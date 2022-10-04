@@ -5,6 +5,15 @@
 <!-- Add icon library -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <style>
+
+#myDIV {
+  width: 100%;
+  padding: 50px 0;
+  text-align: center;
+  background-color: lightblue;
+  margin-top: 20px;
+}
+
 img {
   width: 100%;
   height: auto;
@@ -96,11 +105,31 @@ img {
 
     <a href="https://m.me/thantoeaungat"target="_blank"> 
 <button class="btn" style="width:100%"><i class="fa fa-download"></i>  Chat Box </button>
+
+<button onclick="myFunction()">Try it</button>
+
+<div id="myDIV">
+This is my DIV element.
+</div>
+
 </a>
 </br>
 </br>
 </br>
-<p>ttamig3.com</p>
+<p><a href="https://ttamig3.com">www.ttamig3.com</a>
+</p>
 </Center>
 </body>
+
+<script>
+function myFunction() {
+  var x = document.getElementById("myDIV");
+  if (x.style.display === "none") {
+    x.style.display = "block";
+  } else {
+    x.style.display = "none";
+  }
+}
+</script>
+
 </html>
