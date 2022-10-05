@@ -6,13 +6,6 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <style>
 
-#myDIV {
-  width: 100%;
-  padding: 50px 0;
-  text-align: center;
-  background-color: lightblue;
-  margin-top: 20px;
-}
 
 img {
   width: 100%;
@@ -113,16 +106,10 @@ img {
 </Center>
 
 <Center>
-<button onclick="myFunction()"> Share ပေးပြီးလျှင် Password ကြည့်ရန် နှိပ်ပါ </button> </Center>
+<p><button onclick="myFunction()"> Share ပေးပြီးလျှင် Password ကြည့်ရန် နှိပ်ပါ </button></p>
+<div id="myDIV">Hello</div>
+</Center>
 
-<div id="myDIV">
-<p>Password = ttag3 </p>
-<br>.</br>
-<p><a href="https://www.facebook.com/thantoeaungat/posts/pfbid0pri9b56bz8mbUxaa76qDeohSPNAMyGY7pB2LHHvz5iKRSrqKGB1oFLXFnTwbXjARl"> TTA Mi G3 Group တသက်သာ အတွက် 25,000 ကျပ် ဒီလကုန်ထိ စျေးလျော့ပေးထားပါတယ်</a> </p>
-</div>
-
-
-</br>
 </br>
 </br>
 <Center><p><a href="https://ttamig3.com">www.ttamig3.com</a></p></Center>
@@ -131,10 +118,10 @@ img {
 <script>
 function myFunction() {
   var x = document.getElementById("myDIV");
-  if (x.style.display === "none") {
-    x.style.display = "block";
+  if (x.innerHTML === "Password ကြည့်ရန်") {
+    x.innerHTML = "Password = ttag3";
   } else {
-    x.style.display = "none";
+    x.innerHTML = "Password ကြည့်ရန်";
   }
 }
 </script>
