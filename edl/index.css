@@ -143,7 +143,7 @@ p {
 
 .app-store-btn::before {
 	padding-right: 8px;
-	content: '';
+	content: 'git.png';
 	font-size: 16px;
 }
 
