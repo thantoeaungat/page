@@ -221,7 +221,7 @@ p {
 @media only screen and (min-width: 767px) {
 	.iphone-screenshot {
 		z-index: 1;
-		width: 87%;
+		width: 100%;
 	}
 }
 
