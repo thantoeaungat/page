@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<item><pubDate>Mon, 07 Dec 2020 20:11:15 +0700</pubDate><title><![CDATA[Welcome to Get Axcora CMS]]></title><url><![CDATA[index]]></url><meta><![CDATA[getsimple, easy, content management system]]></meta><metad><![CDATA[]]></metad><menu><![CDATA[Home]]></menu><menuOrder><![CDATA[1]]></menuOrder><menuStatus><![CDATA[Y]]></menuStatus><template><![CDATA[template.php]]></template><parent><![CDATA[]]></parent><content><![CDATA[&lt;div class=&quot;row&quot; style=&quot;background-image: url(&#039;data/uploads/open-laptop1.jpg&#039;);&quot;&gt;
+	&lt;div class=&quot;col-12 col-md-12 p-3 p-md-5&quot;&gt;
+		&lt;div class=&quot;p-3 p-md-5 bg-white rounded&quot;&gt;
+			&lt;h3&gt;&lt;strong&gt;Get &lt;a href=&quot;#&quot;&gt;Axcora&lt;/a&gt; CMS&lt;/strong&gt;&lt;/h3&gt;
+
+			&lt;p&gt;A new version get CMS simple with axcora technology for build blast fast modern website . no need a databased using this cms, very simple and just focusing on your keyword content, just write article and post it, automaticly this cms generate title , description for SEO function.&lt;/p&gt;
+
+			&lt;p&gt;&lt;a class=&quot;float-right&quot; href=&quot;&quot;&gt;Go to Article 1 →&lt;/a&gt;&lt;/p&gt;
+		&lt;/div&gt;
+	&lt;/div&gt;
+
+	&lt;div class=&quot;col-12 col-md-6 p-3 p-md-5&quot;&gt;
+		&lt;div class=&quot;p-3 p-md-5 bg-white rounded&quot;&gt;
+			&lt;h3&gt;&lt;strong&gt;This is &lt;a href=&quot;#&quot;&gt;Article&lt;/a&gt; Two&lt;/strong&gt;&lt;/h3&gt;
+
+			&lt;p&gt;Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.&lt;/p&gt;
+
+			&lt;p&gt;&lt;a class=&quot;float-right&quot; href=&quot;&quot;&gt;Go to Article 2 →&lt;/a&gt;&lt;/p&gt;
+		&lt;/div&gt;
+	&lt;/div&gt;
+
+	&lt;div class=&quot;col-12 col-md-6 p-3 p-md-5&quot;&gt;
+		&lt;div class=&quot;p-3 p-md-5 bg-white rounded&quot;&gt;
+			&lt;h3&gt;&lt;strong&gt;This is &lt;a href=&quot;#&quot;&gt;Article&lt;/a&gt; Three&lt;/strong&gt;&lt;/h3&gt;
+
+			&lt;p&gt;Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum&lt;/p&gt;
+
+			&lt;p&gt;&lt;a class=&quot;float-right&quot; href=&quot;&quot;&gt;Go to Article 3 →&lt;/a&gt;&lt;/p&gt;
+		&lt;/div&gt;
+	&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div class=&quot;row bg-light text-secondary&quot;&gt;
+	&lt;div class=&quot;col-12 col-md-4 p-3 p-md-5 text-center border border-white&quot;&gt;
+		&lt;p&gt;&lt;img class=&quot;img-fluid&quot; src=&quot;data/uploads/pembuatanwebsitemodern-5.png&quot; style=&quot;width: 300px; height: 300px;&quot; /&gt;&lt;/p&gt;
+
+		&lt;h4&gt;&lt;strong&gt;A &lt;a href=&quot;#&quot;&gt;Light&lt;/a&gt;weight&lt;/strong&gt;&lt;/h4&gt;
+
+		&lt;p&gt;Slim and very lite content management system web apps&lt;/p&gt;
+	&lt;/div&gt;
+
+	&lt;div class=&quot;col-12 col-md-4 p-3 p-md-5 text-center border border-white&quot;&gt;
+		&lt;p&gt;&lt;img class=&quot;img-fluid&quot; src=&quot;data/uploads/pembuatanwebsitemodern-2.png&quot; style=&quot;width: 300px; height: 300px;&quot; /&gt;&lt;/p&gt;
+
+		&lt;h4&gt;&lt;strong&gt;Blast &lt;a href=&quot;#&quot;&gt;Fast&lt;/a&gt;&lt;/strong&gt;&lt;/h4&gt;
+
+		&lt;p&gt;No need a database make super fast and rocket !!&lt;/p&gt;
+	&lt;/div&gt;
+
+	&lt;div class=&quot;col-12 col-md-4 p-3 p-md-5 text-center border border-white&quot;&gt;
+		&lt;p&gt;&lt;img class=&quot;img-fluid&quot; src=&quot;data/uploads/pembuatanwebsitemodern-6.png&quot; style=&quot;width: 300px; height: 253px;&quot; /&gt;&lt;/p&gt;
+
+		&lt;h4&gt;&lt;strong&gt;&lt;a href=&quot;#&quot;&gt;Flat &lt;/a&gt;File&lt;/strong&gt;&lt;/h4&gt;
+
+		&lt;p&gt;Just a flat file modern CMS for build your modern website&lt;/p&gt;
+	&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div class=&quot;row border border-light&quot;&gt;
+	&lt;div class=&quot;col-12 col-md-8 p-3 p-md-5&quot;&gt;
+		&lt;h4&gt;&lt;a href=&quot;#&quot;&gt;&lt;strong&gt;Lorem ipsum dolor sit amet&lt;/strong&gt;&lt;/a&gt;&lt;/h4&gt;
+
+		&lt;p&gt;Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.&lt;/p&gt;
+
+		&lt;p&gt;&lt;strong&gt;LOREP&lt;/strong&gt;&lt;/p&gt;
+
+		&lt;p&gt;Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.&lt;/p&gt;
+
+		&lt;p&gt;&lt;a href=&quot;&quot;&gt;Go to Article 4 →&lt;/a&gt;&lt;/p&gt;
+
+		&lt;hr /&gt;
+		&lt;p&gt;&lt;strong&gt;IPSUM&lt;/strong&gt;&lt;/p&gt;
+
+		&lt;p&gt;Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.&lt;/p&gt;
+
+		&lt;p&gt;&lt;a href=&quot;&quot;&gt;Go to Article 5 →&lt;/a&gt;&lt;/p&gt;
+	&lt;/div&gt;
+
+	&lt;div class=&quot;col-12 col-md-4 p-3 p-md-5 text-center&quot;&gt;&lt;img class=&quot;img-fluid&quot; src=&quot;data/uploads/women1.png&quot; /&gt;&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div class=&quot;row&quot; style=&quot;background-image: url(&#039;data/uploads/open-laptop.jpg&#039;);&quot;&gt;
+	&lt;div class=&quot;col-12 col-md-4 p-3 p-md-5&quot;&gt;&amp;nbsp;&lt;/div&gt;
+
+	&lt;div class=&quot;col-12 col-md-4 p-3 p-md-5&quot;&gt;
+		&lt;div class=&quot;p-3 p-md-5 bg-white rounded&quot;&gt;
+			&lt;h3&gt;&lt;strong&gt;This is &lt;a href=&quot;#&quot;&gt;Article&lt;/a&gt; Six&lt;/strong&gt;&lt;/h3&gt;
+
+			&lt;p&gt;Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.&lt;/p&gt;
+
+			&lt;p&gt;&lt;a class=&quot;float-right&quot; href=&quot;&quot;&gt;Go to Article 6 →&lt;/a&gt;&lt;/p&gt;
+		&lt;/div&gt;
+	&lt;/div&gt;
+
+	&lt;div class=&quot;col-12 col-md-4 p-3 p-md-5&quot;&gt;&amp;nbsp;&lt;/div&gt;
+
+	&lt;div class=&quot;col-12 col-md-4 p-3 p-md-5&quot;&gt;
+		&lt;div class=&quot;p-3 p-md-5 bg-white rounded&quot;&gt;
+			&lt;h3&gt;&lt;strong&gt;This is &lt;a href=&quot;#&quot;&gt;Article&lt;/a&gt; Seven&lt;/strong&gt;&lt;/h3&gt;
+
+			&lt;p&gt;Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.&lt;/p&gt;
+
+			&lt;p&gt;&lt;a class=&quot;float-right&quot; href=&quot;&quot;&gt;Go to Article 7 →&lt;/a&gt;&lt;/p&gt;
+		&lt;/div&gt;
+	&lt;/div&gt;
+
+	&lt;div class=&quot;col-12 col-md-4 p-3 p-md-5&quot;&gt;&amp;nbsp;&lt;/div&gt;
+
+	&lt;div class=&quot;col-12 col-md-4 p-3 p-md-5&quot;&gt;
+		&lt;div class=&quot;p-3 p-md-5 bg-white rounded&quot;&gt;
+			&lt;h3&gt;&lt;strong&gt;This is &lt;a href=&quot;#&quot;&gt;Article&lt;/a&gt; Eight&lt;/strong&gt;&lt;/h3&gt;
+
+			&lt;p&gt;Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.&lt;/p&gt;
+
+			&lt;p&gt;&lt;a class=&quot;float-right&quot; href=&quot;&quot;&gt;Go to Article 8 →&lt;/a&gt;&lt;/p&gt;
+		&lt;/div&gt;
+	&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&quot;row bg-dark&quot;&gt;
+&lt;div class=&quot;col-12 col-md-12 p-3 p-md-5 text-center&quot;&gt;
+	&lt;div class=&quot;bg-light p-3 p-md-5&quot;&gt;
+		&lt;h4&gt;&lt;strong&gt;Get Started Now !!&lt;/strong&gt;&lt;/h4&gt;
+
+		&lt;p&gt;Let&#039;s Create a new modern website with flat file new generation era, just write a content and focusing on your keyword for SEO. Read a documentation for detail how work with get axcora cms for develope your new modern website without database.&lt;/p&gt;
+
+		&lt;p&gt;&lt;a class=&quot;mdl-button mdl-js-button mdl-button--raised mdl-button--colored bg-danger text-white&quot; href=&quot;?id=get-started&quot;&gt;Contact Us →&lt;/a&gt;&lt;/p&gt;
+	&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;]]></content><private><![CDATA[]]></private><author><![CDATA[axcora]]></author></item>
