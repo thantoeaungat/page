@@ -91,6 +91,14 @@ p {
 	font-weight: 500;
 }
 
+
+.primary-btn:hover {
+	transition: all 0.1s ease-in-out;
+	color: #21272f;
+	background: #fff;
+	box-shadow: 0 4px 20px 2px rgba(0, 0, 0, 0.2);
+}
+
 .secondry-btn {
 	padding: 15px;
 	text-transform: uppercase;
@@ -99,14 +107,6 @@ p {
 	border-radius: 3px;
 	font-size: 15px;
 	font-weight: 500;
-}
-
-
-.primary-btn:hover {
-	transition: all 0.1s ease-in-out;
-	color: #21272f;
-	background: #fff;
-	box-shadow: 0 4px 20px 2px rgba(0, 0, 0, 0.2);
 }
 
 .secondry-btn:hover {
