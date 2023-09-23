@@ -1,2 +1,0 @@
-user : axcora
-pass : axcoracms
