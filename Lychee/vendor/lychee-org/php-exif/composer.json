@@ -1,0 +1,90 @@
+{
+    "name": "lychee-org/php-exif",
+    "description": "Object-Oriented EXIF parsing",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Tom Van Herreweghe",
+            "homepage": "http://theanalogguy.be",
+            "role": "Developer"
+        }
+    ],
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/LycheeOrg/phpstan-lychee"
+        }
+    ],
+    "keywords": [
+        "EXIF",
+        "IPTC",
+        "jpeg",
+        "tiff",
+        "exiftool",
+        "FFmpeg",
+        "FFprobe",
+        "ImageMagick",
+        "Imagick"
+    ],
+    "require": {
+        "php": "^8.1",
+        "ext-fileinfo": "*",
+        "fylax/forceutf8": "^3.0.1",
+        "php-ffmpeg/php-ffmpeg": "^1.0",
+        "thecodingmachine/safe": "^2.2"
+    },
+    "require-dev": {
+        "friendsofphp/php-cs-fixer": "^3.3",
+        "infection/infection": "^0.26.13",
+        "lychee-org/phpstan-lychee": "^1.0.1",
+        "php-parallel-lint/php-parallel-lint": "^1.2",
+        "phpmd/phpmd": "^2.9",
+        "phpunit/phpunit": "^9.5.10",
+        "squizlabs/php_codesniffer": "^3.5",
+        "thecodingmachine/phpstan-safe-rule": "^1.2"
+    },
+    "suggest": {
+        "lib-exiftool": "Use perl lib exiftool as adapter",
+        "ext-exif": "Use exif PHP extension as adapter",
+        "FFmpeg": "Use FFmpeg/FFprobe as adapter",
+        "ext-imagick": "Use ImageMagick as adapter",
+        "ext-mbstring": "Support UTC-16 characters in EXIF data with exif PHP extension"
+    },
+    "autoload": {
+        "psr-0": {
+            "PHPExif": "lib/"
+        }
+    },
+    "scripts": {
+        "check-code-style": [
+            "vendor/bin/phpcs --standard=PSR2 ./lib/"
+        ],
+        "run-tests": [
+            "vendor/bin/phpunit -c phpunit.xml.dist",
+            "vendor/bin/phpunit --coverage-clover=coverage.xml"
+        ],
+        "validate-files": [
+            "vendor/bin/parallel-lint --exclude vendor --exclude imagick ."
+        ],
+        "phpstan": [
+            "vendor/bin/phpstan analyze"
+        ],
+        "fix-code-style": [
+            "vendor/bin/phpcbf --standard=PSR2 ./lib/"
+        ]
+    },
+    "config": {
+        "platform": {
+            "php": "8.1"
+        },
+        "preferred-install": "dist",
+        "sort-packages": true,
+        "optimize-autoloader": true,
+        "allow-plugins": {
+            "infection/extension-installer": true
+        }
+    },
+	"prefer-stable": true,
+    "minimum-stability": "dev"
+}

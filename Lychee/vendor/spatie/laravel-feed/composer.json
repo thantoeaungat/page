@@ -1,0 +1,78 @@
+{
+    "name": "spatie/laravel-feed",
+    "description": "Generate rss feeds",
+    "keywords": [
+        "spatie",
+        "rss",
+        "laravel",
+        "laravel-feed"
+    ],
+    "homepage": "https://github.com/spatie/laravel-feed",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Jolita Grazyte",
+            "email": "jolita@spatie.be",
+            "homepage": "https://spatie.be",
+            "role": "Developer"
+        },
+        {
+            "name": "Freek Van der Herten",
+            "email": "freek@spatie.be",
+            "homepage": "https://spatie.be",
+            "role": "Developer"
+        },
+        {
+            "name": "Sebastian De Deyne",
+            "email": "sebastian@spatie.be",
+            "homepage": "https://spatie.be",
+            "role": "Developer"
+        },
+        {
+            "name": "Patrick Organ",
+            "homepage": "https://github.com/patinthehat",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": "^8.0",
+        "illuminate/support": "^10.0",
+        "illuminate/http": "^10.0",
+        "illuminate/contracts": "^10.0",
+        "spatie/laravel-package-tools": "^1.15"
+    },
+    "require-dev": {
+        "orchestra/testbench": "^8.0",
+        "spatie/test-time": "^1.2",
+        "pestphp/pest": "^2.0",
+        "spatie/pest-plugin-snapshots": "^2.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Spatie\\Feed\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Spatie\\Feed\\Test\\": "tests"
+        }
+    },
+    "scripts": {
+        "test": "vendor/bin/pest",
+        "test-coverage": "vendor/bin/pest --coverage-html coverage"
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Spatie\\Feed\\FeedServiceProvider"
+            ]
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "config": {
+        "allow-plugins": {
+            "pestphp/pest-plugin": true
+        }
+    }
+}

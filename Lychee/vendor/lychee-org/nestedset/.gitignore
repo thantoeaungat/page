@@ -1,0 +1,6 @@
+/vendor
+/.idea
+composer.phar
+.DS_Store
+.php-cs-fixer.cache
+.phpunit.result.cache

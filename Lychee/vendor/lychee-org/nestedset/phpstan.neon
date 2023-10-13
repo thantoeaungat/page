@@ -1,0 +1,11 @@
+includes:
+	- vendor/nunomaduro/larastan/extension.neon
+	- vendor/lychee-org/phpstan-lychee/phpstan.neon
+
+parameters:
+	checkGenericClassInNonGenericObjectType: false
+	paths:
+		- src
+	excludePaths:
+	stubFiles:
+	ignoreErrors:

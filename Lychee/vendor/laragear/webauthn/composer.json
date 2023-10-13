@@ -1,0 +1,85 @@
+{
+    "name": "laragear/webauthn",
+    "description": "Authenticate your users with biometric data, devices or USB keys.",
+    "type": "library",
+    "license": "MIT",
+    "minimum-stability": "stable",
+    "prefer-stable": true,
+    "keywords": [
+        "laravel",
+        "webauthn",
+        "authentication",
+        "faceid",
+        "touchid",
+        "windows hello",
+        "passkeys"
+    ],
+    "homepage": "https://github.com/laragear/webauthn",
+    "authors": [
+        {
+            "name": "Lukas Buchs",
+            "role": "Original developer"
+        },
+        {
+            "name": "Italo Israel Baeza Cabrera",
+            "email": "DarkGhostHunter@Gmail.com",
+            "role": "Developer",
+            "homepage": "https://github.com/sponsors/DarkGhostHunter"
+        }
+    ],
+    "support": {
+        "source": "https://github.com/Laragear/TwoFactor",
+        "issues": "https://github.com/Laragear/TwoFactor/issues"
+    },
+    "require": {
+        "php": "8.*",
+        "ext-openssl": "*",
+        "ext-json": "*",
+        "illuminate/auth": "9.*|10.*",
+        "illuminate/http": "9.*|10.*",
+        "illuminate/session": "9.*|10.*",
+        "illuminate/support": "9.*|10.*",
+        "illuminate/config": "9.*|10.*",
+        "illuminate/database": "9.*|10.*",
+        "illuminate/encryption": "9.*|10.*"
+    },
+    "require-dev": {
+        "orchestra/testbench": "^7.22|8.*",
+        "jetbrains/phpstorm-attributes": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "Laragear\\WebAuthn\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests",
+            "App\\Http\\Controllers\\WebAuthn\\": "stubs/controllers"
+        }
+    },
+    "scripts": {
+        "test": "vendor/bin/phpunit --coverage-clover build/logs/clover.xml",
+        "test-coverage": "vendor/bin/phpunit --coverage-html coverage"
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Laragear\\WebAuthn\\WebAuthnServiceProvider"
+            ]
+        }
+    },
+    "funding": [
+        {
+            "type": "Github Sponsorship",
+            "url": "https://github.com/sponsors/DarkGhostHunter"
+        },
+        {
+            "type": "Paypal",
+            "url": "https://paypal.me/darkghosthunter"
+        }
+    ]
+}

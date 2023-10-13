@@ -1,0 +1,68 @@
+{
+  "name": "bepsvpt/secure-headers",
+  "description": "Add security related headers to HTTP response. The package includes Service Providers for easy Laravel integration.",
+  "license": "MIT",
+  "type": "library",
+  "keywords": [
+    "laravel",
+    "header",
+    "https",
+    "hsts",
+    "csp",
+    "except-ct",
+    "feature-policy",
+    "clear-site-data",
+    "referrer-policy",
+    "content-security-policy"
+  ],
+  "authors": [
+    {
+      "name": "bepsvpt",
+      "email": "og7lsrszah6y3lz@infinitefa.email"
+    }
+  ],
+  "homepage": "https://github.com/bepsvpt/secure-headers",
+  "require": {
+    "php": "^7.0 || ^8.0"
+  },
+  "require-dev": {
+    "ext-json": "*",
+    "ext-xdebug": "*",
+    "ergebnis/composer-normalize": "~2.29",
+    "laravel/pint": "~1.4",
+    "orchestra/testbench": "~3.1 || ~4.18 || ~5.20 || ~6.25 || ~7.19 || ~8.0",
+    "phpstan/phpstan": "~1.9",
+    "phpunit/phpunit": "~5.7 || ~6.5 || ~7.5 || ~8.5 || ~9.5 || ~10.0"
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "autoload": {
+    "psr-4": {
+      "Bepsvpt\\SecureHeaders\\": "src/"
+    },
+    "files": [
+      "src/helpers.php"
+    ]
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Bepsvpt\\SecureHeaders\\Tests\\": "tests/"
+    }
+  },
+  "config": {
+    "allow-plugins": {
+      "kylekatarnls/update-helper": true,
+      "ergebnis/composer-normalize": true
+    },
+    "optimize-autoloader": true,
+    "preferred-install": "dist",
+    "sort-packages": true
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "Bepsvpt\\SecureHeaders\\SecureHeadersServiceProvider"
+      ]
+    }
+  }
+}

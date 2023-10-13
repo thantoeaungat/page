@@ -1,0 +1,8 @@
+includes:
+	- vendor/lychee-org/phpstan-lychee/phpstan.neon
+
+parameters:
+	paths:
+		- lib
+	ignoreErrors:
+		- '#Array has (2|3) duplicate keys#'
