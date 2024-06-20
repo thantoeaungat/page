@@ -13,6 +13,49 @@ img {
   width: 100%;
   height: auto;
 }
+
+
+
+
+ul, #myUL {
+  list-style-type: none;
+}
+
+#myUL {
+  margin: 0;
+  padding: 0;
+}
+
+.caret {
+  cursor: pointer;
+  -webkit-user-select: none; /* Safari 3.1+ */
+  -moz-user-select: none; /* Firefox 2+ */
+  -ms-user-select: none; /* IE 10+ */
+  user-select: none;
+}
+
+.caret::before {
+  content: "\25B6";
+  color: black;
+  display: inline-block;
+  margin-right: 6px;
+}
+
+.caret-down::before {
+  -ms-transform: rotate(90deg); /* IE 9 */
+  -webkit-transform: rotate(90deg); /* Safari */'
+  transform: rotate(90deg);  
+}
+
+.nested {
+  display: none;
+}
+
+.active {
+  display: block;
+}
+
+
 </style>
     <b:else/> 
       <meta content='width=1100' name='viewport'/> 
@@ -242,15 +285,13 @@ li a.active {
 
 
 <button class="tablink" onclick="openPage('tool', this, 'green')"id="defaultOpen">Tool update စျေးနှုန်းများ နှင့် Remote</button>
-
-
 <div id="tool" class="tabcontent">
 
-<h2 style="text-align:center">စျေးနှုန်းများ Pricing Tables</h2>
-
-
-
-<div class="columns">
+<ul id="myUL">
+  <li><span class="caret">Tool စျေးနှုန်းများ List ( တစ်ချက်နှိပ်ကြည့်ပေးပါ )  </span>
+    <ul class="nested">
+ <br/>
+	<div class="columns">
   <ul class="price">
     <li class="header">iBypass Lpro</li>
     <li class="grey">SN Register</li>
@@ -321,6 +362,21 @@ li a.active {
   </ul>
 </div>
 
+
+
+            </ul>
+          </li>
+        </ul>
+      
+    
+
+
+
+
+
+
+
+
 </div>
 
 
@@ -374,6 +430,16 @@ function scrollFunction() {
 function topFunction() {
   document.body.scrollTop = 0; // For Safari
   document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+}
+
+var toggler = document.getElementsByClassName("caret");
+var i;
+
+for (i = 0; i < toggler.length; i++) {
+  toggler[i].addEventListener("click", function() {
+    this.parentElement.querySelector(".nested").classList.toggle("active");
+    this.classList.toggle("caret-down");
+  });
 }
 </script>
 
