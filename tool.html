@@ -274,7 +274,7 @@ li a.active {
 
 <button class="tablink" onclick="openPage('tool', this, 'green')"id="defaultOpen">Tool update စျေးနှုန်းများ နှင့် Remote</button>
 <div id="tool" class="tabcontent">
- <center><a> irm https://massgrave.dev/ias | iex </a></center>
+
 <ul id="myUL">
   <li><span class="caret">Tool စျေးနှုန်းများ List ( တစ်ချက်နှိပ်ကြည့်ပေးပါ )  </span>
     <ul class="nested">
@@ -514,7 +514,8 @@ li a.active {
           </li>
         </ul>	
 		
-	
+	<input type="IDM" value="IDM Copy" id="myInput">
+<button onclick="myFunction()">Copy Key</button>
 	
 </div>
 
@@ -528,6 +529,22 @@ li a.active {
 
 
 <script>
+
+function myFunction() {
+  // Get the text field
+  var copyText = document.getElementById("myInput");
+
+  // Select the text field
+  copyText.select();
+  copyText.setSelectionRange(0, 99999); // For mobile devices
+
+  // Copy the text inside the text field
+  navigator.clipboard.writeText(copyText.value);
+  
+  // Alert the copied text
+  alert("Copied the text: " + copyText.value);
+}
+
 // Java
 
 
