@@ -520,7 +520,11 @@ li a.active {
 
 </br>
 </br>
-</br>
+<a> Win </a>	
+  <input type="text" value="irm https://get.activated.win | iex" id="GfGInput">
+
+         <!-- The button used to copy the text -->
+         <button onclick="Windows()">Copy text</button>
 
 	
 </div>
@@ -535,6 +539,15 @@ li a.active {
 
 
 <script>
+
+  function GeeksForGeeks() {
+            var copyGfGText = document.getElementById("GfGInput");
+            copyGfGText.select();
+
+            document.execCommand("copy");
+
+            alert("Copied the text: " + copyGfGText.value);
+          }
 
 function myFunction() {
   // Get the text field
