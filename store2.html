@@ -1,0 +1,582 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html>
+<html b:version='2' class='v2' expr:dir='data:blog.languageDirection' xmlns='http://www.w3.org/1999/xhtml' xmlns:b='https://www.google.com/2005/gml/b' xmlns:data='https://www.google.com/2005/gml/data' xmlns:expr='https://www.google.com/2005/gml/expr'> 
+  <head>
+    <link rel="icon" href="https://ttamig3.com/icon.png" type="image/gif" sizes="16x16">
+    <meta content='IE=EmulateIE7' http-equiv='X-UA-Compatible'/> 
+    <b:if cond='data:blog.isMobile'> 
+      <meta content='width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0' name='viewport'/> 
+      <META HTTP-EQUIV="Pragma" CONTENT="no-cache">
+      <META HTTP-EQUIV="Expires" CONTENT="-1">
+	  <style>
+img {
+  width: 100%;
+  height: auto;
+}
+
+
+
+
+ul, #myUL {
+  list-style-type: none;
+}
+
+#myUL {
+  margin: 0;
+  padding: 0;
+}
+
+.caret {
+  cursor: pointer;
+  -webkit-user-select: none; /* Safari 3.1+ */
+  -moz-user-select: none; /* Firefox 2+ */
+  -ms-user-select: none; /* IE 10+ */
+  user-select: none;
+}
+
+.caret::before {
+  content: "\25B6";
+  color: black;
+  display: inline-block;
+  margin-right: 6px;
+}
+
+.caret-down::before {
+  -ms-transform: rotate(90deg); /* IE 9 */
+  -webkit-transform: rotate(90deg); /* Safari */'
+  transform: rotate(90deg);  
+}
+
+.nested {
+  display: none;
+}
+
+.active {
+  display: block;
+}
+
+
+</style>
+    <b:else/> 
+      <meta content='width=1100' name='viewport'/> 
+    </b:if> 
+    <b:include data='blog' name='all-head-content'/> 
+    <title>TTA MI G3</title>
+   <b:skin><![CDATA[/*
+-----------------------------------------------
+/////////// HTML THEME////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////TEMPLATE CREATED BY : FRINTON MADTHA////////////////////////////////////////////////////////////
+/////////////////////// DOWNLOAD FROM: www.FRINMASH.BLOGSPOT.com  //////////////////////////////////////////////////
+----------------------------------------------
+]]></b:skin>
+   <meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+
+body {
+    margin: 50px;
+    font-family: helvetica, sans-serif;
+    background: #e9f0f4;
+}
+
+#wrap {
+    margin: 20px auto;
+    text-align: center;
+}
+
+.btn-slide, .btn-slide2 {
+    position: relative;
+    display: inline-block;
+    height: 50px;
+    width: 200px;
+    line-height: 50px;
+    padding: 0;
+    border-radius: 50px;
+    background: #fdfdfd;
+    border: 2px solid #0099cc;
+    margin: 10px;
+    transition: .5s;
+}
+
+.btn-slide2 {
+    border: 2px solid #efa666;
+}
+
+.btn-slide:hover {
+    background-color: #0099cc;
+}
+
+.btn-slide2:hover {
+    background-color: #efa666;
+}
+
+.btn-slide:hover span.circle, .btn-slide2:hover span.circle2 {
+    left: 100%;
+    margin-left: -45px;
+    background-color: #fdfdfd;
+    color: #0099cc;
+}
+
+.btn-slide2:hover span.circle2 {
+    color: #efa666;
+}
+
+.btn-slide:hover span.title, .btn-slide2:hover span.title2 {
+    left: 40px;
+    opacity: 0;
+}
+
+.btn-slide:hover span.title-hover, .btn-slide2:hover span.title-hover2 {
+    opacity: 1;
+    left: 40px;
+}
+
+.btn-slide span.circle, .btn-slide2 span.circle2 {
+    display: block;
+    background-color: #0099cc;
+    color: #fff;
+    position: absolute;
+    float: left;
+    margin: 5px;
+    line-height: 42px;
+    height: 40px;
+    width: 40px;
+    top: 0;
+    left: 0;
+    transition: .5s;
+    border-radius: 50%;
+}
+
+.btn-slide2 span.circle2 {
+    background-color: #efa666;
+}
+
+.btn-slide span.title,
+  .btn-slide span.title-hover, .btn-slide2 span.title2,
+  .btn-slide2 span.title-hover2 {
+    position: absolute;
+    left: 90px;
+    text-align: center;
+    margin: 0 auto;
+    font-size: 16px;
+    font-weight: bold;
+    color: #30abd5;
+    transition: .5s;
+}
+
+.btn-slide2 span.title2,
+  .btn-slide2 span.title-hover2 {
+    color: #efa666;
+    left: 80px;
+  }
+
+.btn-slide span.title-hover, .btn-slide2 span.title-hover2 {
+    left: 80px;
+    opacity: 0;
+}
+
+.btn-slide span.title-hover, .btn-slide2 span.title-hover2 {
+    color: #fff;
+}
+
+* {box-sizing: border-box}
+
+/* CSS */
+
+
+
+/*testend*/
+
+/* Set height of body and the document to 100% */
+body, html {
+  height: 100%;
+  margin: 0;
+  font-family: Padauk;
+}
+
+/* Style tab links */
+.tablink {
+  background-color: #555;
+  color: black;
+  float: left;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 14px 16px;
+  font-size: 17px;
+  width: 100%;
+}
+
+.tablink:hover {
+  background-color: #777;
+}
+
+/* Style the tab content (and add height:100% for full page content) */
+.tabcontent {
+  color: black;
+  display: none;
+  padding: 100px 20px;
+  height: 100%;
+}
+
+#myBtn {
+  display: none; /* Hidden by default */
+  position: fixed; /* Fixed/sticky position */
+  bottom: 20px; /* Place the button at the bottom of the page */
+  right: 30px; /* Place the button 30px from the right */
+  z-index: 99; /* Make sure it does not overlap */
+  border: none; /* Remove borders */
+  outline: none; /* Remove outline */
+  background-color: green; /* Set a background color */
+  color: white; /* Text color */
+  cursor: pointer; /* Add a mouse pointer on hover */
+  padding: 15px; /* Some padding */
+  border-radius: 10px; /* Rounded corners */
+  font-size: 18px; /* Increase font size */
+}
+
+#myBtn:hover {
+  background-color: #555; /* Add a dark-grey background on hover */
+}
+
+#Xiaomi {background-color: orange;}
+#Basic {background-color: green;}
+#hwopv {background-color: lightblue;}
+#frp {background-color: pink;}
+#Contact {background-color: lightblue;}
+
+
+.vertical-menu {
+  width: 100%;
+}
+
+.vertical-menu a {
+  background-color: #eee;
+  color: black;
+  display: block;
+  padding: 12px;
+  text-decoration: none;
+}
+
+.vertical-menu a:hover {
+  background-color: #ccc;
+}
+
+.vertical-menu a.active {
+  background-color: #04AA6D;
+  color: white;
+}
+
+img {
+  width: 100%;
+  height: auto;
+}
+
+
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  border: 1px solid #e7e7e7;
+  background-color: #f3f3f3;
+}
+
+li {
+  float: left;
+}
+
+li a {
+  display: block;
+  color: #666;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+li a:hover:not(.active) {
+  background-color: #ddd;
+}
+
+li a.active {
+  color: white;
+  background-color: #04AA6D;
+}
+
+
+
+* {
+  box-sizing: border-box;
+}
+
+.columns {
+  float: left;
+  width: 33.3%;
+  padding: 8px;
+}
+
+.price {
+  list-style-type: none;
+  border: 1px solid #eee;
+  margin: 0;
+  padding: 0;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+}
+
+.price:hover {
+  box-shadow: 0 8px 12px 0 rgba(0,0,0,0.2)
+}
+
+.price .header {
+  background-color: #111;
+  color: white;
+  font-size: 25px;
+}
+
+.price li {
+  border-bottom: 1px solid #eee;
+  padding: 20px;
+  text-align: center;
+}
+
+.price .grey {
+  background-color: #eee;
+  font-size: 20px;
+}
+
+.button {
+  background-color: #04AA6D;
+  border: none;
+  color: white;
+  padding: 10px 25px;
+  text-align: center;
+  text-decoration: none;
+  font-size: 18px;
+}
+
+@media only screen and (max-width: 600px) {
+  .columns {
+    width: 100%;
+  }
+}
+
+</style>
+  </head>
+
+
+  <body>
+   
+    <center><h1> TTA APP STORE </h1></center>
+     
+
+
+<ul>
+  <li><a href="store.html"> ttastore.com </a></li>
+  <li><a href="https://t.me/thantoeaungat"> ဆက်သွယ်ရန် Telegram </a></li>
+  <li><a href="https://m.me/thantoeaungat"> ဆက်သွယ်ရန် Messenger </a></li>
+</ul>
+
+
+
+    
+<div class='separator' style='clear: both;'><center><a href='https://ttastore.com/'> <img alt='' border='0' data-original-height='207' data-original-width='900' src='https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhc9SFLdfPMLs4JRYKRJ_RGJgl0hC4JzQCaPR5fKhQEYubrtZH6qYZgzEJPWHUcGYCR-0eZfscfHhb5476Dsi2nYIC-qBA64F2LRkON9VD0dFuVfRNqJ7riWIGkchpuBbCp-8wnLdd0_raE/s0/ttahead.png'/></a></center></div>
+
+   
+   
+   <!--TTA Mi Unicode -->
+ 
+<div class='separator' style='clear: both;'><a style='display: block; padding: 1em 0px; text-align: center;'><img alt='' border='0' data-original-height='200' data-original-width='1000' src='https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhKT8kAffecyI0-jf5EF41pFmIBjp7MToKWPJFt7vAB73AmsAop7OCj3wkoOhbpGpxpIyyE_dGQXI7m0Y7LTEn76v8-c1bYvsMbcH32LID0rrxI7anZH5bp-5yp0eoC02CoSQ8wJZEb0dRm/s0/ttamiunicode.png'/></a> </div>
+
+<div class='separator' style='clear: both;'><a href='https://play.google.com/store/apps/details?id=tta.mi.unicode' style='display: block; padding: 1em 0px; text-align: center;'><img alt='' border='0' data-original-height='80' data-original-width='400' src='https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjoRfk3ljTa0suLcVyQ-cgukjevmU-fkxtuns9eHU37CZHYNAeGJ0adoQVvvEAyUjmtHLI6rFB-8Gf4T7ARjKFW0xdLbvziUhbMJ1HA3olF3_WXZ6ZP7JUWKsyPbsJ5xouaRaiUdSMDLnAF/s0/playstore.png'/></a>
+<a href='https://github.com/thantoeaungat/store/raw/main/ttamiunire.apk' style='display: block; padding: 1em 0px; text-align: center;' target=''><img alt='' border='0' data-original-height='80' data-original-width='400' src='https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjE9Gi-CE5Y-GAYvNJwsIUPvB9DjsPc7ECaoGrkxXu3tmnIJDXlG6EaakurqV0_lBN_pfPN2vscMvxh1NluMYlM5iiVCWMbZeTaG-DcbBaFcUdwRKnkVtWT5KMQZUMby6TSywI41jqIvdaO/s0/Download+Link+1.png'/></a></div>
+<div class='separator' style='clear: both;'><a href='https://bit.ly/ttamiunicode' style='display: block; padding: 1em 0px; text-align: center;' target='_blank'><img alt='' border='0' data-original-height='80' data-original-width='400' src='https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjCx727Mi6c12Gom48PWmcYBtVj5D_3Jl4U0Cgj5CmaF_6MtVmJaGUYGLr3y3ERPhvfuS2rcIZ5B1_a5N-6oT0N10zkLt9i3Tbk6U8GuETf2TgE5QlakQ8kvzmrapZxxF5WB2Zto7VXxL4SopCh3NFQ9zD8nB8wWyxuVSd33F2qT-7CDy3MhHwttOEFRQ/s1600/old.png'/></a></div>
+<div class='separator' style='clear: both;'><a href='https://youtu.be/HgxYOowoxp0' style='display: block; padding: 1em 0px; text-align: center;' target='_blank'><img alt='' border='0' data-original-height='80' data-original-width='400' src='https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEj7wnOMou787XX5IMMCIo1KPFEo2QYsnag38svQmvqIUbTh8xG_g13ioK21pnjI3o5c536E2uSKW6MYPG5poF7hn6ucivHa5Z7W0W8UX2Bes0iSTTp8AQTtPjWbhkhHuZELcdnGRnPkelhC/s0/changenee.png'/></a></div>
+  
+   
+      <!--TTA Ad  -->
+      <div class='separator' style='clear: both;'><a href='https://www.m.me/thantoeaungat' style='display: block; padding: 1em 0px; text-align: center;' target='_blank'><img alt='' border='0' data-original-height='290' data-original-width='790' src='https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEj2NgonT4RYWSRM-TBOiu-Jjo96IZcneW5huddVtPAGc38U0uNe55Jbav6HKMhcVDYWTbr_NA9lV51hRHuZNnllFScmwhT0tywYwQkKLb8tnYZtVRb5hxp6IUsPFk1OUb9EtewJ7lNHGys/s0/%25E2%2580%258Bkyaw.gif'/></a></div>
+  
+     <!--TTA Mi Official  -->
+ 
+  <div class='separator' style='clear: both;'><a style='display: block; padding: 1em 0px; text-align: center;'><img alt='' border='0' data-original-height='352' data-original-width='1000' src='https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjI9KtJCfq1shbY7fgzOocbny4qWi3mLwrLaUwxHZTo5OnBi6JYyrkv2KUFJB9rq3e6SmFDOAHFO2wwKmrGXorQJBOQ_Vx5Ek_Jjm2ZvXaFYhdciYN6Y1ZZT2dY8GDeTdV22lHXhCxXoWRc/s0/ttamiofficial.png'/></a></div>
+  
+<div class='separator' style='clear: both;'><a href='https://play.google.com/store/apps/details?id=mi.official.tta' style='display: block; padding: 1em 0px; text-align: center;'><img alt='' border='0' data-original-height='80' data-original-width='400' src='https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjoRfk3ljTa0suLcVyQ-cgukjevmU-fkxtuns9eHU37CZHYNAeGJ0adoQVvvEAyUjmtHLI6rFB-8Gf4T7ARjKFW0xdLbvziUhbMJ1HA3olF3_WXZ6ZP7JUWKsyPbsJ5xouaRaiUdSMDLnAF/s0/playstore.png'/></a><a href='https://github.com/thantoeaungat/data/raw/master/ttamiofficial_new.apk' style='display: block; padding: 1em 0px; text-align: center;' target=''><img alt='' border='0' data-original-height='80' data-original-width='400' src='https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjE9Gi-CE5Y-GAYvNJwsIUPvB9DjsPc7ECaoGrkxXu3tmnIJDXlG6EaakurqV0_lBN_pfPN2vscMvxh1NluMYlM5iiVCWMbZeTaG-DcbBaFcUdwRKnkVtWT5KMQZUMby6TSywI41jqIvdaO/s0/Download+Link+1.png'/></a></div><div class='separator' style='clear: both;'><a href='https://www.mediafire.com/file/1c25a7q8zy1z553/ttamiofficial.apk/file' style='display: block; padding: 1em 0px; text-align: center;' target='_blank'><img alt='' border='0' data-original-height='80' data-original-width='400' src='https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgkP3pmHKdOxxSURmePKzmnxPp_dq7Naj3kWvBbI3F4UgmOcBR97-OHxwbR7S_WXOCkx3JuDYUnuG7cDOJeil3g-RpznOnCvQmK70WrICt5uvtElyLHkNWliE23zcUX-QRm6gptotABQUpy/s0/Download+Link+2.png'/></a></div><div class='separator' style='clear: both;'><a href='https://youtu.be/HgxYOowoxp0' style='display: block; padding: 1em 0px; text-align: center;' target='_blank'><img alt='' border='0' data-original-height='80' data-original-width='400' src='https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEj7wnOMou787XX5IMMCIo1KPFEo2QYsnag38svQmvqIUbTh8xG_g13ioK21pnjI3o5c536E2uSKW6MYPG5poF7hn6ucivHa5Z7W0W8UX2Bes0iSTTp8AQTtPjWbhkhHuZELcdnGRnPkelhC/s0/changenee.png'/></a></div>
+  
+   <!--TTA Gapp 5678910  -->
+  
+  <div class='separator' style='clear: both;'><a style='display: block; padding: 1em 0; text-align: center; '><img alt='' border='0' data-original-height='352' data-original-width='1000' src='https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiDnNGqskIB5B_zfjwhg4WUe-vaiAqQeTQHQ5Cd5opaJT2t2hbayuZMbKLy6RHbt6tDhmoQMWjll_VOXjWCbZJG8bleTBYUcwiaUQIUCmlaf2NuKkKDWXZ61rlLT_5lH0_Sr55bd_g_1lre/s0/ttagapp678910.png'/></a></div>
+  
+   <div class='separator' style='clear: both;'><a href='https://github.com/thantoeaungat/store/raw/main/tta_gservice_on.apk' style='display: block; padding: 1em 0px; text-align: center;' target=''><img alt='' border='0' data-original-height='80' data-original-width='400' src='https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjE9Gi-CE5Y-GAYvNJwsIUPvB9DjsPc7ECaoGrkxXu3tmnIJDXlG6EaakurqV0_lBN_pfPN2vscMvxh1NluMYlM5iiVCWMbZeTaG-DcbBaFcUdwRKnkVtWT5KMQZUMby6TSywI41jqIvdaO/s0/Download+Link+1.png'/></a></div>
+ <div class='separator' style='clear: both;'><a href='https://www.mediafire.com/file/36ik930n9hghv2b/tta_gservice_on.apk/file' style='display: block; padding: 1em 0px; text-align: center;' target='_blank'><img alt='' border='0' data-original-height='80' data-original-width='400' src='https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgkP3pmHKdOxxSURmePKzmnxPp_dq7Naj3kWvBbI3F4UgmOcBR97-OHxwbR7S_WXOCkx3JuDYUnuG7cDOJeil3g-RpznOnCvQmK70WrICt5uvtElyLHkNWliE23zcUX-QRm6gptotABQUpy/s0/Download+Link+2.png'/></a></div>
+ <div class='separator' style='clear: both;'><a href='https://youtu.be/q5WHkibUvxo' style='display: block; padding: 1em 0px; text-align: center;' target='_blank'><img alt='' border='0' data-original-height='80' data-original-width='400' src='https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEj7wnOMou787XX5IMMCIo1KPFEo2QYsnag38svQmvqIUbTh8xG_g13ioK21pnjI3o5c536E2uSKW6MYPG5poF7hn6ucivHa5Z7W0W8UX2Bes0iSTTp8AQTtPjWbhkhHuZELcdnGRnPkelhC/s0/changenee.png'/></a></div> 
+  
+  
+          <!--TTA  Google Base-->
+  
+<div class='separator' style='clear: both;'><a style='display: block; padding: 1em 0px; text-align: center;'><img alt='' border='0' data-original-height='352' data-original-width='1000' src='https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEheSYxRGNw_PTEIRYio8V_iusUCys6GUVPzcTAcfQCMCyBh2FzxQBbjQSLVMRGLKj0FsuvQz9gjLC26xwhvCKCO_kLsFTmu9zR8nWhJEvvMlByrX89bnly3DEFXJSkMuEjtipgLO6psHDh7d6kBMizz9yFQhneM0dMXS3Soj5PAJgWU9qohoXsMIsiaVg/s1000/gbase.png'/></a></div>
+  
+ <div class='separator' style='clear: both;'><a href='https://github.com/thantoeaungat/store/raw/main/tta_gservice_on.apk' style='display: block; padding: 1em 0px; text-align: center;' target=''><img alt='' border='0' data-original-height='80' data-original-width='400' src='https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjE9Gi-CE5Y-GAYvNJwsIUPvB9DjsPc7ECaoGrkxXu3tmnIJDXlG6EaakurqV0_lBN_pfPN2vscMvxh1NluMYlM5iiVCWMbZeTaG-DcbBaFcUdwRKnkVtWT5KMQZUMby6TSywI41jqIvdaO/s0/Download+Link+1.png'/></a></div>
+ <div class='separator' style='clear: both;'><a href='https://www.mediafire.com/file/36ik930n9hghv2b/tta_gservice_on.apk/file' style='display: block; padding: 1em 0px; text-align: center;' target='_blank'><img alt='' border='0' data-original-height='80' data-original-width='400' src='https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgkP3pmHKdOxxSURmePKzmnxPp_dq7Naj3kWvBbI3F4UgmOcBR97-OHxwbR7S_WXOCkx3JuDYUnuG7cDOJeil3g-RpznOnCvQmK70WrICt5uvtElyLHkNWliE23zcUX-QRm6gptotABQUpy/s0/Download+Link+2.png'/></a></div>
+ <div class='separator' style='clear: both;'><a href='https://youtu.be/q5WHkibUvxo' style='display: block; padding: 1em 0px; text-align: center;' target='_blank'><img alt='' border='0' data-original-height='80' data-original-width='400' src='https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEj7wnOMou787XX5IMMCIo1KPFEo2QYsnag38svQmvqIUbTh8xG_g13ioK21pnjI3o5c536E2uSKW6MYPG5poF7hn6ucivHa5Z7W0W8UX2Bes0iSTTp8AQTtPjWbhkhHuZELcdnGRnPkelhC/s0/changenee.png'/></a></div> 
+  
+   
+      <!--TTA Ad  -->
+      <div class='separator' style='clear: both;'><a href='https://www.m.me/thantoeaungat' style='display: block; padding: 1em 0px; text-align: center;' target='_blank'><img alt='' border='0' data-original-height='290' data-original-width='790' src='https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEj2NgonT4RYWSRM-TBOiu-Jjo96IZcneW5huddVtPAGc38U0uNe55Jbav6HKMhcVDYWTbr_NA9lV51hRHuZNnllFScmwhT0tywYwQkKLb8tnYZtVRb5hxp6IUsPFk1OUb9EtewJ7lNHGys/s0/%25E2%2580%258Bkyaw.gif'/></a></div>
+
+  
+     <!--TTA PQR Gapp -->
+  
+<div class='separator' style='clear: both;'><a style='display: block; padding: 1em 0px; text-align: center;'><img alt='' border='0' data-original-height='352' data-original-width='1000' src='https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEi2cUiCajOH5hbZcQFFTixdiXsFNxTN2j0TKTvw5B8hPhXcQTuAqIXjtgouLGr8IVGXdgk1goDio76c6A44gQPc8xL94ynVxdpkBE6rWZaLntj9J1BQ4IjTVT3n-ib9iqQE5OaDrr3FdMvj/s0/ttapqrgapp.png'/></a></div>
+  
+ <div class='separator' style='clear: both;'><a href='https://1drv.ms/u/s!Aj6pXpTKWQCMcxHOrMEsswoORrE?e=oKw38G' style='display: block; padding: 1em 0px; text-align: center;' target=''><img alt='' border='0' data-original-height='80' data-original-width='400' src='https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjE9Gi-CE5Y-GAYvNJwsIUPvB9DjsPc7ECaoGrkxXu3tmnIJDXlG6EaakurqV0_lBN_pfPN2vscMvxh1NluMYlM5iiVCWMbZeTaG-DcbBaFcUdwRKnkVtWT5KMQZUMby6TSywI41jqIvdaO/s0/Download+Link+1.png'/></a></div><div class='separator' style='clear: both;'><a href='https://bit.ly/ttapqgapp' style='display: block; padding: 1em 0px; text-align: center;' target='_blank'><img alt='' border='0' data-original-height='80' data-original-width='400' src='https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgkP3pmHKdOxxSURmePKzmnxPp_dq7Naj3kWvBbI3F4UgmOcBR97-OHxwbR7S_WXOCkx3JuDYUnuG7cDOJeil3g-RpznOnCvQmK70WrICt5uvtElyLHkNWliE23zcUX-QRm6gptotABQUpy/s0/Download+Link+2.png'/></a></div><div class='separator' style='clear: both;'><a href='https://youtu.be/q5WHkibUvxo' style='display: block; padding: 1em 0px; text-align: center;' target='_blank'><img alt='' border='0' data-original-height='80' data-original-width='400' src='https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEj7wnOMou787XX5IMMCIo1KPFEo2QYsnag38svQmvqIUbTh8xG_g13ioK21pnjI3o5c536E2uSKW6MYPG5poF7hn6ucivHa5Z7W0W8UX2Bes0iSTTp8AQTtPjWbhkhHuZELcdnGRnPkelhC/s0/changenee.png'/></a></div> 
+  
+    <!--TTA Mi Font Lite -->
+  
+  <div class='separator' style='clear: both;'><a style='display: block; padding: 1em 0; text-align: center; '><img alt='' border='0' data-original-height='352' data-original-width='1000' src='https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEh8e_d3E-2kr1Ge4B9sAMacXpfZIWPE9l6peYI3JwHUkl2HAQYMQ-V91wlXJOJOIyQEPa_DI2ln2VwXEvxYR_7RufO_BJWO4zfZNtNRY1b4UpNc6wiHjCpkKF_9I8-bpUr_ErxXKGWIIlXu/s0/ttamifontlite.png'/></a></div>
+  
+  <div class='separator' style='clear: both;'><a href='https://play.google.com/store/apps/details?id=mifont.lite.tta' style='display: block; padding: 1em 0px; text-align: center;'><img alt='' border='0' data-original-height='80' data-original-width='400' src='https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjoRfk3ljTa0suLcVyQ-cgukjevmU-fkxtuns9eHU37CZHYNAeGJ0adoQVvvEAyUjmtHLI6rFB-8Gf4T7ARjKFW0xdLbvziUhbMJ1HA3olF3_WXZ6ZP7JUWKsyPbsJ5xouaRaiUdSMDLnAF/s0/playstore.png'/></a><a href='https://github.com/thantoeaungat/data/raw/master/ttamifontlite.apk' style='display: block; padding: 1em 0px; text-align: center;' target=''><img alt='' border='0' data-original-height='80' data-original-width='400' src='https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjE9Gi-CE5Y-GAYvNJwsIUPvB9DjsPc7ECaoGrkxXu3tmnIJDXlG6EaakurqV0_lBN_pfPN2vscMvxh1NluMYlM5iiVCWMbZeTaG-DcbBaFcUdwRKnkVtWT5KMQZUMby6TSywI41jqIvdaO/s0/Download+Link+1.png'/></a></div><div class='separator' style='clear: both;'><a href='https://www.mediafire.com/file/tytc0b7pe225noc/ttamifontlite.apk/file' style='display: block; padding: 1em 0px; text-align: center;' target='_blank'><img alt='' border='0' data-original-height='80' data-original-width='400' src='https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgkP3pmHKdOxxSURmePKzmnxPp_dq7Naj3kWvBbI3F4UgmOcBR97-OHxwbR7S_WXOCkx3JuDYUnuG7cDOJeil3g-RpznOnCvQmK70WrICt5uvtElyLHkNWliE23zcUX-QRm6gptotABQUpy/s0/Download+Link+2.png'/></a></div><div class='separator' style='clear: both;'><a href='https://youtu.be/_Ymj2HsPoV8' style='display: block; padding: 1em 0px; text-align: center;' target='_blank'><img alt='' border='0' data-original-height='80' data-original-width='400' src='https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEj7wnOMou787XX5IMMCIo1KPFEo2QYsnag38svQmvqIUbTh8xG_g13ioK21pnjI3o5c536E2uSKW6MYPG5poF7hn6ucivHa5Z7W0W8UX2Bes0iSTTp8AQTtPjWbhkhHuZELcdnGRnPkelhC/s0/changenee.png'/></a></div>   
+
+  
+    <!--TTA Realop -->
+  
+  <div class='separator' style='clear: both;'><a style='display: block; padding: 1em 0; text-align: center; '><img alt='' border='0' data-original-height='352' data-original-width='1000' src='https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhIJIFg34H7RsRYTe-yymTDPHst2YqcfbFVSQ2R62mk0oowZtPusO_dVM6QwaBRV3E0j-Wd2zx_QWaa4AXnmBWWYVvaQNco6Fe1lAcNP4YqTYRHuO5ZX-Tjj2yzB5nY5HZrkTTAQsAiFC7q/s0/realipb.png'/></a></div>
+  
+  <div class='separator' style='clear: both;'><a href='https://play.google.com/store/apps/details?id=tta.realop.font' style='display: block; padding: 1em 0px; text-align: center;'><img alt='' border='0' data-original-height='80' data-original-width='400' src='https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjoRfk3ljTa0suLcVyQ-cgukjevmU-fkxtuns9eHU37CZHYNAeGJ0adoQVvvEAyUjmtHLI6rFB-8Gf4T7ARjKFW0xdLbvziUhbMJ1HA3olF3_WXZ6ZP7JUWKsyPbsJ5xouaRaiUdSMDLnAF/s0/playstore.png'/></a><a href='https://github.com/thantoeaungat/data/raw/master/ttarealopfont.apk' style='display: block; padding: 1em 0px; text-align: center;' target=''><img alt='' border='0' data-original-height='80' data-original-width='400' src='https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjE9Gi-CE5Y-GAYvNJwsIUPvB9DjsPc7ECaoGrkxXu3tmnIJDXlG6EaakurqV0_lBN_pfPN2vscMvxh1NluMYlM5iiVCWMbZeTaG-DcbBaFcUdwRKnkVtWT5KMQZUMby6TSywI41jqIvdaO/s0/Download+Link+1.png'/></a></div><div class='separator' style='clear: both;'><a href='https://www.mediafire.com/file/gbfwnlxf537qfdg/ttarealopfont.apk/file' style='display: block; padding: 1em 0px; text-align: center;' target='_blank'><img alt='' border='0' data-original-height='80' data-original-width='400' src='https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgkP3pmHKdOxxSURmePKzmnxPp_dq7Naj3kWvBbI3F4UgmOcBR97-OHxwbR7S_WXOCkx3JuDYUnuG7cDOJeil3g-RpznOnCvQmK70WrICt5uvtElyLHkNWliE23zcUX-QRm6gptotABQUpy/s0/Download+Link+2.png'/></a></div><div class='separator' style='clear: both;'><a href='https://youtu.be/wuBxY3xcMtg' style='display: block; padding: 1em 0px; text-align: center;' target='_blank'><img alt='' border='0' data-original-height='80' data-original-width='400' src='https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEj7wnOMou787XX5IMMCIo1KPFEo2QYsnag38svQmvqIUbTh8xG_g13ioK21pnjI3o5c536E2uSKW6MYPG5poF7hn6ucivHa5Z7W0W8UX2Bes0iSTTp8AQTtPjWbhkhHuZELcdnGRnPkelhC/s0/changenee.png'/></a></div>   
+  
+      <!--TTA Info (Xiaomi) -->
+  
+  <div class='separator' style='clear: both;'><a style='display: block; padding: 1em 0; text-align: center; '><img alt='' border='0' data-original-height='352' data-original-width='1000' src='https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEizZbXVFOA__ctOQguiZHc9mPCSyDqZf1gp1dKEmBUczBfGSfX1u0D1wT4HtuYACG8EwhjvH1BZsJ65ilCQFeLVvd4EkNh1mpX47rTpzcTU6xmosJcQvUN0pmTOIkece_F60OfSD3Y-PgmW/s1000/info_check_er.png'/></a></div>
+  
+  <div class='separator' style='clear: both;'><a href='https://play.google.com/store/apps/details?id=tta.xiao.info' style='display: block; padding: 1em 0px; text-align: center;'><img alt='' border='0' data-original-height='80' data-original-width='400' src='https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjoRfk3ljTa0suLcVyQ-cgukjevmU-fkxtuns9eHU37CZHYNAeGJ0adoQVvvEAyUjmtHLI6rFB-8Gf4T7ARjKFW0xdLbvziUhbMJ1HA3olF3_WXZ6ZP7JUWKsyPbsJ5xouaRaiUdSMDLnAF/s0/playstore.png'/></a></div>
+    
+  <div class='separator' style='clear: both;'>  <a href='https://github.com/thantoeaungat/data/raw/master/info_check.apk' style='display: block; padding: 1em 0px; text-align: center;' target=''><img alt='' border='0' data-original-height='80' data-original-width='400' src='https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjE9Gi-CE5Y-GAYvNJwsIUPvB9DjsPc7ECaoGrkxXu3tmnIJDXlG6EaakurqV0_lBN_pfPN2vscMvxh1NluMYlM5iiVCWMbZeTaG-DcbBaFcUdwRKnkVtWT5KMQZUMby6TSywI41jqIvdaO/s0/Download+Link+1.png'/></a></div>
+  
+  <!--Close  <div class='separator' style='clear: both;'><a href='https://apkpure.com/tta-realop-myanmar-font/tta.realop.font' style='display: block; padding: 1em 0px; text-align: center;' target='_blank'><img alt='' border='0' data-original-height='80' data-original-width='400' src='https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgkP3pmHKdOxxSURmePKzmnxPp_dq7Naj3kWvBbI3F4UgmOcBR97-OHxwbR7S_WXOCkx3JuDYUnuG7cDOJeil3g-RpznOnCvQmK70WrICt5uvtElyLHkNWliE23zcUX-QRm6gptotABQUpy/s0/Download+Link+2.png'/></a></div>--> 
+  
+ <div class='separator' style='clear: both;'><a href='https://youtu.be/kwohyBZc1OY' style='display: block; padding: 1em 0px; text-align: center;' target='_blank'><img alt='' border='0' data-original-height='80' data-original-width='400' src='https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEj7wnOMou787XX5IMMCIo1KPFEo2QYsnag38svQmvqIUbTh8xG_g13ioK21pnjI3o5c536E2uSKW6MYPG5poF7hn6ucivHa5Z7W0W8UX2Bes0iSTTp8AQTtPjWbhkhHuZELcdnGRnPkelhC/s0/changenee.png'/></a></div>
+  
+        <!--TTA Payeik -->
+  
+  <div class='separator' style='clear: both;'><a style='display: block; padding: 1em 0; text-align: center; '><img alt='' border='0' data-original-height='352' data-original-width='1000' src='https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjY-Oep_LnQQwy_wAPbk08Sjpkxg_asEQWksMLnNms6A7axN84MopbmDIulyUefu41oJfoSOBNexWsFl83oPQuAjv_hMEfKUMjJsxo5YEOZqUz5WkGlgskUl0fGC1874hhQZmaBxwzXZyfa/s0/payeik.png'/></a></div>
+  
+  <div class='separator' style='clear: both;'><a href='https://play.google.com/store/apps/details?id=com.tayar.taw' style='display: block; padding: 1em 0px; text-align: center;'><img alt='' border='0' data-original-height='80' data-original-width='400' src='https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjoRfk3ljTa0suLcVyQ-cgukjevmU-fkxtuns9eHU37CZHYNAeGJ0adoQVvvEAyUjmtHLI6rFB-8Gf4T7ARjKFW0xdLbvziUhbMJ1HA3olF3_WXZ6ZP7JUWKsyPbsJ5xouaRaiUdSMDLnAF/s0/playstore.png'/></a></div>
+    
+  <div class='separator' style='clear: both;'>  <a href='https://github.com/thantoeaungat/data/raw/master/%E1%80%95%E1%80%9B%E1%80%AD%E1%80%90%E1%80%BA_%E1%80%90%E1%80%9B%E1%80%AC%E1%80%B8%E1%80%90%E1%80%B1%E1%80%AC%E1%80%BA_1.2.apk' style='display: block; padding: 1em 0px; text-align: center;' target=''><img alt='' border='0' data-original-height='80' data-original-width='400' src='https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjE9Gi-CE5Y-GAYvNJwsIUPvB9DjsPc7ECaoGrkxXu3tmnIJDXlG6EaakurqV0_lBN_pfPN2vscMvxh1NluMYlM5iiVCWMbZeTaG-DcbBaFcUdwRKnkVtWT5KMQZUMby6TSywI41jqIvdaO/s0/Download+Link+1.png'/></a></div>
+  
+  <!--Close  <div class='separator' style='clear: both;'><a href='https://apkpure.com/tta-realop-myanmar-font/tta.realop.font' style='display: block; padding: 1em 0px; text-align: center;' target='_blank'><img alt='' border='0' data-original-height='80' data-original-width='400' src='https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgkP3pmHKdOxxSURmePKzmnxPp_dq7Naj3kWvBbI3F4UgmOcBR97-OHxwbR7S_WXOCkx3JuDYUnuG7cDOJeil3g-RpznOnCvQmK70WrICt5uvtElyLHkNWliE23zcUX-QRm6gptotABQUpy/s0/Download+Link+2.png'/></a></div>--> 
+  
+  <!--Close  <div class='separator' style='clear: both;'><a href='https://youtu.be/wuBxY3xcMtg' style='display: block; padding: 1em 0px; text-align: center;' target='_blank'><img alt='' border='0' data-original-height='80' data-original-width='400' src='https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEj7wnOMou787XX5IMMCIo1KPFEo2QYsnag38svQmvqIUbTh8xG_g13ioK21pnjI3o5c536E2uSKW6MYPG5poF7hn6ucivHa5Z7W0W8UX2Bes0iSTTp8AQTtPjWbhkhHuZELcdnGRnPkelhC/s0/changenee.png'/></a></div>   --> 
+
+          <!--TTA SAM Font -->
+  
+  <div class='separator' style='clear: both;'><a style='display: block; padding: 1em 0; text-align: center; '><img alt='' border='0' data-original-height='352' data-original-width='1000' src='https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEi4XE4NkGzTu-Xwt1LELa5ivTQMJti5VZXDc6Say4rI1i0tUInaXkUNNVqH2gTmNPX4-geYyRgZPAF_SYoDtq_jVCD7CEhI-bcacB9nDKIVjOV6HyiTQ4fXuorLQlhY4mxB3p43TOe3S4N4/s0/samsung.png'/></a></div>
+  
+<div class='separator' style='clear: both;'><a href='https://play.google.com/store/apps/details?id=samfont7.tta' style='display: block; padding: 1em 0px; text-align: center;'><img alt='' border='0' data-original-height='80' data-original-width='400' src='https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhCZ-aEUw6zwBwq7Qq7acINC44pSTHHuu7MpZDZOsbSVNcINWBw1_yAhER0PsSMdIfCpprQFFAeVwPvHBfsd0gnL258KP529GV6m2_pRc_BUFY2VZamWpSGCBUiMZIvc33GJEP4v2ZYSLuc/s0/a7.png'/></a></div><div class='separator' style='clear: both;'><a href='https://play.google.com/store/apps/details?id=samfont8.tta' style='display: block; padding: 1em 0px; text-align: center;'><img alt='' border='0' data-original-height='80' data-original-width='400' src='https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiTYxEvDvUr0589dR2eSfk1FRAiI8Waurt_65-J3pr7rSEDSd9LKrdP5puUSWDX9EHsnqRtwWSHB4fT2U0Ky0qQ6nfhWjQPpkxsv2ELj6oSc_JOn4L9kCWn_W-Rd7-ZFA5LETkeHseEX6HE/s0/a8.png'/></a></div><div class='separator' style='clear: both;'><a href='https://play.google.com/store/apps/details?id=samfont9.tta' style='display: block; padding: 1em 0px; text-align: center;'><img alt='' border='0' data-original-height='80' data-original-width='400' src='https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgAMaiHp3PoU5hWBufZ6jLRP26OXdCTrFh6r9B4GGhuNhWoNgzrLFDwqR4256XIKhPHCVsPeotX_RwmzeQLTT7VZdEtQ8k5MSvXpOAFHlCqcDEZgf-h08729Q5EUmZdAqw5A-Yj9TSXQAc3/s0/a9.png'/></a></div>
+
+          <!--TTA Unicode Change Root -->
+  
+  <div class='separator' style='clear: both;'><a style='display: block; padding: 1em 0; text-align: center; '><img alt='' border='0' data-original-height='352' data-original-width='1000' src='https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEj0WmPLWWdK7PqcYtZdykIOLSuoNXSlD_tNbTs6DVA9MMSUgsWv5NLuHxbe1jTyuDtGHBdC6P9EWnU9WlohbYPKZIwuEi2nzUTbZfZU6ahkwWVFiMQ9IyCfCn-KQ3oRClni6oMuaIzEJUEv/s0/rootchanger.png'/></a></div>
+  
+  <div class='separator' style='clear: both;'><a href='https://play.google.com/store/apps/details?id=tta.uni.root' style='display: block; padding: 1em 0px; text-align: center;'><img alt='' border='0' data-original-height='80' data-original-width='400' src='https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjoRfk3ljTa0suLcVyQ-cgukjevmU-fkxtuns9eHU37CZHYNAeGJ0adoQVvvEAyUjmtHLI6rFB-8Gf4T7ARjKFW0xdLbvziUhbMJ1HA3olF3_WXZ6ZP7JUWKsyPbsJ5xouaRaiUdSMDLnAF/s0/playstore.png'/></a></div>
+    
+  <div class='separator' style='clear: both;'>  <a href='https://github.com/thantoeaungat/data/raw/master/ttaunicodechanger.apk' style='display: block; padding: 1em 0px; text-align: center;' target=''><img alt='' border='0' data-original-height='80' data-original-width='400' src='https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjE9Gi-CE5Y-GAYvNJwsIUPvB9DjsPc7ECaoGrkxXu3tmnIJDXlG6EaakurqV0_lBN_pfPN2vscMvxh1NluMYlM5iiVCWMbZeTaG-DcbBaFcUdwRKnkVtWT5KMQZUMby6TSywI41jqIvdaO/s0/Download+Link+1.png'/></a></div>
+  
+  <!--Close  <div class='separator' style='clear: both;'><a href='https://apkpure.com/tta-realop-myanmar-font/tta.realop.font' style='display: block; padding: 1em 0px; text-align: center;' target='_blank'><img alt='' border='0' data-original-height='80' data-original-width='400' src='https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgkP3pmHKdOxxSURmePKzmnxPp_dq7Naj3kWvBbI3F4UgmOcBR97-OHxwbR7S_WXOCkx3JuDYUnuG7cDOJeil3g-RpznOnCvQmK70WrICt5uvtElyLHkNWliE23zcUX-QRm6gptotABQUpy/s0/Download+Link+2.png'/></a></div>--> 
+  
+<div class='separator' style='clear: both;'><a href='https://youtu.be/CcJqeWII_U8' style='display: block; padding: 1em 0px; text-align: center;' target='_blank'><img alt='' border='0' data-original-height='80' data-original-width='400' src='https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEj7wnOMou787XX5IMMCIo1KPFEo2QYsnag38svQmvqIUbTh8xG_g13ioK21pnjI3o5c536E2uSKW6MYPG5poF7hn6ucivHa5Z7W0W8UX2Bes0iSTTp8AQTtPjWbhkhHuZELcdnGRnPkelhC/s0/changenee.png'/></a></div> 
+  
+            <!--TTA Google Space  -->
+  
+  <div class='separator' style='clear: both;'><a style='display: block; padding: 1em 0; text-align: center; '><img alt='' border='0' data-original-height='352' data-original-width='1000' src='https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEg1722DSDW5u0Xnyu3qe0f49ISrwwrPBz8V__8hxMZEOBfOG93aGWNrVt_nVLJKcOEo1f20oJrAsDvGyAI01CJ8ioLckTVnI64-5fyVkB8dbMgFfQ5zgaz4zdfnjQelInu2of7e_C6iDwfr/s0/gspace.png'/></a></div>
+  
+  <div class='separator' style='clear: both;'>  <a href='https://1drv.ms/u/s!AiRaMtaYZk9QkiAahSL-PFav8NNs?e=UMtsY9' style='display: block; padding: 1em 0px; text-align: center;' target=''><img alt='' border='0' data-original-height='80' data-original-width='400' src='https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjE9Gi-CE5Y-GAYvNJwsIUPvB9DjsPc7ECaoGrkxXu3tmnIJDXlG6EaakurqV0_lBN_pfPN2vscMvxh1NluMYlM5iiVCWMbZeTaG-DcbBaFcUdwRKnkVtWT5KMQZUMby6TSywI41jqIvdaO/s0/Download+Link+1.png'/></a></div>
+  
+  <!--Close  <div class='separator' style='clear: both;'><a href='https://apkpure.com/tta-realop-myanmar-font/tta.realop.font' style='display: block; padding: 1em 0px; text-align: center;' target='_blank'><img alt='' border='0' data-original-height='80' data-original-width='400' src='https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgkP3pmHKdOxxSURmePKzmnxPp_dq7Naj3kWvBbI3F4UgmOcBR97-OHxwbR7S_WXOCkx3JuDYUnuG7cDOJeil3g-RpznOnCvQmK70WrICt5uvtElyLHkNWliE23zcUX-QRm6gptotABQUpy/s0/Download+Link+2.png'/></a></div>--> 
+  
+ <div class='separator' style='clear: both;'><a href='https://youtu.be/VJ7OxZs53SI' style='display: block; padding: 1em 0px; text-align: center;' target='_blank'><img alt='' border='0' data-original-height='80' data-original-width='400' src='https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEj7wnOMou787XX5IMMCIo1KPFEo2QYsnag38svQmvqIUbTh8xG_g13ioK21pnjI3o5c536E2uSKW6MYPG5poF7hn6ucivHa5Z7W0W8UX2Bes0iSTTp8AQTtPjWbhkhHuZELcdnGRnPkelhC/s0/changenee.png'/></a></div>
+  
+  <!--ChannelTTA--> 
+  
+<div class='separator' style='clear: both;'><a href='https://www.youtube.com/channelttatv/videos' style='display: block; padding: 1em 0; text-align: center; '><img alt='' border='0' data-original-height='352' data-original-width='1000' src='https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhVlTvOqsZCaSWSBU2QZ5lBRofgzdKdDW_YWCbHUwGLB7B9_lEf60_O9s9UVGrs0OvZ4LuX_UYO4sRCA-H1_X63n4N19dIoE4_UyqtpWvlILUBICPRUuTHFQ8UL0lK6g1hV2x-2L81MUlvu/s0/channeltta.png'/></a></div>
+  
+    <!--End Sub--> 
+  
+<div style='margin-top:100px; '> 
+
+
+</br>
+</div>
+	
+	
+
+
+
+
+
+
+
+
+
+
+<script>
+// Java
+
+
+
+// test
+
+function openPage(pageName,elmnt,color) {
+  var i, tabcontent, tablinks;
+  tabcontent = document.getElementsByClassName("tabcontent");
+  for (i = 0; i < tabcontent.length; i++) {
+    tabcontent[i].style.display = "none";
+  }
+  tablinks = document.getElementsByClassName("tablink");
+  for (i = 0; i < tablinks.length; i++) {
+    tablinks[i].style.backgroundColor = "";
+  }
+  document.getElementById(pageName).style.display = "block";
+  elmnt.style.backgroundColor = color;
+}
+
+// Get the element with id="defaultOpen" and click on it
+document.getElementById("defaultOpen").click();
+
+//Get the button:
+mybutton = document.getElementById("myBtn");
+
+// When the user scrolls down 20px from the top of the document, show the button
+window.onscroll = function() {scrollFunction()};
+
+function scrollFunction() {
+  if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+    mybutton.style.display = "block";
+  } else {
+    mybutton.style.display = "none";
+  }
+}
+
+// When the user clicks on the button, scroll to the top of the document
+function topFunction() {
+  document.body.scrollTop = 0; // For Safari
+  document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+}
+
+var toggler = document.getElementsByClassName("caret");
+var i;
+
+for (i = 0; i < toggler.length; i++) {
+  toggler[i].addEventListener("click", function() {
+    this.parentElement.querySelector(".nested").classList.toggle("active");
+    this.classList.toggle("caret-down");
+  });
+}
+</script>
+
+
+
+
+  </body> 
+</html>
+
+ 
