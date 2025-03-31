@@ -23,6 +23,12 @@ a {
 	border-radius: 5px;
 	font-size: 20px;
 }
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
 a:hover {
 	background: #00729D;
 }
