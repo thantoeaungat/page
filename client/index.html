@@ -28,12 +28,36 @@
 </br>
 
 <a href="https://sigmakey.com/en/downloads/software/" target="_blank"><button> Sigma Plus </button></a>
+</br>
 <a href="https://drive.google.com/file/d/1ijdNdRAqSMSqrZqIxLWLqolXYGiCjU15/view?usp=sharing" target="_blank"><button> Sigma addon </button></a>
+</br>
 <a href="https://www.usb-over-network.com/dists/usbnet/usb-over-network-client-64bit.msi" target="_blank"><button> USB Over </button></a>
+</br>
 <a href="https://download.radmin-vpn.com/download/files/Radmin_VPN_1.4.4642.1.exe" target="_blank"><button> rad </button></a>
+</br>
 <a href="https://ttamig3.com/usb197.exe" target="_blank"><button> usb 197 </button></a>
-<a href="147.185.221.27:47183" target="_blank"><button> 147.185.221.27:47183 </button></a>
+</br>
+<input type="text" value="147.185.221.27:47183" id="myInput">
+<button onclick="myFunction()">Copy text</button>
 
+
+<script>
+function myFunction() {
+  // Get the text field
+  var copyText = document.getElementById("myInput");
+
+  // Select the text field
+  copyText.select();
+  copyText.setSelectionRange(0, 99999); // For mobile devices
+
+  // Copy the text inside the text field
+  navigator.clipboard.writeText(copyText.value);
+  
+  // Alert the copied text
+  alert("Copied the text: " + copyText.value);
+}
+</script>
 
 </body>
 </html>
+
