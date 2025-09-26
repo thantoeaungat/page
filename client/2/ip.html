@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IP Copy Example</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      padding: 20px;
+      background: #f5f5f5;
+    }
+    h1 { margin-bottom: 20px; }
+    #ip-box {
+      display: inline-block;
+      padding: 12px 16px;
+      border-radius: 8px;
+      background: #eef6ff;
+      color: #0b3d91;
+      font-weight: bold;
+      cursor: pointer;
+      user-select: none;
+      transition: background 0.2s;
+    }
+    #ip-box:hover {
+      background: #d0e7ff;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>သင့် IP</h1>
+  <div id="ip-box">Loading...</div>
+
+  <script>
+    const ipBox = document.getElementById("ip-box");
+
+    // ✅ ipinfo.io ကနေ သင့် IP ရယူ
+    fetch("https://ipinfo.io/json?token=94c69dfb6a0e5b")
+      .then(res => res.json())
+      .then(data => {
+        ipBox.textContent = "Your IP: " + data.ip;
+        ipBox.dataset.ip = data.ip;
+      })
+      .catch(() => {
+        ipBox.textContent = "IP ရယူမရပါ";
+      });
+
+    // ✅ click-to-copy function
+    ipBox.addEventListener("click", () => {
+      const ip = ipBox.dataset.ip;
+      if (ip) {
+        navigator.clipboard.writeText(ip).then(() => {
+          const oldText = "Your IP: " + ip;
+          ipBox.textContent = "Copied ✓ " + ip;
+          setTimeout(() => {
+            ipBox.textContent = oldText;
+          }, 1500);
+        });
+      }
+    });
+  </script>
+
+</body>
+</html>
