@@ -2,233 +2,215 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <meta name="description" content="TTA G3 Phone Service Driver">
-  <meta name="author" content="TTA">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta property="og:url" content="https://ttamig3.com/driver/">
-  <meta property="og:title" content="TTA G3 Phone Service Driver">
-  <meta property="og:description" content="TTA G3 Phone Service Driver">
-  <meta property="og:image" content="app-screenshot.png">
   <title>TTA G3 Phone Service Driver</title>
-  
-  <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
-  
+  <link rel="icon" href="icon.ico" type="image/x-icon">
   <style>
-    * {margin:0; padding:0; box-sizing:border-box; font-family:'Poppins',sans-serif;}
+    /* Theme colors */
+    :root {
+      --bg-color: #ffffff;
+      --text-color: #222222;
+      --card-bg: #f9f9f9;
+      --btn-bg: #007bff;
+      --btn-text: #ffffff;
+      --shadow: rgba(0,0,0,0.1);
+    }
+    [data-theme="dark"] {
+      --bg-color: #1e1e1e;
+      --text-color: #f5f5f5;
+      --card-bg: #2c2c2c;
+      --btn-bg: #0d6efd;
+      --btn-text: #ffffff;
+      --shadow: rgba(0,0,0,0.4);
+    }
     body {
-      background:#f9fafb;
-      color:#111827;
-      line-height:1.6;
-      transition:all 0.4s ease;
+      font-family: "Segoe UI", Arial, sans-serif;
+      margin: 0;
+      background: var(--bg-color);
+      color: var(--text-color);
+      transition: background 0.3s, color 0.3s;
+      line-height: 1.6;
     }
-    body.dark {
-      background: linear-gradient(135deg, #1f2937, #111827);
-      color:#f3f4f6;
+    header, footer {
+      text-align: center;
+      padding: 30px 20px;
     }
-    header, footer {max-width:1200px; margin:auto; padding:20px;}
-    .container {display:flex; flex-wrap:wrap; gap:20px; align-items:center; justify-content:space-between;}
-    
+    .container {
+      max-width: 1000px;
+      margin: auto;
+      padding: 20px;
+    }
+    h1,h2 {
+      margin-top: 0;
+      color: var(--text-color);
+    }
+    p {
+      margin: 6px 0;
+    }
+
+    /* Card layout */
     .card {
-      background:#ffffff;
-      padding:20px;
-      border-radius:16px;
-      box-shadow:0 6px 18px rgba(0,0,0,0.1);
-      flex:1;
-      min-width:300px;
-      transition:all 0.4s ease;
+      background: var(--card-bg);
+      padding: 20px;
+      margin: 20px 0;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px var(--shadow);
     }
-    body.dark .card {
-      background:#1e293b;
-      box-shadow:0 6px 18px rgba(0,0,0,0.4);
-    }
-    .app-icon img {width:60px; border-radius:12px;}
-    .app-icon p {margin-top:10px; font-weight:600;}
-    h2 {margin:15px 0; font-size:1.3rem; font-weight:600;}
-    p {margin:6px 0; color:inherit;}
 
-    .btn {
-      display:inline-block;
-      margin-top:15px;
-      padding:12px 20px;
-      border-radius:8px;
-      font-weight:600;
-      text-decoration:none;
-      transition:0.3s ease;
+    /* Buttons */
+    .primary-btn, .secondry-btn, .youtube-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin: 10px 10px 0 0;
+      padding: 12px 20px;
+      border-radius: 8px;
+      font-weight: bold;
+      text-decoration: none;
+      transition: background 0.3s;
+      cursor: pointer;
     }
-    .btn-primary {
-      background:linear-gradient(90deg,#3b82f6,#06b6d4);
-      color:#fff;
+    .primary-btn {
+      background: var(--btn-bg);
+      color: var(--btn-text);
     }
-    .btn-primary:hover {opacity:0.9;}
-    .btn-secondary {
-      background:#e5e7eb;
-      color:#111827;
+    .primary-btn:hover {
+      background: #0056b3;
     }
-    .btn-secondary:hover {background:#d1d5db;}
-    body.dark .btn-secondary {
-      background:#374151;
-      color:#fff;
+    .secondry-btn {
+      background: #6c757d;
+      color: #fff;
     }
-    body.dark .btn-secondary:hover {background:#4b5563;}
-    
-    .screenshot img {
-      max-width:100%;
-      border-radius:12px;
-      box-shadow:0 4px 12px rgba(0,0,0,0.15);
+    .secondry-btn:hover {
+      background: #555;
     }
-    iframe {
-      max-width:100%;
-      border-radius:12px;
-      margin:20px 0;
+    .youtube-btn {
+      background: #ff0000;
+      color: white;
+      font-size: 16px;
     }
-    section {
-      max-width:900px;
-      margin:40px auto;
-      padding:20px;
-      background:#ffffff;
-      border-radius:16px;
-      box-shadow:0 6px 18px rgba(0,0,0,0.1);
-      transition:all 0.4s ease;
+    .youtube-btn:hover {
+      background: #cc0000;
     }
-    body.dark section {
-      background:#111827;
-      box-shadow:0 6px 18px rgba(0,0,0,0.4);
+    .youtube-btn svg {
+      width: 22px;
+      height: 22px;
+      fill: white;
     }
-    footer {
-      text-align:center;
-      margin-top:40px;
-      border-top:1px solid #e5e7eb;
-      padding-top:20px;
-      color:#6b7280;
-      transition:all 0.4s ease;
-    }
-    body.dark footer {
-      border-top:1px solid #374151;
-      color:#9ca3af;
-    }
-    footer a {color:#3b82f6; text-decoration:none;}
-    footer a:hover {text-decoration:underline;}
 
-    /* Theme Toggle Button */
+    /* Theme toggle */
     .theme-toggle {
-      position:fixed;
-      top:20px;
-      right:20px;
-      background:#e5e7eb;
-      border:none;
-      border-radius:50%;
-      width:45px;
-      height:45px;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      font-size:20px;
-      cursor:pointer;
-      transition:all 0.3s ease;
+      position: fixed;
+      top: 15px;
+      right: 15px;
+      background: var(--card-bg);
+      border: none;
+      padding: 10px 15px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background 0.3s;
     }
-    body.dark .theme-toggle {
-      background:#374151;
-      color:#f3f4f6;
+    .theme-toggle:hover {
+      background: #8884;
+    }
+
+    footer {
+      margin-top: 40px;
+      font-size: 14px;
+      color: var(--text-color);
+    }
+    footer a {
+      color: var(--btn-bg);
+      text-decoration: none;
     }
   </style>
 </head>
-<body>
-  <!-- Theme Toggle Button -->
-  <button class="theme-toggle" id="themeToggle">🌙</button>
+<body data-theme="light">
+  <button class="theme-toggle" onclick="toggleTheme()">🌙 Dark</button>
 
+  <!-- Header -->
   <header>
-    <div class="container">
-      <div class="card">
-        <div class="app-icon">
-          <img src="icon.ico" alt="App icon">
-          <p>TTA G3 Phone Service Driver</p>
-        </div>
-        <h2>Windows တင်ပြီးနောက် ထည့်သင့်သော Driver များ</h2>
-        <p>Last update : Latest version 2025</p>
-        <p>✔ Fixed : Disable Signature</p>
-        <p>✔ Fixed : Font</p>
-        <p>✔ Added : ADV On/Off</p>
-        <p><b>Password :</b> <span style="color:#3b82f6;">tta</span></p>
-        
-        <a class="btn btn-primary" target="_blank" href="https://drive.usercontent.google.com/download?id=1X_Y7HsIbV0OOgSFKeEQPV-6hg_lOtF5v&export=download">📥 Download From Google Drive</a><br>
-        <a class="btn btn-secondary" target="_blank" href="https://www.youtube.com/watch?v=R0IbUiI7qjk">🎬 ဒေါင်းနည်း ကြည့်ရန်</a>
-      </div>
-      
-      <div class="screenshot">
-        <img src="app-screenshot.png" alt="App screenshot">
-      </div>
+    <img src="icon.ico" alt="App Icon" width="80">
+    <h1>TTA G3 Phone Service Driver</h1>
+    <p>Windows တင်ပြီးနောက်ပိုင်းထည့်သင့်သော Driver များနှင့် Activator Tools များ</p>
+    <p><strong>Last update:</strong> Latest version 2025</p>
+  </header>
+
+  <div class="container">
+
+    <!-- Download Card -->
+    <div class="card">
+      <h2>⬇ Download</h2>
+      <a class="primary-btn" href="https://drive.usercontent.google.com/download?id=1X_Y7HsIbV0OOgSFKeEQPV-6hg_lOtF5v&export=download&authuser=0">Download From Google Drive</a>
+      <p><strong>Password:</strong> tta</p>
+      <a class="secondry-btn" href="https://www.youtube.com/watch?v=R0IbUiI7qjk" target="_blank">ဒေါင်းနည်း ကြည့်ရန်</a>
     </div>
 
-    <center>
-      <iframe width="860" height="484" src="https://www.youtube.com/embed/kxxik1rh-oU" title="Phone Service Driver Collection !!! မိတ်ဆက်" frameborder="0" allowfullscreen></iframe>
-    </center>
-  </header>
-  
-  <section>
-    <h2>MediaTek မှာဆိုရင်</h2>
-    <p>MTK QC V3.03 Driver သွင်းလျှင် MTK ဖုန်းတွေ Driver အဆင်ပြေပါမယ် (Sig off)</p>
-    <p>Lib USB + USB DK သွင်းလျှင် Auth Bypass အဆင်ပြေပါမယ်</p>
-    <p>Signature OFF လိုလျှင် Signature OFF ကိုနှိပ်လိုက်ပါ</p>
-    <p>ADV ON လျှင် Signature Off ဖို့ Adv Option တန်းလာပါမယ် (Run As Admin)</p>
-  </section>
+    <!-- YouTube Card -->
+    <div class="card" style="text-align:center;">
+      <h2>🎥 Video Guide</h2>
+      <a href="https://www.youtube.com/watch?v=kxxik1rh-oU" target="_blank" class="youtube-btn">
+        <svg viewBox="0 0 24 24"><path d="M23.5 6.2s-.2-1.6-.8-2.3c-.7-.9-1.5-.9-1.9-1C17.9 2.5 12 2.5 12 2.5h-.1s-5.9 0-8.8.4c-.4.1-1.2.1-1.9 1-.6.7-.8 2.3-.8 2.3S0 8.1 0 10v1.9c0 1.9.2 3.8.2 3.8s.2 1.6.8 2.3c.7.9 1.6.9 2 1 1.4.1 5.9.4 8.9.4s8.8-.1 8.8-.1 1.2 0 1.9-1c.6-.7.8-2.3.8-2.3s.2-1.9.2-3.8V10c0-1.9-.2-3.8-.2-3.8zM9.5 14.6V7.9l6.2 3.4-6.2 3.3z"/></svg>
+        Watch on YouTube
+      </a>
+    </div>
 
-  <section>
-    <h2>Qualcomm + Google မှာဆိုရင်</h2>
-    <p>QC 9008 သွင်းလျှင် 9008 Driver သွင်း Auto ချိတ်</p>
-    <p>Diag သွင်းလျှင် Diagnostic driver</p>
-    <p>Google USB = Fastboot ADB driver</p>
-    <p>Fastboot ADB 5 ဖိုင်</p>
-    <p>CMD Here ပြန်ဖော်</p>
-  </section>
+    <!-- Drivers Info -->
+    <div class="card">
+      <h2>📱 MediaTek Drivers</h2>
+      <p>MTK QC V3.03 Driver သွင်းလျှင် MTK ဖုန်းတွေ Driver အဆင်ပြေပါမယ် (Sig off)</p>
+      <p>Lib USB နှင့် USB DK သွင်း လျှင် Auth Bypass အဆင်ပြေပါမယ်</p>
+      <p>Signature OFF လိုလျှင် Signature OFF ကိုနှိပ်ပါ</p>
+      <p>ADV ON လျှင် Signature off ဖို့ Adv Option (Run as Admin)</p>
+    </div>
 
-  <section>
-    <h2>Other Drivers</h2>
-    <p>Samsung Driver / Hisilicon Driver / UNISOC Driver</p>
-    <p>Visual C++ / .NetFramework / WinRAR / 7zip</p>
-    <p>iObit Driver = Auto reinstall drivers</p>
-  </section>
+    <div class="card">
+      <h2>⚡ Qualcomm + Google Drivers</h2>
+      <p>QC 9008 သွင်းလျှင် 9008 Driver သွင်း Auto ချိတ်</p>
+      <p>Diag သွင်းလျှင် Diagnostic driver</p>
+      <p>Google USB = Fastboot adb driver</p>
+      <p>Fastboot adb 5 ဖိုင်</p>
+      <p>CMD Here ပြန်ဖော်</p>
+    </div>
 
-  <section>
-    <h2>Next Page Software</h2>
-    <p>Activator (Windows License)</p>
-    <p>ZawDecode Fonts, Keymagic Keyboard</p>
-    <p>Notepad++, HxD, Apk Logo Tools</p>
-    <p>IDM Activate, iObit Unlocker, Rufus</p>
-    <p>Partition Wizard, Picasa, Chrome</p>
-    <p>MTK Auth Disable Offline, TTA EDL Tool Setup</p>
-    <p>Windows 10 Right Click Fix, DM Fail Fix</p>
-    <p><b>Serial :</b> <span style="color:#3b82f6;">tta</span></p>
-  </section>
+    <div class="card">
+      <h2>🛠 Other Tools</h2>
+      <p>Samsung Driver, Hisilicon Driver, UNISOC / SPRD Driver</p>
+      <p>Visual C++, .NetFramework, WinRAR, iObit Driver, 7zip</p>
+      <p>Ad Video</p>
+    </div>
+
+    <div class="card">
+      <h2>🔑 Next Page (Extra Tools)</h2>
+      <p>Activator for Windows License, ZawDecode Fonts, Keymagic</p>
+      <p>Notepad++, Hxd, Apk Logo Tool, Fastboot Fix</p>
+      <p>IDM Activate, iObit Unlocker, Rufus, Partition Wizard, Picasa</p>
+      <p>MTK Auth disable Offline, Chrome, Windows 10 Right Click</p>
+      <p>TTA EDL TOOL Setup, DM Fail Fix</p>
+      <p><strong>Serial:</strong> tta</p>
+    </div>
+
+  </div>
 
   <footer>
-    <p>Made with ♥ by <a href="https://facebook.com/thantoeaungat">TTA</a></p>
-    <p>
-      <a href="mailto:thantoeaung@live.com?subject=TTA EDL TOOL">Support</a> | 
-      <a href="https://facebook.com/thantoeaungat">Donate 💙</a>
-    </p>
+    <p>Made with ♥ by <a href="https://facebook.com/thantoeaungat" target="_blank">TTA</a></p>
+    <p><a href="mailto:thantoeaung@live.com?subject=TTA EDL TOOL">Support</a> | <a href="https://facebook.com/thantoeaungat" target="_blank">Donate ♥</a></p>
   </footer>
 
   <script>
-    const toggleBtn = document.getElementById("themeToggle");
-    const body = document.body;
-
-    // Load saved theme
-    if(localStorage.getItem("theme") === "dark"){
-      body.classList.add("dark");
-      toggleBtn.textContent = "☀️";
-    }
-
-    toggleBtn.addEventListener("click", () => {
-      body.classList.toggle("dark");
-      if(body.classList.contains("dark")){
-        toggleBtn.textContent = "☀️";
-        localStorage.setItem("theme", "dark");
+    function toggleTheme() {
+      const body = document.body;
+      const btn = document.querySelector('.theme-toggle');
+      if (body.getAttribute('data-theme') === 'light') {
+        body.setAttribute('data-theme', 'dark');
+        btn.textContent = "☀ Light";
       } else {
-        toggleBtn.textContent = "🌙";
-        localStorage.setItem("theme", "light");
+        body.setAttribute('data-theme', 'light');
+        btn.textContent = "🌙 Dark";
       }
-    });
+    }
   </script>
 </body>
 </html>
