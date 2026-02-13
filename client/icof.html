@@ -1,0 +1,311 @@
+<!doctype html>
+<html lang="my">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>TTA GSM Store – Service Price List</title>
+  <meta name="description" content="TTA GSM Store service price list" />
+  <style>
+    :root{
+      --bg:#0b1220;
+      --card:#101a33;
+      --muted:#93a4c7;
+      --text:#e9efff;
+      --line:rgba(255,255,255,.10);
+      --chip:rgba(255,255,255,.08);
+      --accent:#5aa7ff;
+      --good:#2ee59d;
+      --shadow: 0 18px 45px rgba(0,0,0,.35);
+      --radius:18px;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, "Noto Sans Myanmar", Arial, sans-serif;
+      background: radial-gradient(900px 500px at 10% 0%, rgba(90,167,255,.20), transparent 60%),
+                  radial-gradient(700px 400px at 90% 10%, rgba(46,229,157,.14), transparent 60%),
+                  var(--bg);
+      color:var(--text);
+    }
+    .wrap{max-width:1080px;margin:0 auto;padding:28px 18px 60px}
+    header{
+      display:flex; gap:14px; align-items:center; justify-content:space-between;
+      padding:18px 18px;
+      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+      border:1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(8px);
+    }
+    .brand{display:flex; gap:12px; align-items:center}
+    .logo{
+      width:44px;height:44px;border-radius:14px;
+      background: linear-gradient(135deg, rgba(90,167,255,.9), rgba(46,229,157,.85));
+      display:grid; place-items:center;
+      font-weight:800; color:#041026;
+    }
+    .title h1{margin:0;font-size:18px;letter-spacing:.2px}
+    .title p{margin:4px 0 0;color:var(--muted);font-size:13px}
+    .controls{display:flex;gap:10px;flex-wrap:wrap;justify-content:flex-end}
+    .search{
+      display:flex; align-items:center; gap:8px;
+      padding:10px 12px; border-radius:14px;
+      border:1px solid var(--line);
+      background: rgba(0,0,0,.12);
+      min-width: 260px;
+    }
+    .search input{
+      width:100%; border:0; outline:0; background:transparent; color:var(--text);
+      font-size:14px;
+    }
+    .pill{
+      border:1px solid var(--line);
+      background: rgba(0,0,0,.12);
+      color: var(--text);
+      padding:10px 12px;
+      border-radius:14px;
+      font-size:14px;
+      cursor:pointer;
+    }
+    .grid{
+      margin-top:16px;
+      display:grid;
+      grid-template-columns: 1.15fr .85fr;
+      gap:16px;
+      align-items:start;
+    }
+    @media (max-width: 860px){
+      .grid{grid-template-columns:1fr}
+      .search{min-width: 0; width: 100%;}
+      header{flex-direction:column; align-items:stretch}
+      .controls{justify-content:stretch}
+    }
+    .card{
+      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+      border:1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+    }
+    .card h2{
+      margin:0;
+      padding:14px 16px;
+      border-bottom:1px solid var(--line);
+      font-size:15px;
+      letter-spacing:.2px;
+      display:flex; align-items:center; justify-content:space-between;
+    }
+    .hint{color:var(--muted);font-size:12px}
+    table{
+      width:100%;
+      border-collapse: collapse;
+    }
+    th,td{
+      text-align:left;
+      padding:12px 16px;
+      border-bottom:1px solid var(--line);
+      font-size:14px;
+      vertical-align:middle;
+    }
+    th{color:var(--muted);font-weight:600;font-size:12px;text-transform:uppercase;letter-spacing:.12em}
+    tr:last-child td{border-bottom:0}
+    .model{font-weight:650}
+    .service{color:var(--muted);font-size:13px}
+    .price{
+      font-variant-numeric: tabular-nums;
+      font-weight:750;
+      white-space:nowrap;
+    }
+    .badge{
+      display:inline-flex; align-items:center; gap:6px;
+      padding:6px 10px;
+      border-radius:999px;
+      background: var(--chip);
+      border:1px solid var(--line);
+      color: var(--text);
+      font-size:12px;
+      white-space:nowrap;
+    }
+    .dot{width:8px;height:8px;border-radius:50%;background:var(--good)}
+    .side{
+      padding:14px 16px 16px;
+      color:var(--muted);
+      font-size:14px;
+      line-height:1.55;
+    }
+    .kv{
+      margin-top:10px;
+      display:grid;
+      grid-template-columns: 1fr;
+      gap:10px;
+    }
+    .kv .row{
+      padding:12px 12px;
+      border-radius:14px;
+      border:1px solid var(--line);
+      background: rgba(0,0,0,.12);
+      color: var(--text);
+    }
+    .row small{display:block;color:var(--muted);margin-top:3px}
+    footer{
+      margin-top:16px;
+      color:var(--muted);
+      font-size:12px;
+      text-align:center;
+    }
+    .notice{
+      margin-top:10px;
+      padding:12px 12px;
+      border-radius:14px;
+      border:1px dashed rgba(255,255,255,.20);
+      background: rgba(0,0,0,.10);
+      color: var(--muted);
+      font-size:13px;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div class="brand">
+        <div class="logo">TTA</div>
+        <div class="title">
+          <h1>TTA GSM Store – Service Price List</h1>
+        </div>
+      </div>
+
+      <div class="controls">
+        <div class="search" title="Search by model">
+          🔎 <input id="q" type="search" placeholder="Search model (e.g., iPhone 14 Pro)..." />
+        </div>
+        <button class="pill" id="sortBtn" type="button">Sort: Low → High</button>
+      </div>
+    </header>
+
+    <div class="grid">
+      <section class="card">
+        <h2>
+          Price List
+          <span class="hint" id="countHint">0 items</span>
+        </h2>
+
+        <table>
+          <thead>
+            <tr>
+              <th style="width:55%">Model</th>
+              <th style="width:25%">Service</th>
+              <th style="width:20%;text-align:right">Price</th>
+            </tr>
+          </thead>
+          <tbody id="rows"></tbody>
+        </table>
+      </section>
+
+      <aside class="card">
+        <h2>Notes <span class="badge"><span class="dot"></span> Available</span></h2>
+        <div class="side">
+          Official FMI OFF Service 1-7 day <b>3u ချိတ်ပြပေးဖို့လိုအပ်ပါတယ်။</b>
+         
+
+          <div class="kv">
+            <div class="row">
+              📌 လိုအပ်ချက်
+              <small>IMEI လိုပါတယ်</small>
+            </div>
+            <div class="row">
+              ⏱️ Prepaid
+              <small>အချိန်ကာလ 1-7 Day</small>
+            </div>
+          </div>
+
+          <div class="notice">
+            ⚠️ ငွေလွဲကြိုတင်လွှဲပေးဖို့လိုအပ်ပါတယ်။
+          </div>
+        </div>
+      </aside>
+    </div>
+
+    <footer>
+      © <span id="y"></span> TTA GSM Store • Built as a simple static HTML page
+    </footer>
+  </div>
+
+  <script>
+    // ✅ Edit your items here (model/service/price)
+    // NOTE: Use only lawful/authorized service names.
+    const items = [
+      { model: "iPhone 12 / 12 mini", service: "Service Fee", price: 795000 },
+      { model: "iPhone 12 Pro",       service: "Service Fee", price: 885000 },
+      { model: "iPhone 12 Pro Max",   service: "Service Fee", price: 895000 },
+      { model: "iPhone 13",           service: "Service Fee", price: 975000 },
+      { model: "iPhone 13 mini",      service: "Service Fee", price: 875000 },
+      { model: "iPhone 13 Pro",       service: "Service Fee", price: 1075000 },
+      { model: "iPhone 13 Pro Max",   service: "Service Fee", price: 1120000 },
+      { model: "iPhone 14",           service: "Service Fee", price: 1175000 },
+      { model: "iPhone 14 Pro",       service: "Service Fee", price: 1270000 },
+      { model: "iPhone 14 Pro Max",   service: "Service Fee", price: 1300000 },
+      { model: "iPhone 15 Plus",      service: "Service Fee", price: 1310000 },
+      { model: "iPhone 15",           service: "Service Fee", price: 1300000 },
+      { model: "iPhone 15 Pro",       service: "Service Fee", price: 1415000 },
+      { model: "iPhone 15 Pro Max",   service: "Service Fee", price: 1445000 },
+      { model: "iPhone 16 / Plus",    service: "Service Fee", price: 1535000 },
+      { model: "iPhone 16 Pro",       service: "Service Fee", price: 1650000 },
+      { model: "iPhone 16 Pro Max",   service: "Service Fee", price: 1695000 },
+      { model: "iPhone 17 Air",       service: "Service Fee", price: 2128000 },
+      { model: "iPhone 17 Pro",       service: "Service Fee", price: 2270000 },
+      { model: "iPhone 17 Pro Max",   service: "Service Fee", price: 2332000 },
+    ];
+
+    const fmtMMK = (n) => n.toLocaleString("en-US") + " MMK";
+
+    const rowsEl = document.getElementById("rows");
+    const qEl = document.getElementById("q");
+    const sortBtn = document.getElementById("sortBtn");
+    const countHint = document.getElementById("countHint");
+
+    let asc = true;
+
+    function render() {
+      const q = (qEl.value || "").toLowerCase().trim();
+
+      let list = items.filter(x =>
+        x.model.toLowerCase().includes(q) ||
+        (x.service || "").toLowerCase().includes(q)
+      );
+
+      list = list.sort((a,b) => asc ? a.price - b.price : b.price - a.price);
+
+      rowsEl.innerHTML = list.map(x => `
+        <tr>
+          <td>
+            <div class="model">${escapeHtml(x.model)}</div>
+          </td>
+          <td class="service">${escapeHtml(x.service || "")}</td>
+          <td class="price" style="text-align:right">${fmtMMK(x.price)}</td>
+        </tr>
+      `).join("");
+
+      countHint.textContent = `${list.length} items`;
+    }
+
+    function escapeHtml(str){
+      return String(str)
+        .replaceAll("&","&amp;")
+        .replaceAll("<","&lt;")
+        .replaceAll(">","&gt;")
+        .replaceAll('"',"&quot;")
+        .replaceAll("'","&#039;");
+    }
+
+    qEl.addEventListener("input", render);
+    sortBtn.addEventListener("click", () => {
+      asc = !asc;
+      sortBtn.textContent = asc ? "Sort: Low → High" : "Sort: High → Low";
+      render();
+    });
+
+    document.getElementById("y").textContent = new Date().getFullYear();
+    render();
+  </script>
+</body>
+</html>
