@@ -68,11 +68,14 @@ video{
   padding:10px;
   box-sizing:border-box;
   background:linear-gradient(transparent,rgba(0,0,0,0.7));
+  display:flex;
+  align-items:center;
+  gap:10px;
 }
 
 /* Progress Bar */
 .progress{
-  width:100%;
+  flex:1;
   height:6px;
   background:#555;
   cursor:pointer;
@@ -84,6 +87,21 @@ video{
   height:100%;
   width:0%;
   background:#ff0000;
+}
+
+/* Fullscreen Button */
+.fullscreen-btn{
+  padding:5px 10px;
+  background:rgba(255,255,255,0.2);
+  color:white;
+  border:none;
+  border-radius:4px;
+  cursor:pointer;
+  transition:0.3s;
+}
+
+.fullscreen-btn:hover{
+  background:rgba(255,255,255,0.4);
 }
 
 /* Description + Download */
@@ -134,13 +152,15 @@ video{
     <div class="progress" id="progress">
       <div class="progress-filled" id="progress-filled"></div>
     </div>
+    <button class="fullscreen-btn" id="fullscreen-btn">⛶</button>
   </div>
 </div>
 
 <div class="info">
-  <h2>Borneo Register လုပ်နည်း</h2>
-
+  <h2>Borneo Diagram Regiser လုပ်နည်း</h2>
+  <p>TTA GSM .COM Facebook / Telegram thantoeaungat တို့ကနေဆက်သွယ်နိုင်.</p>
   <a href="https://borneoschematic.com/signup" target="_blank">Register Link</a>
+  <a href="https://www.updateborneo.com/" target="_blank">Download Link</a>
 </div>
 
 <script>
@@ -148,6 +168,7 @@ const video = document.getElementById("video");
 const playbtn = document.getElementById("playbtn");
 const progress = document.getElementById("progress");
 const progressFilled = document.getElementById("progress-filled");
+const fullscreenBtn = document.getElementById("fullscreen-btn");
 
 playbtn.onclick = function(){
   video.play();
@@ -175,6 +196,17 @@ progress.addEventListener("click",function(e){
   let pos=e.offsetX/progress.offsetWidth;
   video.currentTime=pos*video.duration;
 })
+
+/* Fullscreen */
+fullscreenBtn.onclick = function(){
+  if(video.requestFullscreen){
+    video.requestFullscreen();
+  } else if(video.webkitRequestFullscreen){
+    video.webkitRequestFullscreen();
+  } else if(video.msRequestFullscreen){
+    video.msRequestFullscreen();
+  }
+}
 </script>
 
 </body>
