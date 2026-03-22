@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Borneo Schematics Diagram Register လုပ်နည်း</title>
+
+<style>
+body{
+  margin:0;
+  background:#000;
+  font-family:sans-serif;
+  color:white;
+}
+
+.player{
+  position:relative;
+  width:100%;
+  max-width:900px;
+  margin:0 auto;
+  background:black;
+  height:60vh;
+}
+
+video{
+  width:100%;
+  height:100%;
+  object-fit:contain;
+  background:black;
+}
+
+/* Big Play Button */
+.playbtn{
+  position:absolute;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%);
+  width:100px;
+  height:100px;
+  border-radius:50%;
+  background:rgba(0,0,0,0.6);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  cursor:pointer;
+  transition:0.3s;
+  animation:pulse 2s infinite;
+}
+
+.playbtn:after{
+  content:"▶";
+  color:white;
+  font-size:45px;
+  margin-left:5px;
+}
+
+@keyframes pulse{
+  0%{transform:translate(-50%,-50%) scale(1);}
+  50%{transform:translate(-50%,-50%) scale(1.1);}
+  100%{transform:translate(-50%,-50%) scale(1);}
+}
+
+/* Controls */
+.controls{
+  position:absolute;
+  bottom:0;
+  width:100%;
+  padding:10px;
+  box-sizing:border-box;
+  background:linear-gradient(transparent,rgba(0,0,0,0.7));
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+/* Progress Bar */
+.progress{
+  flex:1;
+  height:6px;
+  background:#555;
+  cursor:pointer;
+  border-radius:4px;
+  overflow:hidden;
+}
+
+.progress-filled{
+  height:100%;
+  width:0%;
+  background:#ff0000;
+}
+
+/* Fullscreen Button */
+.fullscreen-btn{
+  padding:5px 10px;
+  background:rgba(255,255,255,0.2);
+  color:white;
+  border:none;
+  border-radius:4px;
+  cursor:pointer;
+  transition:0.3s;
+}
+
+.fullscreen-btn:hover{
+  background:rgba(255,255,255,0.4);
+}
+
+/* Description + Download */
+.info{
+  max-width:900px;
+  margin:20px auto;
+  padding:10px;
+  background:#111;
+  border-radius:6px;
+}
+
+.info h2{
+  margin:0 0 10px 0;
+  font-size:20px;
+}
+
+.info p{
+  margin:0 0 10px 0;
+  font-size:14px;
+  line-height:1.5;
+}
+
+.info a{
+  display:inline-block;
+  padding:8px 15px;
+  background:#ff0000;
+  color:white;
+  text-decoration:none;
+  border-radius:4px;
+  transition:0.3s;
+}
+
+.info a:hover{
+  background:#cc0000;
+}
+</style>
+</head>
+<body>
+
+<div class="player">
+  <video id="video">
+    <source src="borneo.mp4" type="video/mp4">
+  </video>
+
+  <div class="playbtn" id="playbtn"></div>
+
+  <div class="controls">
+    <div class="progress" id="progress">
+      <div class="progress-filled" id="progress-filled"></div>
+    </div>
+    <button class="fullscreen-btn" id="fullscreen-btn">⛶</button>
+  </div>
+</div>
+
+<div class="info">
+  <h2>Borneo Diagram Register လုပ်နည်း</h2>
+  <p>TTA GSM .COM Facebook / Telegram thantoeaungat တို့ကနေဆက်သွယ်နိုင်.</p>
+  <a href="https://borneoschematic.com/signup" target="_blank">Register Link</a>
+  <a href="https://www.updateborneo.com/" target="_blank">Download Link</a>
+</div>
+
+<script>
+const video = document.getElementById("video");
+const playbtn = document.getElementById("playbtn");
+const progress = document.getElementById("progress");
+const progressFilled = document.getElementById("progress-filled");
+const fullscreenBtn = document.getElementById("fullscreen-btn");
+
+playbtn.onclick = function(){
+  video.play();
+  playbtn.style.display="none";
+}
+
+video.onclick = function(){
+  if(video.paused){
+    video.play();
+    playbtn.style.display="none";
+  }else{
+    video.pause();
+    playbtn.style.display="flex";
+  }
+}
+
+/* Progress Update */
+video.addEventListener("timeupdate",function(){
+  let percent=(video.currentTime/video.duration)*100;
+  progressFilled.style.width=percent+"%";
+})
+
+/* Seek */
+progress.addEventListener("click",function(e){
+  let pos=e.offsetX/progress.offsetWidth;
+  video.currentTime=pos*video.duration;
+})
+
+/* Fullscreen */
+fullscreenBtn.onclick = function(){
+  if(video.requestFullscreen){
+    video.requestFullscreen();
+  } else if(video.webkitRequestFullscreen){
+    video.webkitRequestFullscreen();
+  } else if(video.msRequestFullscreen){
+    video.msRequestFullscreen();
+  }
+}
+</script>
+
+</body>
+</html>
