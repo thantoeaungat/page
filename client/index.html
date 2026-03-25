@@ -4,131 +4,152 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Remoter Client by TTA — IP & Downloads</title>
+
 <style>
-  body { font-family:sans-serif; background:#f5f7fb; margin:0; padding:20px; color:#0f172a; }
-  h1 { margin-bottom:10px; }
-  section { background:#fff; border-radius:12px; box-shadow:0 6px 18px rgba(15,23,42,0.06); padding:16px; margin-bottom:20px; border:1px solid rgba(15,23,42,0.04); }
-  
-  /* IP box */
-  #ip-box { 
-    display:inline-block; padding:12px 16px; border-radius:10px; background:#eef6ff; color:#0b3d91; font-weight:700; cursor:pointer; user-select:none; margin-bottom:8px;
-  }
-  #ip-box:active { transform: translateY(1px); }
-  #ip-box:focus { outline:3px solid rgba(96,165,250,0.22); outline-offset:2px; }
+body {
+  font-family:sans-serif;
+  background:#f5f7fb;
+  margin:0;
+  padding:20px;
+  color:#0f172a;
+}
 
-  .feedback { font-size:13px; margin-left:6px; }
-  .ok { color:#166534; }
-  .err { color:#991b1b; }
+h1 { margin-bottom:10px; }
 
-  /* server input */
-  .server-input { display:flex; gap:8px; align-items:center; margin-top:6px; flex-wrap:wrap; }
-  input.server { padding:8px 10px; border-radius:8px; border:1px solid #d1d5db; min-width:220px; }
-  button.copy { padding:8px 12px; border-radius:8px; border:none; background:#0073e6; color:white; cursor:pointer; }
-  button.copy:hover { background:#005bb5; }
+section {
+  background:#fff;
+  border-radius:12px;
+  box-shadow:0 6px 18px rgba(15,23,42,0.06);
+  padding:16px;
+  margin-bottom:20px;
+}
 
-  /* download grid */
-  .grid { display:grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap:12px; }
-  .btn { display:block; padding:12px; border-radius:10px; text-decoration:none; text-align:center; font-weight:700; background:#0073e6; color:white; border:none; transition:transform .06s, background .12s; }
-  .btn:hover { transform:translateY(-2px); background:#005bb5; }
+/* IP box */
+#ip-box {
+  display:inline-block;
+  padding:12px 16px;
+  border-radius:10px;
+  background:#eef6ff;
+  color:#0b3d91;
+  font-weight:700;
+  cursor:pointer;
+}
+
+.feedback { font-size:13px; margin-left:6px; }
+.ok { color:green; }
+.err { color:red; }
+
+/* input */
+.server-input {
+  display:flex;
+  gap:8px;
+  margin-top:10px;
+}
+
+input.server {
+  padding:8px;
+  border-radius:8px;
+  border:1px solid #ccc;
+  width:220px;
+}
+
+button.copy {
+  padding:8px 12px;
+  border:none;
+  border-radius:8px;
+  background:#0073e6;
+  color:white;
+  cursor:pointer;
+}
+
+/* grid */
+.grid {
+  display:grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px,1fr));
+  gap:12px;
+}
+
+.btn {
+  display:block;
+  padding:12px;
+  border-radius:10px;
+  text-align:center;
+  text-decoration:none;
+  background:#0073e6;
+  color:white;
+  font-weight:700;
+}
 </style>
 </head>
+
 <body>
 
-  <!-- IP Section -->
+<!-- IP Section -->
+<section>
+  <h1>Your IP</h1>
 
+  <div id="ip-box" tabindex="0" data-ip="147.185.221.27">
+    Your IP: 147.185.221.27
+  </div>
+  <span id="ip-feedback" class="feedback"></span>
+</section>
 
+<!-- Server Section -->
+<section>
+  <h1>Server</h1>
 
+  <div class="server-input">
+    <input id="myInput" class="server" type="text" value="147.185.221.27:7729">
+    <button class="copy" onclick="copyText()">Copy</button>
+  </div>
+  <span id="server-feedback" class="feedback"></span>
+</section>
 
-  <!-- Download Section -->
-  <section aria-label="Download tools section">
-    <h1>Remoter Client Downloads</h1>
-	    <div class="server-input">
-      <input id="myInput" class="server" type="text" value="147.185.221.27:7729" aria-label="Server address">
-      <button class="copy" onclick="copyText('#myInput')">Copy ကူးမယ်</button>
-    </div>
-	
-  </section>
-  
-	</br>
-    <div class="grid">
-      <a class="btn" href="https://www.ultraviewer.net/en/UltraViewer_setup_6.6_en.exe" target="_blank">Ultra Viewer</a>
-      <a class="btn" href="https://www.teamviewer.com/apac/solutions/use-cases/quicksupport/" target="_blank">Team Viewer QS</a>
-      <a class="btn" href="https://www.flexihub.com/download.html" target="_blank">Flexi Hub</a>
-      <a class="btn" href="https://ttamig3.com/usb197.exe" target="_blank">usb 197</a>
-      <a class="btn" href="https://ttamig3.com/client/usb2.5.exe" target="_blank">usb 2.5</a>
-      <a class="btn" href="https://drive.google.com/file/d/1zFngS90QJyPMIH4E60l9K8npIybZE8g6/view?usp=sharing" target="_blank">Ghost Old</a>
-      <a class="btn" href="https://drive.google.com/file/d/1LnFy68DRAmpsnunqsNFGjI8-4X93pzGp/view?usp=sharing" target="_blank">MediaTek New</a>
-      <a class="btn" href="https://ttamig3.com/client/oplusdriver.exe" target="_blank">oplus driver</a>
-      <a class="btn" href="https://androiddatahost.com/wp-content/uploads/SPD_Driver_R4.20.4201.zip"_blank">UniSoc</a>
-      <a class="btn" href="https://consumer.huawei.com/en/support/hisuite/"_blank">Hi Suite</a>
-      <a class="btn" href="https://developer.samsung.com/android-usb-driver"_blank">Samsung</a>
-      <a class="btn" href="https://ttamig3.com/client/lib.exe" target="_blank">Lib Win 32</a>
-      <a class="btn" href="https://drive.google.com/file/d/1Cv0ZEgTgiZ3BiNJ5r4B9DEyiEmKm_rO5/view?usp=sharing" target="_blank">Sigma Plus</a>
-      <a class="btn" href="https://ttamig3.com/client/VisualCplus.exe" target="_blank">VC+++</a>
-      <a class="btn" href="https://www.usb-over-network.com/dists/usbnet/usb-over-network-client-64bit.msi" target="_blank">USB Over</a>
-      <a class="btn" href="https://ttamig3.com/client/rad.exe" target="_blank">radmin</a>
-      <a class="btn" href="https://dl.google.com/android/repository/platform-tools-latest-windows.zip" target="_blank">adb sdk</a>
-      <a class="btn" href="https://www.ttamig3.com/social" download="my-app">ဆက်သွယ်ရန်</a>
-      <a class="btn" href="https://ttamig3.com/social" target="_blank">Dev TTA</a>
-    </div>
-  </section>
+<!-- Downloads -->
+<section>
+  <h1>Downloads</h1>
+
+<div class="grid"> <a class="btn" href="https://www.ultraviewer.net/en/UltraViewer_setup_6.6_en.exe" target="_blank">Ultra Viewer</a> <a class="btn" href="https://www.teamviewer.com/apac/solutions/use-cases/quicksupport/" target="_blank">Team Viewer QS</a> <a class="btn" href="https://www.flexihub.com/download.html" target="_blank">Flexi Hub</a> <a class="btn" href="https://ttamig3.com/usb197.exe" target="_blank">usb 197</a> <a class="btn" href="https://ttamig3.com/client/usb2.5.exe" target="_blank">usb 2.5</a> <a class="btn" href="https://drive.google.com/file/d/1zFngS90QJyPMIH4E60l9K8npIybZE8g6/view?usp=sharing" target="_blank">Ghost Old</a> <a class="btn" href="https://drive.google.com/file/d/1LnFy68DRAmpsnunqsNFGjI8-4X93pzGp/view?usp=sharing" target="_blank">MediaTek New</a> <a class="btn" href="https://ttamig3.com/client/oplusdriver.exe" target="_blank">oplus driver</a> <a class="btn" href="https://androiddatahost.com/wp-content/uploads/SPD_Driver_R4.20.4201.zip"_blank">UniSoc</a> <a class="btn" href="https://consumer.huawei.com/en/support/hisuite/"_blank">Hi Suite</a> <a class="btn" href="https://developer.samsung.com/android-usb-driver"_blank">Samsung</a> <a class="btn" href="https://ttamig3.com/client/lib.exe" target="_blank">Lib Win 32</a> <a class="btn" href="https://drive.google.com/file/d/1Cv0ZEgTgiZ3BiNJ5r4B9DEyiEmKm_rO5/view?usp=sharing" target="_blank">Sigma Plus</a> <a class="btn" href="https://ttamig3.com/client/VisualCplus.exe" target="_blank">VC+++</a> <a class="btn" href="https://www.usb-over-network.com/dists/usbnet/usb-over-network-client-64bit.msi" target="_blank">USB Over</a> <a class="btn" href="https://ttamig3.com/client/rad.exe" target="_blank">radmin</a> <a class="btn" href="https://dl.google.com/android/repository/platform-tools-latest-windows.zip" target="_blank">adb sdk</a> <a class="btn" href="https://www.ttamig3.com/social" download="my-app">ဆက်သွယ်ရန်</a> <a class="btn" href="https://ttamig3.com/social" target="_blank">Dev TTA</a> </div>
+</section>
 
 <script>
-  const ipBox = document.getElementById('ip-box');
-  const feedback = document.getElementById('ip-feedback');
-  const IPINFO_TOKEN = '94c69dfb6a0e5b';
+const ipBox = document.getElementById('ip-box');
+const ipFeedback = document.getElementById('ip-feedback');
+const serverFeedback = document.getElementById('server-feedback');
 
-  function copyToClipboard(text){
-    if(!text) return Promise.resolve(false);
-    if(navigator.clipboard && navigator.clipboard.writeText){
-      return navigator.clipboard.writeText(text).then(()=>true).catch(()=>fallbackCopy(text));
-    }else return Promise.resolve(fallbackCopy(text));
+function copyToClipboard(text){
+  if(navigator.clipboard){
+    return navigator.clipboard.writeText(text);
   }
-  function fallbackCopy(text){
-    try{
-      const ta = document.createElement('textarea');
-      ta.value = text;
-      ta.style.position='fixed'; ta.style.left='-9999px';
-      document.body.appendChild(ta);
-      ta.select(); ta.setSelectionRange(0, ta.value.length);
-      const ok = document.execCommand('copy');
-      document.body.removeChild(ta);
-      return ok;
-    }catch(e){ return false; }
-  }
-  function copyText(selector){
-    const el = document.querySelector(selector);
-    if(!el) return;
-    const text = el.value || el.textContent || '';
-    copyToClipboard(text).then(ok=>{
-      feedback.textContent = ok ? 'Copied' : 'Copy failed';
-      feedback.className = (ok?'ok':'err')+' feedback';
-      setTimeout(()=>{ feedback.textContent=''; },1500);
-    });
-  }
+}
 
-  function handleCopyIP(){
-    const ip = ipBox.dataset.ip||'';
-    if(!ip) { feedback.textContent='No IP to copy'; feedback.className='err feedback'; return; }
-    copyToClipboard(ip).then(ok=>{
-      const old = ipBox.textContent;
-      ipBox.textContent = 'Copied ✓ ' + ip;
-      setTimeout(()=>{ ipBox.textContent = old; },1400);
-      feedback.textContent = ok?'Copied':'Copy failed';
-      feedback.className = (ok?'ok':'err')+' feedback';
-      setTimeout(()=>{ feedback.textContent=''; },1500);
-    });
-  }
-  ipBox.addEventListener('click', handleCopyIP);
-  ipBox.addEventListener('keydown',e=>{ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); handleCopyIP(); } });
+/* IP Copy */
+function copyIP(){
+  const ip = ipBox.dataset.ip;
+  copyToClipboard(ip).then(()=>{
+    ipFeedback.textContent = "Copied ✓";
+    ipFeedback.className = "feedback ok";
+    setTimeout(()=> ipFeedback.textContent="",1500);
+  });
+}
 
-  fetch('https://ipinfo.io/json?token='+IPINFO_TOKEN)
-    .then(res=>res.json())
-    .then(data=>{
-      const ip = data.ip||'';
-      ipBox.textContent = 'Your IP: '+ip;
-      ipBox.dataset.ip = ip;
-    }).catch(()=>{ ipBox.textContent='Your IP: (unavailable)'; ipBox.dataset.ip=''; feedback.textContent='Could not load IP'; feedback.className='err feedback'; });
+ipBox.addEventListener('click', copyIP);
+ipBox.addEventListener('keydown', e=>{
+  if(e.key==="Enter" || e.key===" "){
+    e.preventDefault();
+    copyIP();
+  }
+});
+
+/* Server Copy */
+function copyText(){
+  const text = document.getElementById("myInput").value;
+  copyToClipboard(text).then(()=>{
+    serverFeedback.textContent = "Copied ✓";
+    serverFeedback.className = "feedback ok";
+    setTimeout(()=> serverFeedback.textContent="",1500);
+  });
+}
 </script>
 
 </body>
