@@ -3,70 +3,553 @@
 
 <head>
   <meta charset="UTF-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Than Toe Aung Social Profile</title>
-  <!-- CSS -->
-  <link rel="stylesheet" href="style.css" />
-  <!-- Boxicons CSS -->
-  <link href="https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css" rel="stylesheet" />
+  <meta name="color-scheme" content="light dark" />
+
+  <title>Than Toe Aung</title>
+
+  <!-- BOX ICONS -->
+  <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+
+  <!-- GOOGLE FONT -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+
+      /* LIGHT */
+      --bg: #f4f7fb;
+      --card: rgba(255, 255, 255, 0.75);
+
+      --text: #111827;
+      --soft: #6b7280;
+
+      --border: rgba(0, 0, 0, 0.06);
+
+      --shadow:
+        0 10px 30px rgba(0, 0, 0, 0.08);
+
+      --glass:
+        blur(22px);
+
+      --blue:
+        linear-gradient(135deg, #1877f2, #0f52ba);
+
+      --red:
+        linear-gradient(135deg, #ff0000, #b31217);
+
+      --telegram:
+        linear-gradient(135deg, #27a7e7, #0f5ea8);
+
+      --messenger:
+        linear-gradient(135deg, #a855f7, #7c3aed);
+    }
+
+    /* DARK MODE AUTO */
+    @media (prefers-color-scheme: dark) {
+
+      :root {
+
+        --bg:
+          radial-gradient(circle at top left,
+            #1e3a8a 0%,
+            #111827 40%,
+            #020617 100%);
+
+        --card:
+          rgba(255, 255, 255, 0.08);
+
+        --text:
+          #ffffff;
+
+        --soft:
+          #cbd5e1;
+
+        --border:
+          rgba(255, 255, 255, 0.08);
+
+        --shadow:
+          0 20px 50px rgba(0, 0, 0, 0.5);
+      }
+
+    }
+
+    body {
+      min-height: 100vh;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      background: var(--bg);
+
+      font-family: "Poppins", sans-serif;
+
+      padding: 25px;
+
+      overflow: hidden;
+    }
+
+    /* BACKGROUND GLOW */
+    body::before,
+    body::after {
+      content: "";
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(90px);
+      z-index: 0;
+    }
+
+    body::before {
+      width: 320px;
+      height: 320px;
+
+      background: #2563eb;
+
+      top: -100px;
+      left: -100px;
+
+      opacity: 0.35;
+    }
+
+    body::after {
+      width: 260px;
+      height: 260px;
+
+      background: #9333ea;
+
+      bottom: -100px;
+      right: -100px;
+
+      opacity: 0.25;
+    }
+
+    /* CARD */
+    .card {
+      width: 100%;
+      max-width: 390px;
+
+      background: var(--card);
+
+      backdrop-filter: var(--glass);
+
+      border: 1px solid var(--border);
+
+      border-radius: 34px;
+
+      padding: 32px 28px;
+
+      position: relative;
+      z-index: 1;
+
+      box-shadow: var(--shadow);
+
+      transition: 0.35s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+    }
+
+    /* PROFILE */
+    .profile {
+      text-align: center;
+    }
+
+    .profile-img {
+      width: 128px;
+      height: 128px;
+
+      object-fit: cover;
+
+      border-radius: 50%;
+
+      border:
+        4px solid rgba(255, 255, 255, 0.2);
+
+      box-shadow:
+        0 0 35px rgba(37, 99, 235, 0.45);
+    }
+
+    .verified {
+      width: 28px;
+      height: 28px;
+
+      background: #2563eb;
+
+      border-radius: 50%;
+
+      color: white;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      font-size: 18px;
+
+      margin: -18px auto 0;
+
+      position: relative;
+
+      border: 3px solid white;
+    }
+
+    .name {
+      margin-top: 16px;
+
+      font-size: 29px;
+      font-weight: 700;
+
+      color: var(--text);
+    }
+
+    .role {
+      margin-top: 8px;
+
+      color: var(--soft);
+
+      font-size: 14px;
+      line-height: 1.7;
+    }
+
+    /* SOCIAL ICONS */
+    .socials {
+      display: flex;
+      justify-content: center;
+      gap: 14px;
+
+      margin-top: 26px;
+    }
+
+    .social {
+      width: 52px;
+      height: 52px;
+
+      border-radius: 18px;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      color: white;
+      text-decoration: none;
+
+      font-size: 24px;
+
+      transition: 0.3s ease;
+
+      box-shadow:
+        0 12px 22px rgba(0, 0, 0, 0.18);
+    }
+
+    .social:hover {
+      transform:
+        translateY(-6px) scale(1.08);
+    }
+
+    .facebook {
+      background: var(--blue);
+    }
+
+    .telegram {
+      background: var(--telegram);
+    }
+
+    .messenger {
+      background: var(--messenger);
+    }
+
+    .youtube {
+      background: var(--red);
+    }
+
+    /* SECTION */
+    .section-title {
+      margin-top: 34px;
+      margin-bottom: 18px;
+
+      text-align: center;
+
+      color: var(--text);
+
+      font-size: 18px;
+      font-weight: 600;
+    }
+
+    /* BUTTONS */
+    .buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .btn {
+      width: 100%;
+
+      padding: 16px 18px;
+
+      border-radius: 20px;
+
+      text-decoration: none;
+
+      color: white;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+
+      font-size: 15px;
+      font-weight: 600;
+
+      transition: 0.3s ease;
+
+      box-shadow:
+        0 12px 25px rgba(0, 0, 0, 0.16);
+    }
+
+    .btn:hover {
+      transform:
+        scale(1.02) translateY(-2px);
+    }
+
+    .btn i {
+      font-size: 22px;
+    }
+
+    /* STATS */
+    .stats {
+      margin-top: 34px;
+
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+
+      gap: 12px;
+    }
+
+    .stat-box {
+      padding: 16px 10px;
+
+      border-radius: 20px;
+
+      background:
+        rgba(255, 255, 255, 0.06);
+
+      border:
+        1px solid var(--border);
+
+      text-align: center;
+    }
+
+    .stat-box i {
+      font-size: 22px;
+
+      color: #60a5fa;
+    }
+
+    .stat-number {
+      margin-top: 8px;
+
+      font-size: 18px;
+      font-weight: 700;
+
+      color: var(--text);
+    }
+
+    .stat-label {
+      margin-top: 4px;
+
+      font-size: 12px;
+
+      color: var(--soft);
+    }
+
+    /* FOOTER */
+    .footer {
+      margin-top: 28px;
+
+      text-align: center;
+
+      color: var(--soft);
+
+      font-size: 12px;
+    }
+
+    /* MOBILE */
+    @media (max-width: 480px) {
+
+      .card {
+        padding: 28px 22px;
+      }
+
+      .name {
+        font-size: 25px;
+      }
+
+    }
+  </style>
 </head>
 
 <body>
-  <div class="profile-card">
-    <!-- Profile Image -->
-    <div class="image">
-      <img src="profile.jpg" alt="Profile Image" class="profile-img" />
+
+  <div class="card">
+
+    <!-- PROFILE -->
+    <div class="profile">
+
+      <img src="profile.jpg"
+        alt="Profile"
+        class="profile-img">
+
+      <div class="verified">
+        <i class='bx bxs-badge-check'></i>
+      </div>
+
+      <h1 class="name">
+        Than Toe Aung
+      </h1>
+
+      <p class="role">
+        YouTuber & Blogger <br>
+        CEO & Founder at Than Toe Aung Mobile
+      </p>
+
     </div>
 
-    <!-- Profile Details -->
-    <div class="text-data">
-      <span class="name">Than Toe Aung</span>
-      <span class="job">YouTuber & Blogger</span>
-	<span class="job">CEO & Founder at Than Toe Aung Mobile</span>
+    <!-- SOCIAL ICONS -->
+    <div class="socials">
+
+      <a href="https://www.facebook.com/thantoeaungat"
+        class="social facebook">
+        <i class='bx bxl-facebook'></i>
+      </a>
+
+      <a href="https://t.me/thantoeaungat"
+        class="social telegram">
+        <i class='bx bxl-telegram'></i>
+      </a>
+
+      <a href="https://m.me/thantoeaungat"
+        class="social messenger">
+        <i class='bx bxl-messenger'></i>
+      </a>
+
+      <a href="https://www.youtube.com/@ChannelTTAtv"
+        class="social youtube">
+        <i class='bx bxl-youtube'></i>
+      </a>
+
     </div>
 
-    <!-- Social Icons -->
-    <div class="media-buttons">
-      <a href="https://www.facebook.com/thantoeaungat" style="background: #4267b2" class="link">
-        <i class="bx bxl-facebook"></i>
-      </a>
-      <a href="https://t.me/thantoeaungat" style="background: #1da1f2" class="link">
-        <i class="bx bxl-telegram"></i>
-      </a>
-      <a href="https://m.me/thantoeaungat" style="background: #e1306c" class="link">
-        <i class="bx bxl-messenger"></i>
-      </a>
-      <a href="https://www.youtube.com/@ChannelTTAtv" style="background: #ff0000" class="link">
-        <i class="bx bxl-youtube"></i>
-      </a>
+    <!-- CONTACT -->
+    <div class="section-title">
+      အောက်ပါတို့ကနေဆက်သွယ်နိုင်ပါတယ်။
     </div>
-</br>
-<a> ဆက်သွယ်ရန် </a>
-    <!-- Subscribe and Message Buttons -->
+
+    <!-- BUTTONS -->
     <div class="buttons">
-	
-    <a href="https://t.me/thantoeaungat"  <button class="button">Telegram</button> > </a>
 
-    <a href="https://m.me/thantoeaungat"   <button class="button">Messenger</button> >  </a>
+      <a href="https://www.facebook.com/thantoeaungat"
+        class="btn facebook">
+
+        <i class='bx bxl-facebook-circle'></i>
+
+        Facebook Profile
+      </a>
+
+
+      <a href="https://t.me/thantoeaungat"
+        class="btn telegram">
+
+        <i class='bx bxl-telegram'></i>
+
+        Telegram Account Chat
+      </a>
+	  
+	        <a href="https://t.me/ttagsm"
+        class="btn telegram">
+
+        <i class='bx bxl-telegram'></i>
+
+        Telegram Channel
+      </a>
+	  
+	  
+	  
+      <a href="https://www.youtube.com/@ChannelTTAtv"
+        class="btn youtube">
+
+        <i class='bx bxl-youtube'></i>
+
+        YouTube Channel
+      </a>
+
     </div>
 
-    <!-- Analytics -->
-    <div class="analytics">
-      <div class="data">
-        <i class="bx bx-heart"></i>
-        <span class="number">60k</span>
+    <!-- STATS -->
+    <div class="stats">
+
+      <div class="stat-box">
+
+        <i class='bx bx-heart'></i>
+
+        <div class="stat-number">
+          100K
+        </div>
+
+        <div class="stat-label">
+          Likes
+        </div>
+
       </div>
-      <div class="data">
-        <i class="bx bx-message-rounded"></i>
-        <span class="number">20k</span>
+
+      <div class="stat-box">
+
+        <i class='bx bx-message-rounded'></i>
+
+        <div class="stat-number">
+          20K
+        </div>
+
+        <div class="stat-label">
+          Messages
+        </div>
+
       </div>
-      <div class="data">
-        <i class="bx bx-share"></i>
-        <span class="number">12k</span>
+
+      <div class="stat-box">
+
+        <i class='bx bx-share-alt'></i>
+
+        <div class="stat-number">
+          12K
+        </div>
+
+        <div class="stat-label">
+          Shares
+        </div>
+
       </div>
+
     </div>
+
+    <!-- FOOTER -->
+    <div class="footer">
+      © 2026 Than Toe Aung Mobile
+    </div>
+
   </div>
+
 </body>
 
 </html>
