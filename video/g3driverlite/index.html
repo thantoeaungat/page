@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BlueScreen Fix MediaTek Driver Error Fix နည်း 2026 by TTA G3 Driver</title>
+
+<style>
+body{
+  margin:0;
+  background:#03130b;
+  font-family:sans-serif;
+  color:white;
+}
+
+/* PLAYER */
+.player{
+  position:relative;
+  width:100%;
+  max-width:900px;
+  margin:20px auto;
+  background:#000;
+  height:60vh;
+  border:2px solid #00ff88;
+  border-radius:14px;
+  overflow:hidden;
+  box-shadow:0 0 30px rgba(0,255,136,0.25);
+}
+
+video{
+  width:100%;
+  height:100%;
+  object-fit:contain;
+  background:black;
+}
+
+/* BIG PLAY BUTTON */
+.playbtn{
+  position:absolute;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%);
+  width:100px;
+  height:100px;
+  border-radius:50%;
+  background:rgba(0,255,136,0.15);
+  border:2px solid #00ff88;
+  backdrop-filter:blur(5px);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  cursor:pointer;
+  transition:0.3s;
+  animation:pulse 2s infinite;
+  box-shadow:0 0 20px rgba(0,255,136,0.5);
+}
+
+.playbtn:after{
+  content:"▶";
+  color:#00ff88;
+  font-size:45px;
+  margin-left:5px;
+}
+
+@keyframes pulse{
+  0%{
+    transform:translate(-50%,-50%) scale(1);
+    box-shadow:0 0 10px rgba(0,255,136,0.5);
+  }
+  50%{
+    transform:translate(-50%,-50%) scale(1.08);
+    box-shadow:0 0 30px rgba(0,255,136,0.8);
+  }
+  100%{
+    transform:translate(-50%,-50%) scale(1);
+    box-shadow:0 0 10px rgba(0,255,136,0.5);
+  }
+}
+
+/* CONTROLS */
+.controls{
+  position:absolute;
+  bottom:0;
+  width:100%;
+  padding:12px;
+  box-sizing:border-box;
+  background:linear-gradient(transparent,rgba(0,0,0,0.9));
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+/* PROGRESS BAR */
+.progress{
+  flex:1;
+  height:7px;
+  background:#1d1d1d;
+  cursor:pointer;
+  border-radius:30px;
+  overflow:hidden;
+  border:1px solid rgba(0,255,136,0.3);
+}
+
+.progress-filled{
+  height:100%;
+  width:0%;
+  background:linear-gradient(90deg,#00ff88,#00ffcc);
+  box-shadow:0 0 10px #00ff88;
+}
+
+/* FULLSCREEN BUTTON */
+.fullscreen-btn{
+  padding:7px 12px;
+  background:rgba(0,255,136,0.15);
+  color:#00ff88;
+  border:1px solid #00ff88;
+  border-radius:6px;
+  cursor:pointer;
+  transition:0.3s;
+  font-size:16px;
+}
+
+.fullscreen-btn:hover{
+  background:#00ff88;
+  color:black;
+  box-shadow:0 0 15px #00ff88;
+}
+
+/* INFO BOX */
+.info{
+  max-width:900px;
+  margin:20px auto;
+  padding:20px;
+  background:#081a12;
+  border:1px solid rgba(0,255,136,0.4);
+  border-radius:12px;
+  box-shadow:0 0 25px rgba(0,255,136,0.15);
+}
+
+.info h2{
+  margin:0 0 15px 0;
+  font-size:24px;
+  color:#00ff88;
+  text-shadow:0 0 10px rgba(0,255,136,0.5);
+}
+
+.info p{
+  margin:0 0 20px 0;
+  font-size:15px;
+  line-height:1.7;
+  color:#d8ffe9;
+}
+
+/* BUTTON LINKS */
+.links{
+  display:flex;
+  flex-wrap:wrap;
+  gap:12px;
+}
+
+.info a{
+  display:inline-block;
+  padding:10px 18px;
+  background:linear-gradient(135deg,#00cc66,#00ff88);
+  color:black;
+  text-decoration:none;
+  border-radius:8px;
+  font-weight:bold;
+  transition:0.3s;
+  box-shadow:0 0 12px rgba(0,255,136,0.3);
+}
+
+.info a:hover{
+  transform:translateY(-2px);
+  box-shadow:0 0 20px rgba(0,255,136,0.7);
+}
+
+/* MOBILE */
+@media(max-width:768px){
+
+  .player{
+    height:40vh;
+    margin:10px;
+  }
+
+  .info{
+    margin:10px;
+  }
+
+  .playbtn{
+    width:80px;
+    height:80px;
+  }
+
+  .playbtn:after{
+    font-size:35px;
+  }
+
+}
+</style>
+</head>
+<body>
+
+<div class="player">
+
+  <video id="video">
+    <source src="video.mp4" type="video/mp4">
+  </video>
+
+  <div class="playbtn" id="playbtn"></div>
+
+  <div class="controls">
+
+    <div class="progress" id="progress">
+      <div class="progress-filled" id="progress-filled"></div>
+    </div>
+
+    <button class="fullscreen-btn" id="fullscreen-btn">⛶</button>
+
+  </div>
+
+</div>
+
+<div class="info">
+
+  <h2>BlueScreen Fix MediaTek Driver Error Fix နည်း 2026 by TTA G3 Driver</h2>
+
+  <p>
+    TTA GSM .COM Facebook / Telegram thantoeaungat တို့ကနေဆက်သွယ်နိုင်ပါတယ်။
+TTA G3 Driver Lite Version = 5MB
+- MTK Driver အတွက် Driver Signature Off စရာမလို
+  </p>
+
+  <div class="links">
+
+    <a href="https://ttamig3.com/driver/" target="_blank">
+      Download Link
+    </a>
+
+
+
+  </div>
+
+</div>
+
+<script>
+
+const video = document.getElementById("video");
+const playbtn = document.getElementById("playbtn");
+const progress = document.getElementById("progress");
+const progressFilled = document.getElementById("progress-filled");
+const fullscreenBtn = document.getElementById("fullscreen-btn");
+
+/* PLAY BUTTON */
+playbtn.onclick = function(){
+
+  video.play();
+  playbtn.style.display = "none";
+
+}
+
+/* CLICK VIDEO PLAY/PAUSE */
+video.onclick = function(){
+
+  if(video.paused){
+
+    video.play();
+    playbtn.style.display = "none";
+
+  }else{
+
+    video.pause();
+    playbtn.style.display = "flex";
+
+  }
+
+}
+
+/* UPDATE PROGRESS */
+video.addEventListener("timeupdate",function(){
+
+  let percent = (video.currentTime / video.duration) * 100;
+  progressFilled.style.width = percent + "%";
+
+})
+
+/* SEEK */
+progress.addEventListener("click",function(e){
+
+  let pos = e.offsetX / progress.offsetWidth;
+  video.currentTime = pos * video.duration;
+
+})
+
+/* FULLSCREEN */
+fullscreenBtn.onclick = function(){
+
+  if(video.requestFullscreen){
+
+    video.requestFullscreen();
+
+  } else if(video.webkitRequestFullscreen){
+
+    video.webkitRequestFullscreen();
+
+  } else if(video.msRequestFullscreen){
+
+    video.msRequestFullscreen();
+
+  }
+
+}
+
+</script>
+
+</body>
+</html>
