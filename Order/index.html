@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TTA Order System</title>
+
+    <link rel="stylesheet" href="css/style.css">
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+<header>
+
+<div class="container nav">
+
+<div class="logo">
+
+TTA ORDER
+
+</div>
+
+<ul>
+
+<li><a href="#">Home</a></li>
+
+<li><a href="#products">Products</a></li>
+
+<li><a href="#order">Order</a></li>
+
+</ul>
+
+</div>
+
+</header>
+
+
+<section class="hero">
+
+<div class="container">
+
+<h1>Welcome To TTA Order System</h1>
+
+<p>
+
+Fast • Simple • Responsive
+
+</p>
+
+<a href="#products" class="btn">
+
+View Products
+
+</a>
+
+</div>
+
+</section>
+
+
+<section id="products">
+
+<div class="container">
+
+<h2>
+
+Products
+
+</h2>
+
+<div id="productList" class="product-grid">
+
+</div>
+
+</div>
+
+</section>
+
+
+<section id="order">
+
+<div class="container">
+
+<h2>
+
+Place Order
+
+</h2>
+
+<form id="orderForm">
+
+<input
+type="text"
+id="customer"
+placeholder="Customer Name"
+required>
+
+<input
+type="text"
+id="phone"
+placeholder="Phone Number"
+required>
+
+<textarea
+id="address"
+placeholder="Address"
+required></textarea>
+
+<select id="product">
+
+<option>Select Product</option>
+
+</select>
+
+<input
+type="number"
+id="qty"
+value="1"
+min="1">
+
+<textarea
+id="note"
+placeholder="Note"></textarea>
+
+<button type="submit">
+
+Submit Order
+
+</button>
+
+</form>
+
+</div>
+
+</section>
+
+
+<footer>
+
+<div class="container">
+
+Copyright © 2026 TTA
+
+</div>
+
+</footer>
+
+<script src="js/app.js"></script>
+
+</body>
+</html>
