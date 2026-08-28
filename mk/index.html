@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="my">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TTA KeyGen</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background-color: #ffffff;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            width: 350px;
+        }
+        h2 {
+            margin-top: 0;
+            color: #333;
+            text-align: center;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #666;
+            font-weight: bold;
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 8px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .btn-group {
+            display: flex;
+            gap: 10px;
+        }
+        button {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            color: white;
+            font-weight: bold;
+        }
+        .btn-generate { background-color: #007bff; }
+        .btn-generate:hover { background-color: #0056b3; }
+        .btn-copy { background-color: #28a745; }
+        .btn-copy:hover { background-color: #218838; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>TTA Key Generator</h2>
+    
+    <div class="form-group">
+        <label for="hardwareId">Hardware ID:</label>
+        <input type="text" id="hardwareId" placeholder="Enter Hardware ID">
+    </div>
+
+    <div class="form-group">
+        <label for="generatedKey">Generated License Key:</label>
+        <input type="text" id="generatedKey" readonly placeholder="Key will appear here">
+    </div>
+
+    <div class="btn-group">
+        <button class="btn-generate" onclick="generateKey()">Generate</button>
+        <button class="btn-copy" onclick="copyKey()">Copy Key</button>
+    </div>
+</div>
+
+<script>
+    // SHA-256 Hash တွက်ချက်ပေးမည့် async function
+    async function sha256(message) {
+        const msgBuffer = new TextEncoder().encode(message);
+        const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
+        const hashArray = Array.from(new Uint8Array(hashBuffer));
+        // Hexadecimal အက္ခရာ အကြီး (X2) ပြောင်းပေးခြင်း
+        const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0').toUpperCase()).join('');
+        return hashHex;
+    }
+
+    async function generateKey() {
+        const hardwareId = document.getElementById("hardwareId").value.trim();
+
+        if (!hardwareId) {
+            alert("Please enter Hardware ID!");
+            return;
+        }
+
+        const secretSalt = "AdbRunnerSuperKey2026";
+        const rawData = hardwareId + secretSalt;
+
+        // SHA-256 တွက်ချက်ပြီး ထွက်လာသော Hash ၏ ပထမ စာလုံး ၂၀ ကို ဖြတ်ယူခြင်း
+        const fullHash = await sha256(rawData);
+        const key20Length = fullHash.substring(0, 20);
+
+        document.getElementById("generatedKey").value = key20Length;
+    }
+
+    function copyKey() {
+        const keyText = document.getElementById("generatedKey").value;
+
+        if (keyText) {
+            navigator.clipboard.writeText(keyText).then(() => {
+                alert("License Key copied to clipboard!");
+            }).catch(err => {
+                alert("Failed to copy text: " + err);
+            });
+        } else {
+            alert("No key to copy!");
+        }
+    }
+</script>
+
+</body>
+</html>
