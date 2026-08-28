@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="my">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>TTA China FRP Tool</title>
+
+    <style>
+        :root {
+            --bg: #f4f7fb;
+            --card: rgba(255,255,255,0.88);
+            --text: #172033;
+            --muted: #667085;
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --border: rgba(0,0,0,0.08);
+            --shadow: 0 20px 60px rgba(0,0,0,0.10);
+        }
+
+        body.dark {
+            --bg: #080b12;
+            --card: rgba(20,25,36,0.90);
+            --text: #f3f4f6;
+            --muted: #9ca3af;
+            --primary: #3b82f6;
+            --primary-dark: #2563eb;
+            --border: rgba(255,255,255,0.09);
+            --shadow: 0 20px 60px rgba(0,0,0,0.40);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family:
+                "Noto Sans Myanmar",
+                "Myanmar Text",
+                Arial,
+                sans-serif;
+
+            background:
+                radial-gradient(
+                    circle at top left,
+                    rgba(37,99,235,0.15),
+                    transparent 35%
+                ),
+                var(--bg);
+
+            color: var(--text);
+            min-height: 100vh;
+
+            transition:
+                background .3s ease,
+                color .3s ease;
+        }
+
+        .container {
+            width: min(1050px, 92%);
+            margin: auto;
+            padding: 35px 0 30px;
+        }
+
+        /* NAVBAR */
+
+        .navbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            padding: 15px 20px;
+            margin-bottom: 45px;
+
+            background: var(--card);
+            border: 1px solid var(--border);
+
+            border-radius: 18px;
+
+            backdrop-filter: blur(18px);
+
+            box-shadow: var(--shadow);
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+
+            font-size: 20px;
+            font-weight: 800;
+        }
+
+        .logo {
+            width: 42px;
+            height: 42px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 12px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #2563eb,
+                    #7c3aed
+                );
+
+            color: white;
+            font-weight: 900;
+            font-size: 18px;
+
+            box-shadow:
+                0 8px 20px rgba(37,99,235,.30);
+        }
+
+        .theme-btn {
+            width: 45px;
+            height: 45px;
+
+            border: 1px solid var(--border);
+            border-radius: 12px;
+
+            background: transparent;
+            color: var(--text);
+
+            cursor: pointer;
+
+            font-size: 20px;
+
+            transition: .2s;
+        }
+
+        .theme-btn:hover {
+            transform: scale(1.05);
+            background: rgba(127,127,127,.08);
+        }
+
+        /* HERO */
+
+        .hero {
+            text-align: center;
+            max-width: 850px;
+            margin: auto;
+        }
+
+        .badge {
+            display: inline-block;
+
+            padding: 8px 15px;
+
+            border-radius: 30px;
+
+            background: rgba(37,99,235,.10);
+            color: var(--primary);
+
+            font-size: 13px;
+            font-weight: 700;
+
+            margin-bottom: 18px;
+        }
+
+        h1 {
+            font-size: clamp(34px, 6vw, 62px);
+            line-height: 1.08;
+
+            font-weight: 900;
+
+            letter-spacing: -1.5px;
+
+            margin-bottom: 18px;
+        }
+
+        .gradient {
+            background:
+                linear-gradient(
+                    90deg,
+                    #2563eb,
+                    #7c3aed
+                );
+
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .description {
+            color: var(--muted);
+
+            font-size: 17px;
+            line-height: 1.8;
+
+            margin-bottom: 30px;
+        }
+
+        /* BUTTONS */
+
+        .buttons {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 12px;
+
+            margin-bottom: 50px;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 9px;
+
+            min-width: 175px;
+
+            padding: 14px 22px;
+
+            border-radius: 13px;
+
+            text-decoration: none;
+
+            font-size: 15px;
+            font-weight: 800;
+
+            transition:
+                transform .2s,
+                box-shadow .2s;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+        }
+
+        .download {
+            color: white;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #2563eb,
+                    #1d4ed8
+                );
+
+            box-shadow:
+                0 12px 30px rgba(37,99,235,.28);
+        }
+
+        .video {
+            color: white;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #ef4444,
+                    #dc2626
+                );
+
+            box-shadow:
+                0 12px 30px rgba(239,68,68,.22);
+        }
+
+        .contact {
+            color: var(--text);
+
+            background: var(--card);
+
+            border: 1px solid var(--border);
+        }
+
+        /* SCREENSHOT */
+
+        .preview-card {
+            background: var(--card);
+
+            border: 1px solid var(--border);
+
+            border-radius: 22px;
+
+            padding: 12px;
+
+            box-shadow: var(--shadow);
+
+            max-width: 950px;
+
+            margin: auto;
+        }
+
+        .preview-card img {
+            width: 100%;
+
+            display: block;
+
+            border-radius: 14px;
+
+            height: auto;
+        }
+
+        /* FEATURES */
+
+        .features {
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 18px;
+
+            margin-top: 25px;
+        }
+
+        .feature {
+            padding: 25px;
+
+            background: var(--card);
+
+            border:
+                1px solid var(--border);
+
+            border-radius: 18px;
+
+            text-align: center;
+
+            box-shadow:
+                0 10px 35px rgba(0,0,0,.05);
+        }
+
+        .feature-icon {
+            font-size: 30px;
+            margin-bottom: 12px;
+        }
+
+        .feature h3 {
+            font-size: 17px;
+            margin-bottom: 8px;
+        }
+
+        .feature p {
+            color: var(--muted);
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        /* FOOTER */
+
+        footer {
+            text-align: center;
+
+            color: var(--muted);
+
+            font-size: 13px;
+
+            padding:
+                35px 10px 10px;
+        }
+
+        footer a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 700;
+        }
+
+        /* MOBILE */
+
+        @media (max-width: 700px) {
+
+            .container {
+                padding-top: 18px;
+            }
+
+            .navbar {
+                margin-bottom: 35px;
+            }
+
+            h1 {
+                font-size: 38px;
+            }
+
+            .description {
+                font-size: 15px;
+            }
+
+            .buttons {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .btn {
+                width: 100%;
+            }
+
+            .features {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- NAVBAR -->
+
+    <nav class="navbar">
+
+        <div class="brand">
+
+            <div class="logo">
+                T
+            </div>
+
+            <span>
+                TTA China FRP Tool
+            </span>
+
+        </div>
+
+        <button
+            class="theme-btn"
+            id="themeToggle"
+            title="Toggle Theme">
+            🌙
+        </button>
+
+    </nav>
+
+
+    <!-- HERO -->
+
+    <section class="hero">
+
+        <div class="badge">
+            🇨🇳 TTA CHINA TOOL
+        </div>
+
+        <h1>
+            TTA China
+            <span class="gradient">
+                FRP Tool
+            </span>
+        </h1>
+
+        <p class="description">
+
+            Xiaomi / Redmi China Device များအတွက်
+            TTA TEMP ROOT & FRP Tool ကို
+            Download ရယူနိုင်ပါသည်။
+
+        </p>
+
+
+        <!-- BUTTONS -->
+
+        <div class="buttons">
+
+            <a
+                class="btn download"
+                href="http://ttamig3.com/TTA_TEMP_ROOT_FRP.exe"
+                download>
+
+                ⬇️
+                Download Tool
+
+            </a>
+
+
+            <a
+                class="btn video"
+                href="https://t.me/ttagsm/1087"
+                target="_blank">
+
+                ▶️
+                Video Guide
+
+            </a>
+
+
+            <a
+                class="btn contact"
+                href="https://ttamig3.com/social/"
+                target="_blank">
+
+                📞
+                ဆက်သွယ်ရန်
+
+            </a>
+
+        </div>
+
+    </section>
+
+
+    <!-- SCREENSHOT -->
+
+    <div class="preview-card">
+
+        <img
+            src="Screenshot.png"
+            alt="TTA China FRP Tool">
+
+    </div>
+
+
+    <!-- FEATURES -->
+
+    <section class="features">
+
+        <div class="feature">
+
+            <div class="feature-icon">
+                ⚡
+            </div>
+
+            <h3>
+                Fast & Simple
+            </h3>
+
+            <p>
+                အသုံးပြုရလွယ်ကူပြီး
+                ရိုးရှင်းတဲ့ Tool Interface
+            </p>
+
+        </div>
+
+
+        <div class="feature">
+
+            <div class="feature-icon">
+                📱
+            </div>
+
+            <h3>
+                China Devices
+            </h3>
+
+            <p>
+                Supported China Xiaomi /
+                Redmi Devices များအတွက်
+            </p>
+
+        </div>
+
+
+        <div class="feature">
+
+            <div class="feature-icon">
+                🔄
+            </div>
+
+            <h3>
+                Temp Root & FRP
+            </h3>
+
+            <p>
+                Tool ရဲ့ support လုပ်ထားသော
+                functions များကို အသုံးပြုနိုင်ပါသည်။
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <!-- FOOTER -->
+
+    <footer>
+
+        <p>
+            © 2026
+            <a
+                href="https://ttamig3.com/"
+                target="_blank">
+                TTA MiG3
+            </a>
+            — All Rights Reserved.
+        </p>
+
+        <p style="margin-top:8px;">
+            TTA China FRP Tool
+        </p>
+
+    </footer>
+
+</div>
+
+
+<script>
+
+    const toggle =
+        document.getElementById("themeToggle");
+
+    const body =
+        document.body;
+
+
+    /* Load saved theme */
+
+    const savedTheme =
+        localStorage.getItem("tta-theme");
+
+
+    if (savedTheme === "dark") {
+
+        body.classList.add("dark");
+
+        toggle.textContent = "☀️";
+
+    }
+
+
+    /* Toggle */
+
+    toggle.addEventListener(
+        "click",
+        function () {
+
+            body.classList.toggle("dark");
+
+            const dark =
+                body.classList.contains("dark");
+
+            if (dark) {
+
+                toggle.textContent = "☀️";
+
+                localStorage.setItem(
+                    "tta-theme",
+                    "dark"
+                );
+
+            } else {
+
+                toggle.textContent = "🌙";
+
+                localStorage.setItem(
+                    "tta-theme",
+                    "light"
+                );
+
+            }
+
+        }
+    );
+
+</script>
+
+</body>
+</html>
