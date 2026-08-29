@@ -35,18 +35,50 @@
             color: #666;
             font-weight: bold;
         }
+        
+        /* Input နဲ့ Icon ခလုတ်များ ဘေးချင်းယှဉ်ရန် */
+        .input-wrapper {
+            display: flex;
+            gap: 6px;
+            align-items: center;
+        }
         input[type="text"] {
-            width: 100%;
+            flex: 1;
             padding: 8px;
             box-sizing: border-box;
             border: 1px solid #ccc;
             border-radius: 4px;
         }
+
+        /* Icon ခလုတ်များအတွက် Style */
+        .btn-icon {
+            width: 34px;
+            height: 34px;
+            padding: 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            background-color: #f8f9fa;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: background-color 0.2s;
+        }
+        .btn-icon:hover {
+            background-color: #e2e6ea;
+        }
+        .btn-icon svg {
+            width: 16px;
+            height: 16px;
+            fill: #495057;
+        }
+
         .btn-group {
             display: flex;
             gap: 10px;
+            margin-top: 20px;
         }
-        button {
+        .btn-action {
             flex: 1;
             padding: 10px;
             border: none;
@@ -59,6 +91,8 @@
         .btn-generate:hover { background-color: #0056b3; }
         .btn-copy { background-color: #28a745; }
         .btn-copy:hover { background-color: #218838; }
+        .btn-clear { background-color: #dc3545; }
+        .btn-clear:hover { background-color: #c82333; }
     </style>
 </head>
 <body>
@@ -68,7 +102,15 @@
     
     <div class="form-group">
         <label for="hardwareId">Hardware ID:</label>
-        <input type="text" id="hardwareId" placeholder="Enter Hardware ID">
+        <div class="input-wrapper">
+            <input type="text" id="hardwareId" placeholder="Enter Hardware ID">
+            <!-- Paste Icon Button -->
+            <button type="button" class="btn-icon" onclick="pasteHardwareId()" title="Paste from Clipboard">
+                <svg viewBox="0 0 24 24">
+                    <path d="M19 2h-4.18C14.4 0.84 13.3 0 12 0c-1.3 0-2.4.84-2.82 2H5c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-7 0c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zm7 18H5V4h2v3h10V4h2v16z"/>
+                </svg>
+            </button>
+        </div>
     </div>
 
     <div class="form-group">
@@ -77,8 +119,9 @@
     </div>
 
     <div class="btn-group">
-        <button class="btn-generate" onclick="generateKey()">Generate</button>
-        <button class="btn-copy" onclick="copyKey()">Copy Key</button>
+        <button class="btn-action btn-generate" onclick="generateKey()">Generate</button>
+        <button class="btn-action btn-copy" onclick="copyKey()">Copy Key</button>
+        <button class="btn-action btn-clear" onclick="clearAll()" title="Clear Inputs">Clear</button>
     </div>
 </div>
 
@@ -88,7 +131,6 @@
         const msgBuffer = new TextEncoder().encode(message);
         const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
         const hashArray = Array.from(new Uint8Array(hashBuffer));
-        // Hexadecimal အက္ခရာ အကြီး (X2) ပြောင်းပေးခြင်း
         const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0').toUpperCase()).join('');
         return hashHex;
     }
@@ -104,7 +146,6 @@
         const secretSalt = "AdbRunnerSuperKey2026";
         const rawData = hardwareId + secretSalt;
 
-        // SHA-256 တွက်ချက်ပြီး ထွက်လာသော Hash ၏ ပထမ စာလုံး ၂၀ ကို ဖြတ်ယူခြင်း
         const fullHash = await sha256(rawData);
         const key20Length = fullHash.substring(0, 20);
 
@@ -123,6 +164,22 @@
         } else {
             alert("No key to copy!");
         }
+    }
+
+    // Clipboard မှ စာသားကို တိုက်ရိုက် Paste လုပ်ပေးမည့် function
+    async function pasteHardwareId() {
+        try {
+            const text = await navigator.clipboard.readText();
+            document.getElementById("hardwareId").value = text;
+        } catch (err) {
+            alert("Failed to paste from clipboard. Please allow clipboard permissions.");
+        }
+    }
+
+    // Input fields များကို ရှင်းထုတ်ပေးမည့် function
+    function clearAll() {
+        document.getElementById("hardwareId").value = "";
+        document.getElementById("generatedKey").value = "";
     }
 </script>
 
