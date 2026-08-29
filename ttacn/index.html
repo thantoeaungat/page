@@ -1,41 +1,64 @@
+```html
 <!DOCTYPE html>
 <html lang="my">
+
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
 
     <title>TTA China FRP Tool</title>
 
+
     <style>
+
         :root {
+
             --bg: #f4f7fb;
             --card: rgba(255,255,255,0.88);
             --text: #172033;
             --muted: #667085;
+
             --primary: #2563eb;
             --primary-dark: #1d4ed8;
+
             --border: rgba(0,0,0,0.08);
-            --shadow: 0 20px 60px rgba(0,0,0,0.10);
+
+            --shadow:
+                0 20px 60px rgba(0,0,0,0.10);
         }
 
+
         body.dark {
+
             --bg: #080b12;
             --card: rgba(20,25,36,0.90);
             --text: #f3f4f6;
             --muted: #9ca3af;
+
             --primary: #3b82f6;
             --primary-dark: #2563eb;
+
             --border: rgba(255,255,255,0.09);
-            --shadow: 0 20px 60px rgba(0,0,0,0.40);
+
+            --shadow:
+                0 20px 60px rgba(0,0,0,0.40);
         }
 
+
         * {
+
             margin: 0;
             padding: 0;
+
             box-sizing: border-box;
         }
 
+
         body {
+
             font-family:
                 "Noto Sans Myanmar",
                 "Myanmar Text",
@@ -43,14 +66,17 @@
                 sans-serif;
 
             background:
+
                 radial-gradient(
                     circle at top left,
                     rgba(37,99,235,0.15),
                     transparent 35%
                 ),
+
                 var(--bg);
 
             color: var(--text);
+
             min-height: 100vh;
 
             transition:
@@ -58,23 +84,35 @@
                 color .3s ease;
         }
 
+
         .container {
+
             width: min(1050px, 92%);
+
             margin: auto;
+
             padding: 35px 0 30px;
         }
 
-        /* NAVBAR */
+
+        /* =========================
+           NAVBAR
+        ========================= */
 
         .navbar {
+
             display: flex;
+
             align-items: center;
+
             justify-content: space-between;
 
             padding: 15px 20px;
+
             margin-bottom: 45px;
 
             background: var(--card);
+
             border: 1px solid var(--border);
 
             border-radius: 18px;
@@ -84,26 +122,35 @@
             box-shadow: var(--shadow);
         }
 
+
         .brand {
+
             display: flex;
+
             align-items: center;
+
             gap: 12px;
 
             font-size: 20px;
+
             font-weight: 800;
         }
 
+
         .logo {
+
             width: 42px;
             height: 42px;
 
             display: flex;
+
             align-items: center;
             justify-content: center;
 
             border-radius: 12px;
 
             background:
+
                 linear-gradient(
                     135deg,
                     #2563eb,
@@ -111,21 +158,27 @@
                 );
 
             color: white;
+
             font-weight: 900;
+
             font-size: 18px;
 
             box-shadow:
                 0 8px 20px rgba(37,99,235,.30);
         }
 
+
         .theme-btn {
+
             width: 45px;
             height: 45px;
 
             border: 1px solid var(--border);
+
             border-radius: 12px;
 
             background: transparent;
+
             color: var(--text);
 
             cursor: pointer;
@@ -135,37 +188,56 @@
             transition: .2s;
         }
 
+
         .theme-btn:hover {
+
             transform: scale(1.05);
-            background: rgba(127,127,127,.08);
+
+            background:
+                rgba(127,127,127,.08);
         }
 
-        /* HERO */
+
+        /* =========================
+           HERO
+        ========================= */
 
         .hero {
+
             text-align: center;
+
             max-width: 850px;
+
             margin: auto;
         }
 
+
         .badge {
+
             display: inline-block;
 
             padding: 8px 15px;
 
             border-radius: 30px;
 
-            background: rgba(37,99,235,.10);
+            background:
+                rgba(37,99,235,.10);
+
             color: var(--primary);
 
             font-size: 13px;
+
             font-weight: 700;
 
             margin-bottom: 18px;
         }
 
+
         h1 {
-            font-size: clamp(34px, 6vw, 62px);
+
+            font-size:
+                clamp(34px, 6vw, 62px);
+
             line-height: 1.08;
 
             font-weight: 900;
@@ -175,8 +247,11 @@
             margin-bottom: 18px;
         }
 
+
         .gradient {
+
             background:
+
                 linear-gradient(
                     90deg,
                     #2563eb,
@@ -184,33 +259,50 @@
                 );
 
             -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+
+            -webkit-text-fill-color:
+                transparent;
         }
 
+
         .description {
+
             color: var(--muted);
 
             font-size: 17px;
+
             line-height: 1.8;
 
             margin-bottom: 30px;
         }
 
-        /* BUTTONS */
+
+        /* =========================
+           BUTTONS
+        ========================= */
 
         .buttons {
+
             display: flex;
+
             justify-content: center;
+
             flex-wrap: wrap;
+
             gap: 12px;
 
             margin-bottom: 50px;
         }
 
+
         .btn {
+
             display: inline-flex;
+
             align-items: center;
+
             justify-content: center;
+
             gap: 9px;
 
             min-width: 175px;
@@ -222,6 +314,7 @@
             text-decoration: none;
 
             font-size: 15px;
+
             font-weight: 800;
 
             transition:
@@ -229,14 +322,19 @@
                 box-shadow .2s;
         }
 
+
         .btn:hover {
+
             transform: translateY(-3px);
         }
 
+
         .download {
+
             color: white;
 
             background:
+
                 linear-gradient(
                     135deg,
                     #2563eb,
@@ -247,10 +345,13 @@
                 0 12px 30px rgba(37,99,235,.28);
         }
 
+
         .video {
+
             color: white;
 
             background:
+
                 linear-gradient(
                     135deg,
                     #ef4444,
@@ -261,7 +362,9 @@
                 0 12px 30px rgba(239,68,68,.22);
         }
 
+
         .contact {
+
             color: var(--text);
 
             background: var(--card);
@@ -269,9 +372,13 @@
             border: 1px solid var(--border);
         }
 
-        /* SCREENSHOT */
+
+        /* =========================
+           SCREENSHOT
+        ========================= */
 
         .preview-card {
+
             background: var(--card);
 
             border: 1px solid var(--border);
@@ -287,7 +394,9 @@
             margin: auto;
         }
 
+
         .preview-card img {
+
             width: 100%;
 
             display: block;
@@ -297,9 +406,232 @@
             height: auto;
         }
 
-        /* FEATURES */
+
+        /* =========================
+           VIDEO PLAYER
+        ========================= */
+
+        .video-card {
+
+            background: var(--card);
+
+            border: 1px solid var(--border);
+
+            border-radius: 22px;
+
+            padding: 12px;
+
+            box-shadow: var(--shadow);
+
+            max-width: 950px;
+
+            margin: 25px auto 0;
+        }
+
+
+        .video-title {
+
+            text-align: center;
+
+            font-size: 15px;
+
+            font-weight: 800;
+
+            color: var(--text);
+
+            margin-bottom: 12px;
+        }
+
+
+        .video-wrapper {
+
+            position: relative;
+
+            width: 100%;
+
+            aspect-ratio: 16 / 9;
+
+            background: #000;
+
+            border-radius: 14px;
+
+            overflow: hidden;
+        }
+
+
+        .video-wrapper video {
+
+            width: 100%;
+
+            height: 100%;
+
+            display: block;
+
+            object-fit: contain;
+
+            background: #000;
+
+            cursor: pointer;
+        }
+
+
+        /* =========================
+           VIDEO CONTROLS
+        ========================= */
+
+        .video-controls {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 10px;
+
+            padding:
+                12px 5px 4px;
+        }
+
+
+        .video-controls button {
+
+            border: 1px solid var(--border);
+
+            background: transparent;
+
+            color: var(--text);
+
+            width: 45px;
+
+            height: 42px;
+
+            border-radius: 11px;
+
+            cursor: pointer;
+
+            font-size: 17px;
+
+            transition: .2s;
+
+            flex-shrink: 0;
+        }
+
+
+        .video-controls button:hover {
+
+            transform: translateY(-2px);
+
+            background:
+                rgba(127,127,127,.10);
+        }
+
+
+        .video-controls
+        .play-btn {
+
+            background: var(--primary);
+
+            color: white;
+
+            border-color:
+                var(--primary);
+        }
+
+
+        .video-controls
+        .play-btn:hover {
+
+            background:
+                var(--primary-dark);
+        }
+
+
+        /* PROGRESS */
+
+        .progress-container {
+
+            flex: 1;
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 8px;
+        }
+
+
+        #progressBar {
+
+            width: 100%;
+
+            height: 5px;
+
+            appearance: none;
+
+            -webkit-appearance: none;
+
+            background:
+                rgba(127,127,127,.25);
+
+            border-radius: 10px;
+
+            cursor: pointer;
+        }
+
+
+        #progressBar::-webkit-slider-thumb {
+
+            appearance: none;
+
+            -webkit-appearance: none;
+
+            width: 14px;
+
+            height: 14px;
+
+            border-radius: 50%;
+
+            background: var(--primary);
+
+            cursor: pointer;
+        }
+
+
+        #progressBar::-moz-range-thumb {
+
+            width: 14px;
+
+            height: 14px;
+
+            border-radius: 50%;
+
+            background: var(--primary);
+
+            border: none;
+
+            cursor: pointer;
+        }
+
+
+        .time {
+
+            min-width: 80px;
+
+            text-align: center;
+
+            font-size: 12px;
+
+            color: var(--muted);
+
+            white-space: nowrap;
+        }
+
+
+        /* =========================
+           FEATURES
+        ========================= */
 
         .features {
+
             display: grid;
 
             grid-template-columns:
@@ -310,7 +642,9 @@
             margin-top: 25px;
         }
 
+
         .feature {
+
             padding: 25px;
 
             background: var(--card);
@@ -326,25 +660,39 @@
                 0 10px 35px rgba(0,0,0,.05);
         }
 
+
         .feature-icon {
+
             font-size: 30px;
+
             margin-bottom: 12px;
         }
 
+
         .feature h3 {
+
             font-size: 17px;
+
             margin-bottom: 8px;
         }
 
+
         .feature p {
+
             color: var(--muted);
+
             font-size: 13px;
+
             line-height: 1.6;
         }
 
-        /* FOOTER */
+
+        /* =========================
+           FOOTER
+        ========================= */
 
         footer {
+
             text-align: center;
 
             color: var(--muted);
@@ -355,53 +703,105 @@
                 35px 10px 10px;
         }
 
+
         footer a {
+
             color: var(--primary);
+
             text-decoration: none;
+
             font-weight: 700;
         }
 
-        /* MOBILE */
+
+        /* =========================
+           MOBILE
+        ========================= */
 
         @media (max-width: 700px) {
 
             .container {
+
                 padding-top: 18px;
             }
 
+
             .navbar {
+
                 margin-bottom: 35px;
             }
 
+
             h1 {
+
                 font-size: 38px;
             }
 
+
             .description {
+
                 font-size: 15px;
             }
 
+
             .buttons {
+
                 flex-direction: column;
+
                 align-items: stretch;
             }
 
+
             .btn {
+
                 width: 100%;
             }
 
+
             .features {
+
                 grid-template-columns: 1fr;
             }
+
+
+            .video-controls {
+
+                gap: 6px;
+            }
+
+
+            .video-controls button {
+
+                width: 40px;
+
+                height: 38px;
+
+                font-size: 15px;
+            }
+
+
+            .time {
+
+                min-width: 65px;
+
+                font-size: 11px;
+            }
         }
+
     </style>
+
 </head>
+
 
 <body>
 
+
 <div class="container">
 
-    <!-- NAVBAR -->
+
+    <!-- =========================
+         NAVBAR
+    ========================= -->
 
     <nav class="navbar">
 
@@ -417,55 +817,194 @@
 
         </div>
 
+
         <button
             class="theme-btn"
             id="themeToggle"
             title="Toggle Theme">
+
             🌙
+
         </button>
 
     </nav>
 
 
-    <!-- HERO -->
+
+    <!-- =========================
+         HERO
+    ========================= -->
 
     <section class="hero">
 
+
         <div class="badge">
+
             🇨🇳 TTA CHINA TOOL
+
         </div>
 
+
         <h1>
+
             TTA China
+
             <span class="gradient">
                 FRP Tool
             </span>
+
         </h1>
+
 
         <p class="description">
 
             Xiaomi / Redmi China Device များအတွက်
             TTA TEMP ROOT & FRP Tool ကို
-            Download ရယူနိုင်ပါသည်။ 
-			လက်ရှိမှာပုံထဲက Model များသာပါပါဦးမယ်။
+            Download ရယူနိုင်ပါသည်။
+
+            <br>
+
+            လက်ရှိမှာပုံထဲက Model များသာပါပါဦးမယ်။
 
         </p>
-		
-		    <!-- SCREENSHOT -->
 
-    <div class="preview-card">
 
-        <img
-            src="Screenshot.png"
-            alt="TTA China FRP Tool">
 
-    </div>
+        <!-- =========================
+             SCREENSHOT
+        ========================= -->
 
-</br>
+        <div class="preview-card">
 
-        <!-- BUTTONS -->
+            <img
+                src="Screenshot.png"
+                alt="TTA China FRP Tool">
+
+        </div>
+
+
+
+        <!-- =========================
+             VIDEO PLAYER
+        ========================= -->
+
+        <div class="video-card">
+
+
+            <div class="video-title">
+
+                🎬 TTA China FRP Tool အသုံးပြုနည်း Video
+
+            </div>
+
+
+            <div
+                class="video-wrapper"
+                id="videoWrapper">
+
+
+                <video
+                    id="ttaVideo"
+                    preload="metadata"
+                    playsinline>
+
+                    <source
+                        src="video.mp4"
+                        type="video/mp4">
+
+                    Your browser does not support
+                    HTML5 video.
+
+                </video>
+
+
+            </div>
+
+
+
+            <!-- VIDEO CONTROLS -->
+
+            <div class="video-controls">
+
+
+                <!-- PLAY / PAUSE -->
+
+                <button
+                    class="play-btn"
+                    id="playBtn"
+                    title="Play">
+
+                    ▶️
+
+                </button>
+
+
+
+                <!-- STOP -->
+
+                <button
+                    id="stopBtn"
+                    title="Stop">
+
+                    ⏹️
+
+                </button>
+
+
+
+                <!-- PROGRESS -->
+
+                <div class="progress-container">
+
+
+                    <input
+                        type="range"
+                        id="progressBar"
+                        min="0"
+                        max="100"
+                        value="0">
+
+
+                    <span
+                        class="time"
+                        id="timeDisplay">
+
+                        00:00 / 00:00
+
+                    </span>
+
+                </div>
+
+
+
+                <!-- FULL SCREEN -->
+
+                <button
+                    id="fullscreenBtn"
+                    title="Full Screen">
+
+                    ⛶
+
+                </button>
+
+
+            </div>
+
+
+        </div>
+
+
+
+        <br>
+
+
+
+        <!-- =========================
+             DOWNLOAD BUTTONS
+        ========================= -->
 
         <div class="buttons">
+
 
             <a
                 class="btn download"
@@ -473,9 +1012,11 @@
                 download>
 
                 ⬇️
+
                 Download Tool
 
             </a>
+
 
 
             <a
@@ -484,9 +1025,11 @@
                 target="_blank">
 
                 ▶️
+
                 Video Guide
 
             </a>
+
 
 
             <a
@@ -495,113 +1038,175 @@
                 target="_blank">
 
                 📞
+
                 ဆက်သွယ်ရန်
 
             </a>
 
+
         </div>
+
 
     </section>
 
 
 
-
-    <!-- FEATURES -->
+    <!-- =========================
+         FEATURES
+    ========================= -->
 
     <section class="features">
 
+
         <div class="feature">
 
+
             <div class="feature-icon">
+
                 ⚡
+
             </div>
 
+
             <h3>
+
                 Fast & Simple
+
             </h3>
 
+
             <p>
+
                 အသုံးပြုရလွယ်ကူပြီး
                 ရိုးရှင်းတဲ့ Tool Interface
+
             </p>
+
 
         </div>
 
 
+
         <div class="feature">
 
+
             <div class="feature-icon">
+
                 📱
+
             </div>
 
+
             <h3>
+
                 China Devices
+
             </h3>
 
+
             <p>
+
                 Supported China Xiaomi /
                 Redmi Devices များအတွက်
+
             </p>
 
+
         </div>
+
 
 
         <div class="feature">
 
+
             <div class="feature-icon">
+
                 🔄
+
             </div>
 
+
             <h3>
+
                 Temp Root & FRP
+
             </h3>
 
+
             <p>
+
                 Tool ရဲ့ support လုပ်ထားသော
                 functions များကို အသုံးပြုနိုင်ပါသည်။
+
             </p>
 
+
         </div>
+
 
     </section>
 
 
-    <!-- FOOTER -->
+
+    <!-- =========================
+         FOOTER
+    ========================= -->
 
     <footer>
 
+
         <p>
+
             © 2026
+
             <a
                 href="https://ttamig3.com/"
                 target="_blank">
+
                 TTA MiG3
+
             </a>
+
             — All Rights Reserved.
+
         </p>
+
 
         <p style="margin-top:8px;">
+
             TTA China FRP Tool
+
         </p>
 
+
     </footer>
+
 
 </div>
 
 
+
 <script>
 
+
+    /* =========================
+       DARK / LIGHT THEME
+    ========================= */
+
     const toggle =
-        document.getElementById("themeToggle");
+        document.getElementById(
+            "themeToggle"
+        );
+
 
     const body =
         document.body;
 
 
-    /* Load saved theme */
-
     const savedTheme =
-        localStorage.getItem("tta-theme");
+        localStorage.getItem(
+            "tta-theme"
+        );
 
 
     if (savedTheme === "dark") {
@@ -613,20 +1218,25 @@
     }
 
 
-    /* Toggle */
-
     toggle.addEventListener(
         "click",
         function () {
 
-            body.classList.toggle("dark");
+            body.classList.toggle(
+                "dark"
+            );
+
 
             const dark =
-                body.classList.contains("dark");
+                body.classList.contains(
+                    "dark"
+                );
+
 
             if (dark) {
 
-                toggle.textContent = "☀️";
+                toggle.textContent =
+                    "☀️";
 
                 localStorage.setItem(
                     "tta-theme",
@@ -635,7 +1245,8 @@
 
             } else {
 
-                toggle.textContent = "🌙";
+                toggle.textContent =
+                    "🌙";
 
                 localStorage.setItem(
                     "tta-theme",
@@ -647,7 +1258,351 @@
         }
     );
 
+
+
+    /* =========================
+       VIDEO PLAYER
+    ========================= */
+
+    const video =
+        document.getElementById(
+            "ttaVideo"
+        );
+
+
+    const playBtn =
+        document.getElementById(
+            "playBtn"
+        );
+
+
+    const stopBtn =
+        document.getElementById(
+            "stopBtn"
+        );
+
+
+    const fullscreenBtn =
+        document.getElementById(
+            "fullscreenBtn"
+        );
+
+
+    const progressBar =
+        document.getElementById(
+            "progressBar"
+        );
+
+
+    const timeDisplay =
+        document.getElementById(
+            "timeDisplay"
+        );
+
+
+    const videoWrapper =
+        document.getElementById(
+            "videoWrapper"
+        );
+
+
+
+    /* FORMAT TIME */
+
+    function formatTime(seconds) {
+
+        if (!isFinite(seconds)) {
+
+            return "00:00";
+
+        }
+
+
+        const minutes =
+            Math.floor(
+                seconds / 60
+            );
+
+
+        const secs =
+            Math.floor(
+                seconds % 60
+            );
+
+
+        return String(minutes)
+            .padStart(2, "0")
+            + ":" +
+            String(secs)
+            .padStart(2, "0");
+    }
+
+
+
+    /* UPDATE TIME */
+
+    function updateTime() {
+
+        const current =
+            video.currentTime;
+
+
+        const duration =
+            video.duration || 0;
+
+
+        timeDisplay.textContent =
+            formatTime(current)
+            + " / "
+            + formatTime(duration);
+
+
+        if (duration > 0) {
+
+            progressBar.value =
+                (current / duration) * 100;
+
+        }
+
+    }
+
+
+
+    /* PLAY / PAUSE */
+
+    playBtn.addEventListener(
+        "click",
+        function () {
+
+            if (video.paused) {
+
+                video.play();
+
+            } else {
+
+                video.pause();
+
+            }
+
+        }
+    );
+
+
+
+    /* VIDEO CLICK = PLAY / PAUSE */
+
+    video.addEventListener(
+        "click",
+        function () {
+
+            if (video.paused) {
+
+                video.play();
+
+            } else {
+
+                video.pause();
+
+            }
+
+        }
+    );
+
+
+
+    /* PLAY */
+
+    video.addEventListener(
+        "play",
+        function () {
+
+            playBtn.textContent =
+                "⏸️";
+
+            playBtn.title =
+                "Pause";
+
+        }
+    );
+
+
+
+    /* PAUSE */
+
+    video.addEventListener(
+        "pause",
+        function () {
+
+            playBtn.textContent =
+                "▶️";
+
+            playBtn.title =
+                "Play";
+
+        }
+    );
+
+
+
+    /* STOP */
+
+    stopBtn.addEventListener(
+        "click",
+        function () {
+
+            video.pause();
+
+            video.currentTime = 0;
+
+            progressBar.value = 0;
+
+            playBtn.textContent =
+                "▶️";
+
+            playBtn.title =
+                "Play";
+
+            updateTime();
+
+        }
+    );
+
+
+
+    /* PROGRESS UPDATE */
+
+    video.addEventListener(
+        "timeupdate",
+        updateTime
+    );
+
+
+
+    /* PROGRESS SEEK */
+
+    progressBar.addEventListener(
+        "input",
+        function () {
+
+            if (video.duration) {
+
+                video.currentTime =
+                    (progressBar.value / 100)
+                    * video.duration;
+
+            }
+
+        }
+    );
+
+
+
+    /* VIDEO LOADED */
+
+    video.addEventListener(
+        "loadedmetadata",
+        function () {
+
+            updateTime();
+
+        }
+    );
+
+
+
+    /* VIDEO ENDED */
+
+    video.addEventListener(
+        "ended",
+        function () {
+
+            playBtn.textContent =
+                "▶️";
+
+            playBtn.title =
+                "Play";
+
+            progressBar.value = 100;
+
+        }
+    );
+
+
+
+    /* =========================
+       FULLSCREEN
+    ========================= */
+
+    fullscreenBtn.addEventListener(
+        "click",
+        function () {
+
+            if (
+                document.fullscreenElement
+            ) {
+
+                document.exitFullscreen();
+
+                return;
+
+            }
+
+
+            if (
+                videoWrapper.requestFullscreen
+            ) {
+
+                videoWrapper.requestFullscreen();
+
+            }
+
+            else if (
+                videoWrapper.webkitRequestFullscreen
+            ) {
+
+                videoWrapper.webkitRequestFullscreen();
+
+            }
+
+        }
+    );
+
+
+
+    /* UPDATE FULLSCREEN BUTTON */
+
+    document.addEventListener(
+        "fullscreenchange",
+        function () {
+
+            if (
+                document.fullscreenElement
+            ) {
+
+                fullscreenBtn.textContent =
+                    "✕";
+
+                fullscreenBtn.title =
+                    "Exit Full Screen";
+
+            } else {
+
+                fullscreenBtn.textContent =
+                    "⛶";
+
+                fullscreenBtn.title =
+                    "Full Screen";
+
+            }
+
+        }
+    );
+
+
 </script>
 
+
 </body>
+
 </html>
+```
