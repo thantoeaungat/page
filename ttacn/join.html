@@ -90,13 +90,13 @@
             <label for="gmail">Gmail</label>
             <input type="email" id="gmail" required placeholder="Enter gmail">
         </div>
-        <button type="submit">Register</button>
+        <button type="submit">TCF Tool Register</button>
     </form>
     <div id="message"></div>
 </div>
 
 <script>
-    // သင်၏ Google Apps Script Web App URL ကို ဤနေရာတွင် အစားထိုးပါ
+  
     const scriptURL = 'https://script.google.com/macros/s/AKfycbze4V289S25H9kZAL4e_FK7jhaasmGuE9wwZFSgCw4P065uH_u_K5CmkAurpDWwkzKG2w/exec';
 
     document.getElementById('registerForm').addEventListener('submit', function(e) {
@@ -106,9 +106,9 @@
         messageDiv.className = '';
         messageDiv.innerText = 'Processing...';
 
-        // URLSearchParams သုံးပြီး Google Sheet ဆီ Form Data အဖြစ် ပို့ဆောင်ခြင်း
+        
         const formData = new URLSearchParams();
-        formData.append('action', 'register'); // action parameter မဖြစ်မနေ ထည့်ရမည်
+        formData.append('action', 'register'); 
         formData.append('username', document.getElementById('username').value.trim());
         formData.append('password', document.getElementById('password').value.trim());
         formData.append('gmail', document.getElementById('gmail').value.trim());
