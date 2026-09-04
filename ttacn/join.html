@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="my">
+<head>
+    <meta charset="UTF-8">
+    <title>Register Page</title>
+    <style>
+        body { font-family: sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; background-color: #f4f4f9; }
+        .register-card { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); width: 300px; }
+        .input-group { margin-bottom: 15px; }
+        .input-group label { display: block; margin-bottom: 5px; }
+        .input-group input { width: 100%; padding: 8px; box-sizing: border-box; }
+        button { width: 100%; padding: 10px; background-color: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer; }
+        button:hover { background-color: #0056b3; }
+        #message { margin-top: 15px; font-weight: bold; text-align: center; }
+        .success { color: green; }
+        .error { color: red; }
+    </style>
+</head>
+<body>
+
+<div class="register-card">
+    <h2>Register</h2>
+    <form id="registerForm">
+        <div class="input-group">
+            <label>Username</label>
+            <input type="text" id="username" required>
+        </div>
+        <div class="input-group">
+            <label>Password</label>
+            <input type="password" id="password" required>
+        </div>
+        <div class="input-group">
+            <label>Gmail</label>
+            <input type="email" id="gmail" required>
+        </div>
+        <button type="submit">Register</button>
+    </form>
+    <div id="message"></div>
+</div>
+
+<script>
+    // ဤနေရာတွင် သင်၏ Google Web App URL ကို ထည့်ပါ
+    const scriptURL = 'YOUR_WEB_APP_URL_HERE';
+
+    document.getElementById('registerForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const messageDiv = document.getElementById('message');
+        messageDiv.className = '';
+        messageDiv.innerText = 'Processing...';
+
+        const data = {
+            username: document.getElementById('username').value,
+            password: document.getElementById('password').value,
+            gmail: document.getElementById('gmail').value
+        };
+
+        fetch(scriptURL, {
+            method: 'POST',
+            body: JSON.stringify(data)
+        })
+        .then(response => response.json())
+        .then(res => {
+            if (res.status === 'success') {
+                messageDiv.className = 'success';
+                messageDiv.innerText = res.message;
+                document.getElementById('registerForm').reset();
+            } else {
+                messageDiv.className = 'error';
+                messageDiv.innerText = res.message;
+            }
+        })
+        .catch(error => {
+            messageDiv.className = 'error';
+            messageDiv.innerText = 'Something went wrong. Try again!';
+        });
+    });
+</script>
+
+</body>
+</html>
