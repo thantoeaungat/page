@@ -7,7 +7,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TTA China FRP Tool</title>
 
-    <!-- Logo / Favicon (Browser Tab Display) -->
     <link rel="icon" type="image/x-icon" href="logo.ico">
 
     <style>
@@ -65,13 +64,15 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 15px 20px;
+            padding: 12px 20px;
             margin-bottom: 45px;
             background: var(--card);
             border: 1px solid var(--border);
             border-radius: 18px;
             backdrop-filter: blur(18px);
             box-shadow: var(--shadow);
+            flex-wrap: wrap;
+            gap: 15px;
         }
 
         .brand {
@@ -99,16 +100,58 @@
             object-fit: cover;
         }
 
+        /* NAV CONTROLS & MENU */
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .nav-menu {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            list-style: none;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: var(--text);
+            font-weight: 700;
+            font-size: 14px;
+            padding: 8px 14px;
+            border-radius: 10px;
+            transition: .2s ease;
+        }
+
+        .nav-link:hover {
+            background: rgba(127,127,127,.10);
+            color: var(--primary);
+        }
+
+        .nav-link.btn-nav-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .nav-link.btn-nav-primary:hover {
+            background: var(--primary-dark);
+            color: white;
+        }
+
         .theme-btn {
-            width: 45px;
-            height: 45px;
+            width: 40px;
+            height: 40px;
             border: 1px solid var(--border);
             border-radius: 12px;
             background: transparent;
             color: var(--text);
             cursor: pointer;
-            font-size: 20px;
+            font-size: 18px;
             transition: .2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .theme-btn:hover {
@@ -388,7 +431,7 @@
             font-weight: 700;
         }
 
-        /* MOBILE */
+        /* MOBILE Responsive */
         @media (max-width: 700px) {
             .container {
                 padding-top: 18px;
@@ -396,6 +439,23 @@
 
             .navbar {
                 margin-bottom: 35px;
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .nav-right {
+                justify-content: space-between;
+                width: 100%;
+            }
+
+            .nav-menu {
+                flex-wrap: wrap;
+                gap: 5px;
+            }
+
+            .nav-link {
+                padding: 6px 10px;
+                font-size: 13px;
             }
 
             h1 {
@@ -443,7 +503,6 @@
 
 <div class="container">
 
-    <!-- NAVBAR -->
     <nav class="navbar">
         <div class="brand">
             <div class="logo">
@@ -452,10 +511,16 @@
             <span>TTA China FRP Tool</span>
         </div>
 
-        <button class="theme-btn" id="themeToggle" title="Toggle Theme">🌙</button>
+        <div class="nav-right">
+            <ul class="nav-menu">
+                <li><a href="https://ttamig3.com/ttacn/TCF_V1.4.3.exe" class="nav-link" download>Download</a></li>
+                <li><a href="http://www.ttamig3.com/ttacn/join.html" class="nav-link">Register</a></li>
+                <li><a href="http://www.ttamig3.com/ttacn/login.html" class="nav-link btn-nav-primary">Login</a></li>
+            </ul>
+            <button class="theme-btn" id="themeToggle" title="Toggle Theme">🌙</button>
+        </div>
     </nav>
 
-    <!-- HERO -->
     <section class="hero">
 
         <div class="badge">🇨🇳 TTA CHINA TOOL</div>
@@ -471,26 +536,21 @@
             လက်ရှိမှာပုံထဲက Model များသာပါပါဦးမယ်။
         </p>
 
-        <p class="description">
+        <div class="description">
             <h2>Supported Models</h2>
-            Redmi Note 14 Pro | Redmi Note 14 Pro Plus | Redmi Note 15 | Redmi Note 15 Pro | Redmi Note 15 Pro Plus | Redmi Note 12 Turbo | Redmi Note 13 Pro | Xiaomi 14 / Pro / Ultra | Redmi K70 Pro | Civi 2 | Turbo 4 | Turbo 4 Pro | Civi 5 Pro | K70 | K70 Pro | K80 Ultra | MI 13 / Pro | ULTRA
-        </p>
+            <p style="margin-top: 10px;">Redmi Note 14 Pro | Redmi Note 14 Pro Plus | Redmi Note 15 | Redmi Note 15 Pro | Redmi Note 15 Pro Plus | Redmi Note 12 Turbo | Redmi Note 13 Pro | Xiaomi 14 / Pro / Ultra | Redmi K70 Pro | Civi 2 | Turbo 4 | Turbo 4 Pro | Civi 5 Pro | K70 | K70 Pro | K80 Ultra | MI 13 / Pro | ULTRA</p>
+        </div>
 
-        <!-- SCREENSHOT -->
         <div class="preview-card">
             <img src="Screenshot.png" alt="TTA China FRP Tool">
         </div>
-		</br>
-		
-		        <!-- DOWNLOAD & REGISTER BUTTONS -->
+        <br>
+        
         <div class="buttons">
 
-            <a class="btn register" href="http://www.ttamig3.com/ttacn/join.html">
-                📝 Register လုပ်ရန်
-            </a>
-
+          
             <a class="btn download" href="https://ttamig3.com/ttacn/TCF_V1.4.3.exe" download>
-                ⬇️ Download Tool V1.4.2 update
+                ⬇️ Download Tool V1.4.3 update
             </a>
 
             <a class="btn video" href="https://t.me/ttagsm/1087" target="_blank">
@@ -504,164 +564,10 @@
         </div>
 
 
-        <!-- VIDEO PLAYER -->
         <div class="video-card">
             <div class="video-title">🎬 TTA China FRP Tool အသုံးပြုနည်း Video</div>
 
             <div class="video-wrapper" id="videoWrapper">
                 <video id="ttaVideo" preload="metadata" playsinline>
                     <source src="http://www.ttamig3.com/ttacn/Video.mp4" type="video/mp4">
-                    Your browser does not support HTML5 video.
-                </video>
-            </div>
-
-            <!-- VIDEO CONTROLS -->
-            <div class="video-controls">
-                <button class="play-btn" id="playBtn" title="Play">▶️</button>
-                <button id="stopBtn" title="Stop">⏹️</button>
-
-                <div class="progress-container">
-                    <input type="range" id="progressBar" min="0" max="100" value="0">
-                    <span class="time" id="timeDisplay">00:00 / 00:00</span>
-                </div>
-
-                <button id="fullscreenBtn" title="Full Screen">⛶</button>
-            </div>
-        </div>
-
-        <br>
-
-
-    </section>
-
-    <!-- FEATURES -->
-    <section class="features">
-
-        <div class="feature">
-            <div class="feature-icon">⚡</div>
-            <h3>Fast & Simple</h3>
-            <p>အသုံးပြုရလွယ်ကူပြီး ရိုးရှင်းတဲ့ Tool Interface</p>
-        </div>
-
-        <div class="feature">
-            <div class="feature-icon">📱</div>
-            <h3>China Devices</h3>
-            <p>Supported China Xiaomi / Redmi Devices များအတွက်</p>
-        </div>
-
-        <div class="feature">
-            <div class="feature-icon">🔄</div>
-            <h3>Temp Root & FRP</h3>
-            <p>Tool ရဲ့ support လုပ်ထားသော functions များကို အသုံးပြုနိုင်ပါသည်။</p>
-        </div>
-
-    </section>
-
-    <!-- FOOTER -->
-    <footer>
-        <p>
-            © 2026 <a href="https://ttamig3.com/" target="_blank">TTA MiG3</a> — All Rights Reserved.
-        </p>
-        <p style="margin-top:8px;">TTA China FRP Tool</p>
-    </footer>
-
-</div>
-
-<script>
-    /* DARK / LIGHT THEME */
-    const toggle = document.getElementById("themeToggle");
-    const body = document.body;
-    const savedTheme = localStorage.getItem("tta-theme");
-
-    if (savedTheme === "dark") {
-        body.classList.add("dark");
-        toggle.textContent = "☀️";
-    }
-
-    toggle.addEventListener("click", function () {
-        body.classList.toggle("dark");
-        const dark = body.classList.contains("dark");
-
-        if (dark) {
-            toggle.textContent = "☀️";
-            localStorage.setItem("tta-theme", "dark");
-        } else {
-            toggle.textContent = "🌙";
-            localStorage.setItem("tta-theme", "light");
-        }
-    });
-
-    /* VIDEO PLAYER */
-    const video = document.getElementById("ttaVideo");
-    const playBtn = document.getElementById("playBtn");
-    const stopBtn = document.getElementById("stopBtn");
-    const fullscreenBtn = document.getElementById("fullscreenBtn");
-    const progressBar = document.getElementById("progressBar");
-    const timeDisplay = document.getElementById("timeDisplay");
-    const wrapper = document.getElementById("videoWrapper");
-
-    function togglePlay() {
-        if (video.paused) {
-            video.play();
-            playBtn.textContent = "⏸️";
-        } else {
-            video.pause();
-            playBtn.textContent = "▶️";
-        }
-    }
-
-    playBtn.addEventListener("click", togglePlay);
-    video.addEventListener("click", togglePlay);
-
-    stopBtn.addEventListener("click", function () {
-        video.pause();
-        video.currentTime = 0;
-        playBtn.textContent = "▶️";
-    });
-
-    function formatTime(sec) {
-        if (isNaN(sec)) return "00:00";
-        let m = Math.floor(sec / 60);
-        let s = Math.floor(sec % 60);
-        if (m < 10) m = "0" + m;
-        if (s < 10) s = "0" + s;
-        return m + ":" + s;
-    }
-
-    video.addEventListener("timeupdate", function () {
-        if (!video.duration) return;
-        const percent = (video.currentTime / video.duration) * 100;
-        progressBar.value = percent;
-        timeDisplay.textContent = formatTime(video.currentTime) + " / " + formatTime(video.duration);
-    });
-
-    progressBar.addEventListener("input", function () {
-        if (!video.duration) return;
-        video.currentTime = (progressBar.value / 100) * video.duration;
-    });
-
-    fullscreenBtn.addEventListener("click", function () {
-        if (!document.fullscreenElement && !document.webkitFullscreenElement) {
-            if (wrapper.requestFullscreen) {
-                wrapper.requestFullscreen();
-            } else if (wrapper.webkitRequestFullscreen) {
-                wrapper.webkitRequestFullscreen();
-            } else if (video.webkitEnterFullscreen) {
-                video.webkitEnterFullscreen();
-            }
-        } else {
-            if (document.exitFullscreen) {
-                document.exitFullscreen();
-            } else if (document.webkitExitFullscreen) {
-                document.webkitExitFullscreen();
-            }
-        }
-    });
-
-    video.addEventListener("ended", function () {
-        playBtn.textContent = "▶️";
-    });
-</script>
-
-</body>
-</html>
+                    Your browser does not support HTML5 video
