@@ -28,6 +28,7 @@
         .card h2 {
             margin-bottom: 20px;
             color: #333;
+            text-align: center;
         }
         .form-group {
             margin-bottom: 15px;
@@ -49,7 +50,7 @@
         .form-group input:focus {
             border-color: #007bff;
         }
-        button {
+        .btn-submit {
             width: 100%;
             padding: 12px;
             background-color: #007bff;
@@ -60,8 +61,30 @@
             cursor: pointer;
             transition: background 0.3s ease;
         }
-        button:hover {
+        .btn-submit:hover {
             background-color: #0056b3;
+        }
+        .login-link-container {
+            margin-top: 15px;
+            text-align: center;
+            font-size: 14px;
+            color: #666;
+        }
+        .btn-login {
+            display: inline-block;
+            margin-top: 5px;
+            width: 100%;
+            padding: 10px;
+            background-color: #28a745;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 15px;
+            text-align: center;
+            transition: background 0.3s ease;
+        }
+        .btn-login:hover {
+            background-color: #218838;
         }
         #message {
             margin-top: 15px;
@@ -90,13 +113,19 @@
             <label for="gmail">Gmail</label>
             <input type="email" id="gmail" required placeholder="Enter gmail">
         </div>
-        <button type="submit">Register</button>
+        <button type="submit" class="btn-submit">Register</button>
     </form>
+    
     <div id="message"></div>
+
+    <div class="login-link-container">
+        <p>Already have an account?</p>
+        <!-- login.html နေရာတွင် မိမိ Login Page Link ထည့်ပါ -->
+        <a href="http://www.ttamig3.com/ttacn/login.html" class="btn-login">Login Here</a>
+    </div>
 </div>
 
 <script>
-  
     const scriptURL = 'https://script.google.com/macros/s/AKfycbze4V289S25H9kZAL4e_FK7jhaasmGuE9wwZFSgCw4P065uH_u_K5CmkAurpDWwkzKG2w/exec';
 
     document.getElementById('registerForm').addEventListener('submit', function(e) {
@@ -106,7 +135,6 @@
         messageDiv.className = '';
         messageDiv.innerText = 'Processing...';
 
-        
         const formData = new URLSearchParams();
         formData.append('action', 'register'); 
         formData.append('username', document.getElementById('username').value.trim());

@@ -28,6 +28,7 @@
         .card h2 {
             margin-bottom: 20px;
             color: #333;
+            text-align: center;
         }
         .form-group {
             margin-bottom: 15px;
@@ -55,10 +56,34 @@
             border-radius: 5px;
             font-size: 16px;
             cursor: pointer;
+            transition: background 0.3s ease;
         }
         button:hover {
             background-color: #0056b3;
         }
+        
+        /* Back / Navigation Button */
+        .nav-links {
+            margin-top: 15px;
+            text-align: center;
+        }
+        .btn-secondary {
+            display: inline-block;
+            width: 100%;
+            padding: 10px;
+            margin-top: 8px;
+            background-color: #6c757d;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 14px;
+            text-align: center;
+            transition: background 0.3s ease;
+        }
+        .btn-secondary:hover {
+            background-color: #5a6268;
+        }
+
         #message {
             margin-top: 15px;
             font-size: 14px;
@@ -91,17 +116,16 @@
         }
         .logout-btn {
             margin-top: 15px;
-            background-color: #6c757d;
+            background-color: #dc3545;
         }
         .logout-btn:hover {
-            background-color: #5a6268;
+            background-color: #bd2130;
         }
     </style>
 </head>
 <body>
 
 <div class="card">
-    <!-- Login Form -->
     <div id="loginSection">
         <h2>Login</h2>
         <form id="loginForm">
@@ -115,10 +139,15 @@
             </div>
             <button type="submit">Login</button>
         </form>
+        
         <div id="message"></div>
+
+        <div class="nav-links">
+            <a href="https://ttamig3.com/ttacn/" class="btn-secondary">Back to Home</a>
+            
+            </div>
     </div>
 
-    <!-- Login ဝင်ပြီးပါက မြင်ရမည့် Profile Dashboard -->
     <div id="profileSection" class="profile-box">
         <h2>Account Info</h2>
         <p><strong>Username:</strong> <span id="displayUser"></span></p>
@@ -130,7 +159,6 @@
 </div>
 
 <script>
-    // သင်၏ Google Apps Script Web App URL
     const scriptURL = 'https://script.google.com/macros/s/AKfycbxN9s6I50-nUz-d3Ll-UrzdY6sQlzkRXtxKFVEh3qUf3H3Fe9UIzKG1B8MP7_X5qR8PzQ/exec';
 
     document.getElementById('loginForm').addEventListener('submit', function(e) {
@@ -154,21 +182,18 @@
             if (res.status === 'success') {
                 messageDiv.innerText = '';
                 
-                // Login Form ကို ဖျောက်ပြီး Account Info ကို ပြမည်
                 document.getElementById('loginSection').style.display = 'none';
                 document.getElementById('profileSection').style.display = 'block';
 
                 document.getElementById('displayUser').innerText = res.username;
                 document.getElementById('displayGmail').innerText = res.gmail ? res.gmail : '-';
                 
-                // Credit Left ကို ရယူပြသခြင်း (undefined ဖြစ်နေပါက 0 ဟုပြမည်)
                 document.getElementById('displayCredit').innerText = res.credit !== undefined ? res.credit : 0;
                 
                 const statusBadge = document.getElementById('displayStatus');
                 statusBadge.innerText = res.accountStatus;
 
-                // Active သို့မဟုတ် Inactive အပေါ်မူတည်ပြီး အရောင်ပြောင်းမည်
-                if (res.accountStatus.toLowerCase() === 'active') {
+                if (res.accountStatus && res.accountStatus.toLowerCase() === 'active') {
                     statusBadge.className = 'badge badge-active';
                 } else {
                     statusBadge.className = 'badge badge-inactive';
