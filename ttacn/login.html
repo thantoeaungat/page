@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="my">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #f4f6f9;
+        }
+        .card {
+            background: #ffffff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            width: 350px;
+        }
+        .card h2 {
+            margin-bottom: 20px;
+            color: #333;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: #555;
+            font-size: 14px;
+        }
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            outline: none;
+            font-size: 14px;
+        }
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        #message {
+            margin-top: 15px;
+            font-size: 14px;
+            font-weight: bold;
+            text-align: center;
+        }
+        .error { color: red; }
+        
+        /* Dashboard / Profile Section */
+        .profile-box {
+            display: none;
+            text-align: center;
+        }
+        .profile-box p {
+            margin: 10px 0;
+            font-size: 15px;
+        }
+        .badge {
+            display: inline-block;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-weight: bold;
+            color: white;
+        }
+        .badge-active { background-color: #28a745; }
+        .badge-inactive { background-color: #dc3545; }
+        .logout-btn {
+            margin-top: 15px;
+            background-color: #6c757d;
+        }
+        .logout-btn:hover {
+            background-color: #5a6268;
+        }
+    </style>
+</head>
+<body>
+
+<div class="card">
+    <!-- Login Form -->
+    <div id="loginSection">
+        <h2>Login</h2>
+        <form id="loginForm">
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" id="username" required placeholder="Enter username">
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" required placeholder="Enter password">
+            </div>
+            <button type="submit">Login</button>
+        </form>
+        <div id="message"></div>
+    </div>
+
+    <!-- Login ဝင်ပြီးပါက မြင်ရမည့် Profile Dashboard -->
+    <div id="profileSection" class="profile-box">
+        <h2>Account Info</h2>
+        <p><strong>Username:</strong> <span id="displayUser"></span></p>
+        <p><strong>Gmail:</strong> <span id="displayGmail"></span></p>
+        <p><strong>Status:</strong> <span id="displayStatus" class="badge"></span></p>
+        <button class="logout-btn" onclick="logout()">Logout</button>
+    </div>
+</div>
+
+<script>
+    // သင်၏ Google Apps Script Web App URL ကို ထည့်ပါ
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbzRYEFXL339D69jx7eQNZFdiIEqxmlmC_wgfJV8KF09Cw4C6Ss8RNu2FyyMTI9kYCnDrw/exec';
+
+    document.getElementById('loginForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        const messageDiv = document.getElementById('message');
+        messageDiv.className = '';
+        messageDiv.innerText = 'Checking...';
+
+        const formData = new URLSearchParams();
+        formData.append('action', 'login'); // action ကို login ပို့မည်
+        formData.append('username', document.getElementById('username').value.trim());
+        formData.append('password', document.getElementById('password').value.trim());
+
+        fetch(scriptURL, {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.json())
+        .then(res => {
+            if (res.status === 'success') {
+                messageDiv.innerText = '';
+                
+                // Login Form ကို ဖျောက်ပြီး Account Info ကို ပြမည်
+                document.getElementById('loginSection').style.display = 'none';
+                document.getElementById('profileSection').style.display = 'block';
+
+                document.getElementById('displayUser').innerText = res.username;
+                document.getElementById('displayGmail').innerText = res.gmail ? res.gmail : '-';
+                
+                const statusBadge = document.getElementById('displayStatus');
+                statusBadge.innerText = res.accountStatus;
+
+                // Active သို့မဟုတ် Inactive အပေါ်မူတည်ပြီး အရောင်ပြောင်းမည်
+                if (res.accountStatus.toLowerCase() === 'active') {
+                    statusBadge.className = 'badge badge-active';
+                } else {
+                    statusBadge.className = 'badge badge-inactive';
+                }
+            } else {
+                messageDiv.className = 'error';
+                messageDiv.innerText = res.message;
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            messageDiv.className = 'error';
+            messageDiv.innerText = 'Something went wrong. Try again!';
+        });
+    });
+
+    function logout() {
+        document.getElementById('profileSection').style.display = 'none';
+        document.getElementById('loginSection').style.display = 'block';
+        document.getElementById('loginForm').reset();
+    }
+</script>
+
+</body>
+</html>
