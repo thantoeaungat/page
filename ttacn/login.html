@@ -85,6 +85,10 @@
         }
         .badge-active { background-color: #28a745; }
         .badge-inactive { background-color: #dc3545; }
+        .badge-credit { 
+            background-color: #17a2b8; 
+            font-size: 14px;
+        }
         .logout-btn {
             margin-top: 15px;
             background-color: #6c757d;
@@ -119,14 +123,15 @@
         <h2>Account Info</h2>
         <p><strong>Username:</strong> <span id="displayUser"></span></p>
         <p><strong>Gmail:</strong> <span id="displayGmail"></span></p>
+        <p><strong>Credit Left:</strong> <span id="displayCredit" class="badge badge-credit">0</span></p>
         <p><strong>Status:</strong> <span id="displayStatus" class="badge"></span></p>
         <button class="logout-btn" onclick="logout()">Logout</button>
     </div>
 </div>
 
 <script>
-    // သင်၏ Google Apps Script Web App URL ကို ထည့်ပါ
-    const scriptURL = 'https://script.google.com/macros/s/AKfycbzRYEFXL339D69jx7eQNZFdiIEqxmlmC_wgfJV8KF09Cw4C6Ss8RNu2FyyMTI9kYCnDrw/exec';
+    // သင်၏ Google Apps Script Web App URL
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbxN9s6I50-nUz-d3Ll-UrzdY6sQlzkRXtxKFVEh3qUf3H3Fe9UIzKG1B8MP7_X5qR8PzQ/exec';
 
     document.getElementById('loginForm').addEventListener('submit', function(e) {
         e.preventDefault();
@@ -136,7 +141,7 @@
         messageDiv.innerText = 'Checking...';
 
         const formData = new URLSearchParams();
-        formData.append('action', 'login'); // action ကို login ပို့မည်
+        formData.append('action', 'login');
         formData.append('username', document.getElementById('username').value.trim());
         formData.append('password', document.getElementById('password').value.trim());
 
@@ -155,6 +160,9 @@
 
                 document.getElementById('displayUser').innerText = res.username;
                 document.getElementById('displayGmail').innerText = res.gmail ? res.gmail : '-';
+                
+                // Credit Left ကို ရယူပြသခြင်း (undefined ဖြစ်နေပါက 0 ဟုပြမည်)
+                document.getElementById('displayCredit').innerText = res.credit !== undefined ? res.credit : 0;
                 
                 const statusBadge = document.getElementById('displayStatus');
                 statusBadge.innerText = res.accountStatus;
