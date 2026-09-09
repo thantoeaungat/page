@@ -2,7 +2,6 @@
 <html lang="my">
 
 <head>
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TTA China FRP Tool</title>
@@ -10,18 +9,14 @@
     <link rel="icon" type="image/x-icon" href="logo.ico">
 
     <style>
-
         :root {
             --bg: #f4f7fb;
             --card: rgba(255,255,255,0.88);
             --text: #172033;
             --muted: #667085;
-
             --primary: #2563eb;
             --primary-dark: #1d4ed8;
-
             --border: rgba(0,0,0,0.08);
-
             --shadow: 0 20px 60px rgba(0,0,0,0.10);
         }
 
@@ -30,12 +25,9 @@
             --card: rgba(20,25,36,0.90);
             --text: #f3f4f6;
             --muted: #9ca3af;
-
             --primary: #3b82f6;
             --primary-dark: #2563eb;
-
             --border: rgba(255,255,255,0.09);
-
             --shadow: 0 20px 60px rgba(0,0,0,0.40);
         }
 
@@ -100,7 +92,6 @@
             object-fit: cover;
         }
 
-        /* NAV CONTROLS & MENU */
         .nav-right {
             display: flex;
             align-items: center;
@@ -198,6 +189,50 @@
             margin-bottom: 30px;
         }
 
+        .info-box {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            padding: 24px;
+            margin-bottom: 25px;
+            text-align: left;
+            box-shadow: 0 10px 30px rgba(0,0,0,.04);
+        }
+
+        .info-box h3 {
+            font-size: 18px;
+            margin-bottom: 15px;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .steps-list {
+            padding-left: 20px;
+            color: var(--muted);
+            font-size: 15px;
+            line-height: 1.8;
+        }
+
+        .steps-list li {
+            margin-bottom: 8px;
+        }
+
+        .credit-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 12px;
+            font-weight: 800;
+            font-size: 16px;
+            margin: 15px 0 30px;
+            box-shadow: 0 8px 20px rgba(245, 158, 11, 0.25);
+        }
+
         /* BUTTONS */
         .buttons {
             display: flex;
@@ -223,12 +258,6 @@
 
         .btn:hover {
             transform: translateY(-3px);
-        }
-
-        .register {
-            color: white;
-            background: linear-gradient(135deg, #10b981, #059669);
-            box-shadow: 0 12px 30px rgba(16,185,129,.28);
         }
 
         .download {
@@ -304,119 +333,6 @@
             cursor: pointer;
         }
 
-        /* VIDEO CONTROLS */
-        .video-controls {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding: 12px 5px 4px;
-        }
-
-        .video-controls button {
-            border: 1px solid var(--border);
-            background: transparent;
-            color: var(--text);
-            width: 45px;
-            height: 42px;
-            border-radius: 11px;
-            cursor: pointer;
-            font-size: 17px;
-            transition: .2s;
-            flex-shrink: 0;
-        }
-
-        .video-controls button:hover {
-            transform: translateY(-2px);
-            background: rgba(127,127,127,.10);
-        }
-
-        .video-controls .play-btn {
-            background: var(--primary);
-            color: white;
-            border-color: var(--primary);
-        }
-
-        .video-controls .play-btn:hover {
-            background: var(--primary-dark);
-        }
-
-        .progress-container {
-            flex: 1;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        #progressBar {
-            width: 100%;
-            height: 5px;
-            appearance: none;
-            -webkit-appearance: none;
-            background: rgba(127,127,127,.25);
-            border-radius: 10px;
-            cursor: pointer;
-        }
-
-        #progressBar::-webkit-slider-thumb {
-            appearance: none;
-            -webkit-appearance: none;
-            width: 14px;
-            height: 14px;
-            border-radius: 50%;
-            background: var(--primary);
-            cursor: pointer;
-        }
-
-        #progressBar::-moz-range-thumb {
-            width: 14px;
-            height: 14px;
-            border-radius: 50%;
-            background: var(--primary);
-            border: none;
-            cursor: pointer;
-        }
-
-        .time {
-            min-width: 80px;
-            text-align: center;
-            font-size: 12px;
-            color: var(--muted);
-            white-space: nowrap;
-        }
-
-        /* FEATURES */
-        .features {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 18px;
-            margin-top: 25px;
-        }
-
-        .feature {
-            padding: 25px;
-            background: var(--card);
-            border: 1px solid var(--border);
-            border-radius: 18px;
-            text-align: center;
-            box-shadow: 0 10px 35px rgba(0,0,0,.05);
-        }
-
-        .feature-icon {
-            font-size: 30px;
-            margin-bottom: 12px;
-        }
-
-        .feature h3 {
-            font-size: 17px;
-            margin-bottom: 8px;
-        }
-
-        .feature p {
-            color: var(--muted);
-            font-size: 13px;
-            line-height: 1.6;
-        }
-
         /* FOOTER */
         footer {
             text-align: center;
@@ -474,29 +390,8 @@
             .btn {
                 width: 100%;
             }
-
-            .features {
-                grid-template-columns: 1fr;
-            }
-
-            .video-controls {
-                gap: 6px;
-            }
-
-            .video-controls button {
-                width: 40px;
-                height: 38px;
-                font-size: 15px;
-            }
-
-            .time {
-                min-width: 65px;
-                font-size: 11px;
-            }
         }
-
     </style>
-
 </head>
 
 <body>
@@ -536,18 +431,37 @@
             လက်ရှိမှာပုံထဲက Model များသာပါပါဦးမယ်။
         </p>
 
+        <!-- Credit Pricing Notice -->
+        <div>
+            <div class="credit-badge">
+                💎 နှုန်းထား - 2 Credit = 1 FRP
+            </div>
+        </div>
+
+        <!-- USB Debugging Instruction Box -->
+        <div class="info-box">
+            <h3>⚙️ USB Debugging ဖွင့်နည်း အဆင့်ဆင့်</h3>
+            <ol class="steps-list">
+                <li>ဖုန်း၏ <strong>Setting &gt; My Device &gt; OS version</strong> ထဲသို့ဝင်ပြီး (၇) ချက်တိတိ ဆက်တိုက်နှိပ်ပါ။</li>
+                <li><strong>Additional Settings &gt; Developer options</strong> ထဲသို့ဝင်ပါ။</li>
+                <li><strong>USB Debugging</strong> ကို ရှာပြီး On ပေးပါ။</li>
+                <li>ဖုန်းနှင့် PC ကို USB Cable ဖြင့် ချိတ်ဆက်ပါ။</li>
+                <li>ဖုန်းမျက်နှာပြင်တွင် <strong>Allow USB debugging?</strong> ပေါ်လာတိုင်း <strong>OK</strong> ကိုနှိပ်ပေးပါ။</li>
+            </ol>
+        </div>
+
         <div class="description">
             <h2>Supported Models</h2>
             <p style="margin-top: 10px;">
-			Redmi Note 14 Pro | 
-			Redmi Note 14 Pro Plus | Redmi Note 15 | Redmi Note 15 Pro | 
-			Redmi Note 15 Pro Plus | Redmi Note 12 Turbo | Redmi Note 13 Pro | 
-			Xiaomi 15 / Pro / Ultra
-			Xiaomi 17 / Pro / Max / Ultra
-			Xiaomi 14 / Pro / Ultra | Redmi K70 Pro | Civi 2 | Turbo 4 | Turbo 3 | 
-			Turbo 4 Pro | Civi 5 Pro | K70 | K70 Pro | K80 Ultra | MI 13 / Pro | ULTRA
-			K90 / K90 Ultra  / Pro Max / K80 Ultra
-			</p>
+            Redmi Note 14 Pro | 
+            Redmi Note 14 Pro Plus | Redmi Note 15 | Redmi Note 15 Pro | 
+            Redmi Note 15 Pro Plus | Redmi Note 12 Turbo | Redmi Note 13 Pro | 
+            Xiaomi 15 / Pro / Ultra |
+            Xiaomi 17 / Pro / Max / Ultra |
+            Xiaomi 14 / Pro / Ultra | Redmi K70 Pro | Civi 2 | Turbo 4 | Turbo 3 | 
+            Turbo 4 Pro | Civi 5 Pro | K70 | K70 Pro | K80 Ultra | MI 13 / Pro | ULTRA |
+            K90 / K90 Ultra / Pro Max
+            </p>
         </div>
 
         <div class="preview-card">
@@ -556,8 +470,6 @@
         <br>
         
         <div class="buttons">
-
-          
             <a class="btn download" href="https://ttamig3.com/ttacn/TCF_V1.4.3.2.exe" download>
                 ⬇️ Download Tool V1.4.3.2 update
             </a>
@@ -569,14 +481,41 @@
             <a class="btn contact" href="https://ttamig3.com/social/" target="_blank">
                 📞 ဆက်သွယ်ရန်
             </a>
-
         </div>
-
 
         <div class="video-card">
             <div class="video-title">🎬 TTA China FRP Tool အသုံးပြုနည်း Video</div>
 
             <div class="video-wrapper" id="videoWrapper">
-                <video id="ttaVideo" preload="metadata" playsinline>
+                <video id="ttaVideo" preload="metadata" playsinline controls>
                     <source src="http://www.ttamig3.com/ttacn/Video.mp4" type="video/mp4">
                     Your browser does not support HTML5 video
+                </video>
+            </div>
+        </div>
+
+    </section>
+
+    <footer>
+        <p>&copy; 2026 TTA China FRP Tool. All Rights Reserved.</p>
+    </footer>
+
+</div>
+
+<script>
+    // Theme Switcher Script
+    const themeToggle = document.getElementById('themeToggle');
+    const body = document.body;
+
+    themeToggle.addEventListener('click', () => {
+        body.classList.toggle('dark');
+        if (body.classList.contains('dark')) {
+            themeToggle.textContent = '☀️';
+        } else {
+            themeToggle.textContent = '🌙';
+        }
+    });
+</script>
+
+</body>
+</html>
