@@ -31,6 +31,11 @@
             --shadow: 0 20px 60px rgba(0,0,0,0.40);
         }
 
+        /* Smooth Scroll Effect */
+        html {
+            scroll-behavior: smooth;
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -408,7 +413,8 @@
 
         <div class="nav-right">
             <ul class="nav-menu">
-                <li><a href="https://ttamig3.com/ttacn/Release.exe" class="nav-link" download>Download</a></li>
+                <!-- Navbar Download ခလုတ်ကို နှိပ်လျှင် အောက်ဘက်သို့ Scroll ဆင်းသွားမည် -->
+                <li><a href="#downloadSection" class="nav-link">Download</a></li>
                 <li><a href="http://www.ttamig3.com/ttacn/join.html" class="nav-link">Register</a></li>
                 <li><a href="http://www.ttamig3.com/ttacn/login.html" class="nav-link btn-nav-primary">Login</a></li>
             </ul>
@@ -469,8 +475,10 @@
         </div>
         <br>
         
-        <div class="buttons">
-            <a class="btn download" href="https://ttamig3.com/ttacn/Release.exe" download>
+        <!-- အောက်ခြေ Download ခလုတ်များစုရာ (ဤနေရာသို့ Scroll ဆင်းလာမည်) -->
+        <div class="buttons" id="downloadSection">
+            <!-- ⬇️ လင့်ခ်အသစ်ပြောင်းလိုပါက အောက်ပါ globalDownloadUrl ဗေဒါ သို့မဟုတ် ဤနေရာတွင် ပြောင်းပါ -->
+            <a class="btn download" href="#" id="downloadLinkBtn" download>
                 ⬇️ Download Tool V1.4.3.2 update
             </a>
 
@@ -503,6 +511,12 @@
 </div>
 
 <script>
+    // ⬇️ [အရေးကြီး] နောင်တွင် Download Link အသစ်ပြောင်းလိုပါက ဤနေရာတွင် တစ်ကြိမ်တည်း ပြောင်းပေးပါ။
+    const globalDownloadUrl = "https://ttamig3.com/ttacn/Release.exe";
+
+    // အောက်ခြေ Download ခလုတ်ဆီသို့ လင့်ခ်အလိုအလျောက် ချိတ်ပေးခြင်း
+    document.getElementById('downloadLinkBtn').href = globalDownloadUrl;
+
     // Theme Switcher Script
     const themeToggle = document.getElementById('themeToggle');
     const body = document.body;
