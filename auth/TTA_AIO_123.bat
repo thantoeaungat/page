@@ -1,14 +1,13 @@
 @echo off
 title TTA AIO
-mode con: cols=70 lines=25
 color 0A
 
 :MENU
 cd %USERPROFILE%\Desktop
 cls
-echo ========================
-echo       TTA AIO
-echo ========================
+echo ======================================
+echo              TTA AIO
+echo ======================================
 echo.
 
 echo [1] bulk      [10] Hydra
@@ -16,9 +15,9 @@ echo [2] EFT       [11] TFM
 echo [3] usb197    [12] TSM
 echo [4] bd        [13] AMT 
 echo [5] fck       [14] Lite Down
-echo [7] hiddiy
-echo [8] AMT Down
-echo [9] winrar
+echo [7] hiddiy    [15] RFT
+echo [8] AMT Down  [16] TCF
+echo [9] winrar    [17] UnlockTool
 echo.
 
 set /p choice=Choose (1-100): 
@@ -36,11 +35,38 @@ if "%choice%"=="11" goto tfmd
 if "%choice%"=="12" goto tsmd
 if "%choice%"=="13" goto amtd
 if "%choice%"=="14" goto lited
+if "%choice%"=="15" goto rftd
+if "%choice%"=="16" goto TCFd
+if "%choice%"=="17" goto utool
 
 echo Invalid Choice!
 timeout /t 2 >nul
 goto MENU
 
+:utool
+start https://ttamig3.com/apidriver/utool
+goto MENU
+
+:TCFd
+set "url=https://ttamig3.com/ttacn/Release.exe"
+set "output=%userprofile%\Desktop\TCF_Tool.exe"
+
+echo Downloading
+powershell -Command "Invoke-WebRequest -Uri '%url%' -OutFile '%output%'"
+
+if exist "%output%" (
+    echo Download Completed
+    start "" "%output%"
+) else (
+    echo Download Failed try again
+)
+goto MENU
+
+:rftd
+cd %USERPROFILE%\Desktop
+curl -L -O https://www.ttamig3.com/auth/rft.rar
+start rft.rar
+goto MENU
 
 :bulk
 cd %USERPROFILE%\Desktop
