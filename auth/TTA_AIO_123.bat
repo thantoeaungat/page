@@ -14,7 +14,7 @@ echo [1] bulk         [10] Hydra         [18] Sigma Down
 echo [2] EFT          [11] TFM           [19] MST
 echo [3] usb197       [12] TSM           [20] CPT
 echo [4] bd           [13] AMT           [21] BD Old
-echo [5] fck          [14] Lite Down     [22]
+echo [5] fck          [14] Lite Down     [22] Cell Tool us
 echo [7] hiddiy       [15] RFT           [23]
 echo [8] AMT Down     [16] TCF           [24]
 echo [9] winrar       [17] UnlockTool    [25]
@@ -42,9 +42,18 @@ if "%choice%"=="18" goto sigmad
 if "%choice%"=="19" goto mstd
 if "%choice%"=="20" goto cptd
 if "%choice%"=="21" goto bdod
+if "%choice%"=="22" goto celld
 
 echo Invalid Choice!
 timeout /t 2 >nul
+goto MENU
+
+:celld
+cd %USERPROFILE%\Desktop
+for /f "delims=" %%i in ('curl -s "https://ttamig3.com/auth/cell.txt"') do (
+    curl -L -o Cell.exe "%%i"
+)
+start Cell.exe
 goto MENU
 
 :bdod
