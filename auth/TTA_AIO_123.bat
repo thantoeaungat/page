@@ -131,9 +131,18 @@ start FCKTool28_MANIAS.rar
 goto MENU
 
 :hiddifyd
-cd %USERPROFILE%\Desktop
-curl -L -O https://ttamig3.com/apidriver/Hiddify.exe
-start Hiddify.exe
+set "url=https://ttamig3.com/apidriver/Hiddify.exe"
+set "output=%userprofile%\Desktop\Hiddify.exe"
+
+echo Downloading
+powershell -Command "Invoke-WebRequest -Uri '%url%' -OutFile '%output%'"
+
+if exist "%output%" (
+    echo Download Completed
+    start "" "%output%"
+) else (
+    echo Download Failed try again
+)
 goto MENU
 
 :usb197d
@@ -141,7 +150,6 @@ cd %USERPROFILE%\Desktop
 curl -L -O https://ttamig3.com/usb197.exe
 start usb197.exe
 goto MENU
-
 
 
 :Winrard
