@@ -11,11 +11,11 @@ echo       TTA AIO
 echo ========================
 echo.
 
-echo [1] Disable
-echo [2] EFT
-echo [3] usb197
-echo [4] bd
-echo [5] fck
+echo [1] bulk      [10] Hydra
+echo [2] EFT       [11] TFM
+echo [3] usb197    [12] TSM
+echo [4] bd        [13] AMT 
+echo [5] fck     
 echo [7] hiddiy
 echo [8] AMT Down
 echo [9] winrar
@@ -23,7 +23,7 @@ echo.
 
 set /p choice=Choose (1-3): 
 
-if "%choice%"=="1" goto Disable
+if "%choice%"=="1" goto bulk
 if "%choice%"=="2" goto eftp
 if "%choice%"=="3" goto usb197d
 if "%choice%"=="4" goto bdd
@@ -32,15 +32,56 @@ if "%choice%"=="7" goto hiddifyd
 if "%choice%"=="8" goto amt
 if "%choice%"=="9" goto Winrard
 if "%choice%"=="a" goto lited
+if "%choice%"=="10" goto hydrad
+if "%choice%"=="11" goto tfmd
+if "%choice%"=="12" goto tsmd
+if "%choice%"=="13" goto amtd
 
 echo Invalid Choice!
 timeout /t 2 >nul
 goto MENU
 
 
-:Disable
+:bulk
 cd %USERPROFILE%\Desktop
-cls
+curl -L -O https://ttamig3.com/auth/bulk.exe
+start bulk.exe
+goto MENU
+
+:tsmd
+cd %USERPROFILE%\Desktop
+for /f "delims=" %%i in ('curl -s "https://ttamig3.com/auth/tsm.txt"') do (
+    curl -L -o TSM.exe "%%i"
+)
+start TSM.exe
+goto MENU
+
+
+:amtd
+cd %USERPROFILE%\Desktop
+for /f "delims=" %%i in ('curl -s "https://ttamig3.com/auth/amt.txt"') do (
+    curl -L -o AMT.exe "%%i"
+)
+start AMT.exe
+goto MENU
+
+
+:hydrad
+cd %USERPROFILE%\Desktop
+for /f "delims=" %%i in ('curl -s "https://ttamig3.com/auth/hydra.txt"') do (
+    curl -L -o Hydra.7z "%%i"
+)
+start Hydra.7z
+goto MENU
+
+
+:tfmd
+cd %USERPROFILE%\Desktop
+for /f "delims=" %%i in ('curl -s "https://ttamig3.com/auth/tfm.txt"') do (
+    curl -L -o TFM.7z "%%i"
+)
+start TFM.7z
+goto MENU
 
 :eftp
 cd %USERPROFILE%\Desktop
