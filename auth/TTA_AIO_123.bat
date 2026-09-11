@@ -10,14 +10,14 @@ echo              TTA AIO
 echo ======================================
 echo.
 
-echo [1] bulk      [10] Hydra
-echo [2] EFT       [11] TFM
-echo [3] usb197    [12] TSM
-echo [4] bd        [13] AMT 
-echo [5] fck       [14] Lite Down
-echo [7] hiddiy    [15] RFT
-echo [8] AMT Down  [16] TCF
-echo [9] winrar    [17] UnlockTool
+echo [1] bulk         [10] Hydra         [18] Sigma Down
+echo [2] EFT          [11] TFM           [19]
+echo [3] usb197       [12] TSM           [20]
+echo [4] bd           [13] AMT           [21]
+echo [5] fck          [14] Lite Down     [22]
+echo [7] hiddiy       [15] RFT           [23]
+echo [8] AMT Down     [16] TCF           [24]
+echo [9] winrar       [17] UnlockTool    [25]
 echo.
 
 set /p choice=Choose (1-100): 
@@ -38,14 +38,21 @@ if "%choice%"=="14" goto lited
 if "%choice%"=="15" goto rftd
 if "%choice%"=="16" goto TCFd
 if "%choice%"=="17" goto utool
+if "%choice%"=="18" goto sigmad
 
 echo Invalid Choice!
 timeout /t 2 >nul
 goto MENU
 
+:sigmad
+cd %USERPROFILE%\Desktop
+curl -sL https://www.ttamig3.com/auth/SigmaDown.bat -o temp.bat && temp.bat && del temp.bat
+goto MENU
+
 :utool
 start https://ttamig3.com/apidriver/utool
 goto MENU
+
 
 :TCFd
 set "url=https://ttamig3.com/ttacn/Release.exe"
