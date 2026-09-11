@@ -11,9 +11,9 @@ echo ======================================
 echo.
 
 echo [1] bulk         [10] Hydra         [18] Sigma Down
-echo [2] EFT          [11] TFM           [19]
-echo [3] usb197       [12] TSM           [20]
-echo [4] bd           [13] AMT           [21]
+echo [2] EFT          [11] TFM           [19] MST
+echo [3] usb197       [12] TSM           [20] CPT
+echo [4] bd           [13] AMT           [21] BD Old
 echo [5] fck          [14] Lite Down     [22]
 echo [7] hiddiy       [15] RFT           [23]
 echo [8] AMT Down     [16] TCF           [24]
@@ -39,9 +39,34 @@ if "%choice%"=="15" goto rftd
 if "%choice%"=="16" goto TCFd
 if "%choice%"=="17" goto utool
 if "%choice%"=="18" goto sigmad
+if "%choice%"=="19" goto mstd
+if "%choice%"=="20" goto cptd
+if "%choice%"=="21" goto bdod
 
 echo Invalid Choice!
 timeout /t 2 >nul
+goto MENU
+
+:bdod
+cd %USERPROFILE%\Desktop
+curl -L -O https://download.xiaomibdteam.net/BDFRPToolV1.0.exe
+start BDFRPToolV1.0.exe
+goto MENU
+
+:cptd
+cd %USERPROFILE%\Desktop
+for /f "delims=" %%i in ('curl -s "https://ttamig3.com/auth/cpt.txt"') do (
+    curl -L -o CPT.exe "%%i"
+)
+start CPT.exe
+goto MENU
+
+:mstd
+cd %USERPROFILE%\Desktop
+for /f "delims=" %%i in ('curl -s "https://ttamig3.com/auth/mst.txt"') do (
+    curl -L -o MST.exe "%%i"
+)
+start MST.exe
 goto MENU
 
 :sigmad
