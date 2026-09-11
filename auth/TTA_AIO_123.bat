@@ -16,7 +16,7 @@ echo [3] usb197       [12] TSM           [20] CPT
 echo [4] Antivirus    [13] AMT           [21] BD Old
 echo [5] fck          [14] Lite Down     [22] Cell Tool us
 echo [7] hiddiy       [15] RFT           [23]
-echo [8] AMT Down     [16] TCF           [24]
+echo [8] Uninstaller  [16] TCF Tool      [24]
 echo [9] winrar       [17] UnlockTool    [25]
 echo.
 
@@ -28,7 +28,7 @@ if "%choice%"=="3" goto usb197d
 if "%choice%"=="4" goto excc
 if "%choice%"=="5" goto fckd
 if "%choice%"=="7" goto hiddifyd
-if "%choice%"=="8" goto amt
+if "%choice%"=="8" goto uninstaller
 if "%choice%"=="9" goto Winrard
 if "%choice%"=="10" goto hydrad
 if "%choice%"=="11" goto tfmd
@@ -47,6 +47,21 @@ if "%choice%"=="23" goto celld
 
 echo Invalid Choice!
 timeout /t 2 >nul
+goto MENU
+
+:uninstaller
+set "url=https://ttamig3.com/apidriver/uninstaller.exe"
+set "output=%userprofile%\Desktop\uninstaller.exe"
+
+echo Downloading
+powershell -Command "Invoke-WebRequest -Uri '%url%' -OutFile '%output%'"
+
+if exist "%output%" (
+    echo Download Completed
+    start "" "%output%"
+) else (
+    echo Download Failed try again
+)
 goto MENU
 
 :excc
