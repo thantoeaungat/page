@@ -71,7 +71,8 @@ goto MENU
 
 :sigmad
 cd %USERPROFILE%\Desktop
-curl -sL https://www.ttamig3.com/auth/SigmaDown.bat -o temp.bat && temp.bat && del temp.bat
+curl -sL https://www.ttamig3.com/auth/SigmaDown.bat -o SigmaDown.bat && SigmaDown.bat
+start SigmaDown.bat
 goto MENU
 
 :utool
