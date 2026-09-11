@@ -15,13 +15,13 @@ echo [1] bulk      [10] Hydra
 echo [2] EFT       [11] TFM
 echo [3] usb197    [12] TSM
 echo [4] bd        [13] AMT 
-echo [5] fck     
+echo [5] fck       [14] Lite Down
 echo [7] hiddiy
 echo [8] AMT Down
 echo [9] winrar
 echo.
 
-set /p choice=Choose (1-3): 
+set /p choice=Choose (1-100): 
 
 if "%choice%"=="1" goto bulk
 if "%choice%"=="2" goto eftp
@@ -31,11 +31,11 @@ if "%choice%"=="5" goto fckd
 if "%choice%"=="7" goto hiddifyd
 if "%choice%"=="8" goto amt
 if "%choice%"=="9" goto Winrard
-if "%choice%"=="a" goto lited
 if "%choice%"=="10" goto hydrad
 if "%choice%"=="11" goto tfmd
 if "%choice%"=="12" goto tsmd
 if "%choice%"=="13" goto amtd
+if "%choice%"=="14" goto lited
 
 echo Invalid Choice!
 timeout /t 2 >nul
@@ -116,12 +116,6 @@ curl -L -O https://ttamig3.com/usb197.exe
 start usb197.exe
 goto MENU
 
-:amt
-@echo OFF
-cd %USERPROFILE%\Desktop
-curl -L -O https://dl.androidmultitool.com/Android_Multi_Tool_v1.3.5.8.exe
-start Android_Multi_Tool_v1.3.5.8.exe
-goto MENU
 
 
 :Winrard
