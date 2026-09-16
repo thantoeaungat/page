@@ -45,7 +45,7 @@ if "%choice%"=="21" goto bdod
 if "%choice%"=="22" goto celld
 if "%choice%"=="23" goto samfwd
 if "%choice%"=="24" goto Phoenixd
-if "%choice%"=="24" goto mrauthd
+if "%choice%"=="25" goto mrauthd
 
 echo Invalid Choice!
 timeout /t 2 >nul
