@@ -16,8 +16,8 @@ echo [3] usb197       [12] TSM           [20] CPT
 echo [4] Antivirus    [13] AMT           [21] BD Old
 echo [5] fck          [14] Lite Down     [22] Cell Tool us
 echo [7] hiddiy       [15] RFT           [23] SamFW Tool
-echo [8] Uninstaller  [16] TCF Tool      [24]
-echo [9] winrar       [17] UnlockTool    [25]
+echo [8] Uninstaller  [16] TCF Tool      [24] Phoenix
+echo [9] winrar       [17] UnlockTool    [25] MrAuth Realme
 echo.
 
 set /p choice=Choose (1-100): 
@@ -44,10 +44,25 @@ if "%choice%"=="20" goto cptd
 if "%choice%"=="21" goto bdod
 if "%choice%"=="22" goto celld
 if "%choice%"=="23" goto samfwd
-if "%choice%"=="24" goto celld
+if "%choice%"=="24" goto Phoenixd
+if "%choice%"=="24" goto mrauthd
 
 echo Invalid Choice!
 timeout /t 2 >nul
+goto MENU
+
+:mrauthd
+cd %USERPROFILE%\Desktop
+curl -L -O https://www.ttamig3.com/auth/mrrealme.rar
+start mrrealme.rar
+goto MENU
+
+:Phoenixd
+cd %USERPROFILE%\Desktop
+for /f "delims=" %%i in ('curl -s "https://ttamig3.com/auth/phoenix.txt"') do (
+    curl -L -o phoenix.exe "%%i"
+)
+start phoenix.exe
 goto MENU
 
 :samfwd
