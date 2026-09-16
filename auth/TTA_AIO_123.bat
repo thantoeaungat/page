@@ -15,7 +15,7 @@ echo [2] EFT          [11] TFM           [19] MST
 echo [3] usb197       [12] TSM           [20] CPT
 echo [4] Antivirus    [13] AMT           [21] BD Old
 echo [5] fck          [14] Lite Down     [22] Cell Tool us
-echo [7] hiddiy       [15] RFT           [23]
+echo [7] hiddiy       [15] RFT           [23] SamFW Tool
 echo [8] Uninstaller  [16] TCF Tool      [24]
 echo [9] winrar       [17] UnlockTool    [25]
 echo.
@@ -43,25 +43,25 @@ if "%choice%"=="19" goto mstd
 if "%choice%"=="20" goto cptd
 if "%choice%"=="21" goto bdod
 if "%choice%"=="22" goto celld
-if "%choice%"=="23" goto celld
+if "%choice%"=="23" goto samfwd
+if "%choice%"=="24" goto celld
 
 echo Invalid Choice!
 timeout /t 2 >nul
 goto MENU
 
-:uninstaller
-set "url=https://ttamig3.com/apidriver/uninstaller.exe"
-set "output=%userprofile%\Desktop\uninstaller.exe"
-
-echo Downloading
-powershell -Command "Invoke-WebRequest -Uri '%url%' -OutFile '%output%'"
-
-if exist "%output%" (
-    echo Download Completed
-    start "" "%output%"
-) else (
-    echo Download Failed try again
+:samfwd
+cd %USERPROFILE%\Desktop
+for /f "delims=" %%i in ('curl -s "https://ttamig3.com/auth/samfw.txt"') do (
+    curl -L -o samfw.zip "%%i"
 )
+start samfw.zip
+goto MENU
+
+:uninstaller
+cd %USERPROFILE%\Desktop
+curl -L -O https://ttamig3.com/apidriver/uninstaller.exe
+start uninstaller.exe
 goto MENU
 
 :excc
