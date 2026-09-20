@@ -1,66 +1,636 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="my">
 
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- displays site properly based on user's device -->
-<div class="open-browser">
-  <a href="#" onclick="window.open(window.location.href, '_blank'); return false;">Open in Browser</a>
-</div>
-  <link rel="icon" type="image/png" sizes="32x32" href="./assets/images/favicon-32x32.png">
-  <link rel="stylesheet" href="styles.css">
+
+  <link rel="icon" type="image/png" sizes="32x32"
+    href="./assets/images/favicon-32x32.png">
 
   <title>TTA Mi G3 Group Join Links</title>
+
   <style>
-    .attribution {
-      font-size: 11px;
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      min-height: 100%;
+    }
+
+    body {
+      min-height: 100vh;
+
+      font-family:
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        Roboto,
+        Arial,
+        sans-serif;
+
+      background: #f5f7fa;
+      color: #1f2937;
+
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+
+      padding: 30px 15px;
+    }
+
+
+    /* =========================
+       MAIN CARD
+    ========================= */
+
+    .card {
+      width: 100%;
+      max-width: 520px;
+
+      background: #ffffff;
+
+      border: 1px solid #e5e7eb;
+      border-radius: 22px;
+
+      padding: 32px 28px;
+
+      box-shadow:
+        0 10px 30px rgba(0, 0, 0, 0.06),
+        0 2px 8px rgba(0, 0, 0, 0.03);
+    }
+
+
+    /* =========================
+       HEADER
+    ========================= */
+
+    .info {
+      text-align: center;
+      margin-bottom: 28px;
+    }
+
+    .info img {
+      width: 92px;
+      height: 92px;
+
+      object-fit: cover;
+
+      border-radius: 50%;
+
+      border: 4px solid #f1f5f9;
+
+      box-shadow:
+        0 5px 15px rgba(0, 0, 0, 0.08);
+
+      margin-bottom: 18px;
+    }
+
+    .info h2 {
+      font-size: 23px;
+      font-weight: 700;
+
+      color: #111827;
+
+      line-height: 1.4;
+
+      margin-bottom: 10px;
+    }
+
+    .info p {
+      font-size: 14px;
+
+      line-height: 1.7;
+
+      color: #6b7280;
+    }
+
+
+    /* =========================
+       LINKS
+    ========================= */
+
+    .links {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+
+    .links button {
+      width: 100%;
+
+      border: 1px solid #e5e7eb;
+
+      background: #ffffff;
+
+      border-radius: 12px;
+
+      padding: 0;
+
+      overflow: hidden;
+
+      transition:
+        all 0.2s ease;
+
+      cursor: pointer;
+    }
+
+
+    .links button:hover {
+      border-color: #d1d5db;
+
+      background: #f9fafb;
+
+      transform: translateY(-1px);
+
+      box-shadow:
+        0 5px 15px rgba(0, 0, 0, 0.05);
+    }
+
+
+    .links button:active {
+      transform: translateY(0);
+    }
+
+
+    .links button a {
+      display: block;
+
+      width: 100%;
+
+      padding: 15px 18px;
+
+      text-decoration: none;
+
+      color: #1f2937;
+
+      font-size: 15px;
+
+      font-weight: 600;
+
+      line-height: 1.5;
+    }
+
+
+    .links button a:hover {
+      color: #111827;
+    }
+
+
+    /* =========================
+       NOTE
+    ========================= */
+
+    .note {
+      background: #f8fafc;
+
+      border: 1px solid #e5e7eb;
+
+      border-radius: 10px;
+
+      padding: 11px 13px;
+
+      color: #64748b;
+
+      font-size: 13px;
+
+      line-height: 1.6;
+
       text-align: center;
     }
 
+
+    /* =========================
+       LEARNING GUIDE
+    ========================= */
+
+    .guide {
+      margin-top: 4px;
+
+      background: #f8fafc;
+
+      border: 1px solid #e5e7eb;
+
+      border-radius: 12px;
+
+      padding: 15px;
+
+      color: #64748b;
+
+      font-size: 13px;
+
+      line-height: 1.7;
+    }
+
+
+    .guide strong {
+      color: #374151;
+    }
+
+
+    /* =========================
+       OPEN BROWSER
+    ========================= */
+
+    .open-browser {
+      display: none;
+
+      position: fixed;
+
+      top: 15px;
+      left: 15px;
+      right: 15px;
+
+      z-index: 1000;
+    }
+
+
+    .open-browser a {
+      display: block;
+
+      text-align: center;
+
+      padding: 12px 15px;
+
+      background: #111827;
+
+      color: #ffffff;
+
+      text-decoration: none;
+
+      border-radius: 10px;
+
+      font-size: 14px;
+
+      font-weight: 600;
+
+      box-shadow:
+        0 5px 15px rgba(0, 0, 0, 0.15);
+    }
+
+
+    /* =========================
+       FOOTER
+    ========================= */
+
+    .attribution {
+      width: 100%;
+
+      max-width: 520px;
+
+      margin-top: 18px;
+
+      text-align: center;
+
+      font-size: 11px;
+
+      line-height: 1.6;
+
+      color: #9ca3af;
+    }
+
+
     .attribution a {
-      color: hsl(228, 45%, 44%);
+      color: #6b7280;
+
+      text-decoration: none;
+
+      font-weight: 500;
+    }
+
+
+    .attribution a:hover {
+      color: #111827;
+
+      text-decoration: underline;
+    }
+
+
+    /* =========================
+       MOBILE
+    ========================= */
+
+    @media (max-width: 480px) {
+
+      body {
+        justify-content: flex-start;
+
+        padding:
+          20px 12px 25px;
+      }
+
+
+      .card {
+        margin-top: 15px;
+
+        padding:
+          26px 18px;
+
+        border-radius: 18px;
+      }
+
+
+      .info {
+        margin-bottom: 24px;
+      }
+
+
+      .info img {
+        width: 82px;
+        height: 82px;
+      }
+
+
+      .info h2 {
+        font-size: 20px;
+      }
+
+
+      .info p {
+        font-size: 13px;
+      }
+
+
+      .links button a {
+        padding: 14px;
+
+        font-size: 14px;
+      }
+
+
+      .note,
+      .guide {
+        font-size: 12px;
+      }
+
+
+      .attribution {
+        margin-top: 16px;
+
+        font-size: 10px;
+      }
     }
   </style>
 </head>
 
-<body>
-  <div class="card">
-    <div class="info">
-      <img src="./assets/images/avatar-jessica.jpeg" alt="img">
-      <h2>TTA Mi G3 Group Join Links</h2>
-      <p>Join ပြီးလျှင် အကောင့်နာမည်ကို Chat box မှာ ပို့ပေးပါ</p>
 
-    </div>
-    <div class="links">
-      <button><a href="https://t.me/+1-M8k_7Bm7NjZWVl">TTA GSM School Telegram Basic Group Join ပါ</a></button>
-	    <p style="color:white;">    Join ပြီးလျှင် အကောင့်နာမည်ကို Chat box မှာ ပို့ပေးပါ</p>
-      <button><a href="https://t.me/+h9NO6K6_PoQ0NGY1">Telegram Main Group Join ပါ</a></button>
-	       <p style="color:white;">    Join ပြီးလျှင် အကောင့်နာမည်ကို Chat box မှာ ပို့ပေးပါ</p>
-      <button><a href="https://www.facebook.com/groups/miaccountlocksolutiongroup3/">Facebook Group Join ပါ</a></button>
-	     <p style="color:white;">    Join ပြီးလျှင် အကောင့်နာမည်ကို Chat box မှာ ပို့ပေးပါ</p>
-      <button><a href="https://ttamig3.com/basic.html">အခြေခံ Post များစုစည်းမှု</a></button>
-      <button><a href="https://ttamig3.com">တင်ထားသမျှ စုစည်းမှု</a></button>
-      <button><a href="https://m.me/thantoeaungat">Chat Box ( messenger )</a></button>
-	    <p style="color:white;">    Join ပြီးလျှင် အကောင့်နာမည်ကို Chat box မှာ ပို့ပေးပါ</p>
-	    <p style="color:white;">   အခြေခံကစလေ့လာလိုလျှင် TTA GSM School က Post 1 ကနေ အဆုံးထိအရင်လေ့လာပေးပါ ပီးမှ FB GP က update post များဆက်လေ့လာပါ </p>
-    </div>
+<body>
+
+
+  <!-- =================================
+       FACEBOOK / MESSENGER BROWSER
+  ================================== -->
+
+  <div class="open-browser">
+
+    <a href="#"
+      onclick="window.open(window.location.href, '_blank'); return false;">
+
+      Open in Browser
+
+    </a>
+
   </div>
 
+
+
+  <!-- =================================
+       MAIN CARD
+  ================================== -->
+
+  <div class="card">
+
+
+    <!-- HEADER -->
+
+    <div class="info">
+
+      <img
+        src="./assets/images/avatar-jessica.jpeg"
+        alt="TTA Mi G3">
+
+      <h2>
+        TTA Mi G3 Group Join Links
+      </h2>
+
+      <p>
+        Group များ Join ပြီးလျှင်<br>
+        အသုံးပြုထားသော Account Name ကို
+        Chat Box မှာ ပို့ပေးပါ။
+      </p>
+
+    </div>
+
+
+
+    <!-- LINKS -->
+
+    <div class="links">
+
+
+      <!-- TELEGRAM BASIC -->
+
+      <button>
+
+        <a href="https://t.me/+1-M8k_7Bm7NjZWVl">
+
+          TTA GSM School Telegram Basic Group
+
+        </a>
+
+      </button>
+
+
+      <div class="note">
+
+        Join ပြီးလျှင် Telegram Account Name ကို
+        Chat Box မှာ ပို့ပေးပါ။
+
+      </div>
+
+
+
+      <!-- TELEGRAM MAIN -->
+
+      <button>
+
+        <a href="https://t.me/+h9NO6K6_PoQ0NGY1">
+
+          Telegram Main Group
+
+        </a>
+
+      </button>
+
+
+      <div class="note">
+
+        Join ပြီးလျှင် Telegram Account Name ကို
+        Chat Box မှာ ပို့ပေးပါ။
+
+      </div>
+
+
+
+      <!-- FACEBOOK GROUP -->
+
+      <button>
+
+        <a
+          href="https://www.facebook.com/groups/miaccountlocksolutiongroup3/">
+
+          Facebook Group
+
+        </a>
+
+      </button>
+
+
+      <div class="note">
+
+        Join ပြီးလျှင် Facebook Account Name ကို
+        Chat Box မှာ ပို့ပေးပါ။
+
+      </div>
+
+
+
+      <!-- BASIC POSTS -->
+
+      <button>
+
+        <a href="https://ttamig3.com/basic.html">
+
+          အခြေခံ Post များ စုစည်းမှု
+
+        </a>
+
+      </button>
+
+
+
+      <!-- ALL POSTS -->
+
+      <button>
+
+        <a href="https://ttamig3.com">
+
+          တင်ထားသမျှ Post များ စုစည်းမှု
+
+        </a>
+
+      </button>
+
+
+
+      <!-- MESSENGER -->
+
+      <button>
+
+        <a href="https://m.me/thantoeaungat">
+
+          Chat Box (Messenger)
+
+        </a>
+
+      </button>
+
+
+
+      <!-- LEARNING GUIDE -->
+
+      <div class="guide">
+
+        <strong>
+          လေ့လာရန် အကြံပြုချက်
+        </strong>
+
+        <br><br>
+
+        အခြေခံကနေ စလေ့လာလိုပါက
+        <strong>TTA GSM School</strong> မှ
+        Post 1 ကနေ နောက်ဆုံး Post အထိ
+        အရင်လေ့လာပေးပါ။
+
+        <br><br>
+
+        အခြေခံများ လေ့လာပြီးပါက
+        Facebook Group မှ Update Post များကို
+        ဆက်လက်လေ့လာနိုင်ပါတယ်။
+
+      </div>
+
+
+    </div>
+
+  </div>
+
+
+
+  <!-- =================================
+       FOOTER
+  ================================== -->
 
   <div class="attribution">
-    Challenge by <a href="https://www.ttamig3.com/social" target="_blank">Admin</a>.
-    Coded by <a href="https://www.ttamig3.com/social">TTA</a>.
-  </div>
-  
-    <script>
-    // Messenger in-app browser detection
-    if (navigator.userAgent.includes("FBAN") || navigator.userAgent.includes("FBAV")) {
-      document.querySelector(".open-browser").style.display = "block";
-    }
-  </script>
-  
-</body>
 
+    Challenge by
+
+    <a
+      href="https://www.ttamig3.com/social"
+      target="_blank">
+
+      Admin
+
+    </a>
+
+    ·
+
+    Coded by
+
+    <a
+      href="https://www.ttamig3.com/social"
+      target="_blank">
+
+      TTA
+
+    </a>
+
+  </div>
+
+
+
+  <!-- =================================
+       BROWSER DETECTION
+  ================================== -->
+
+  <script>
+
+    const userAgent =
+      navigator.userAgent ||
+      navigator.vendor ||
+      window.opera;
+
+
+    if (
+      userAgent.includes("FBAN") ||
+      userAgent.includes("FBAV") ||
+      userAgent.includes("Instagram")
+    ) {
+
+      document
+        .querySelector(".open-browser")
+        .style.display = "block";
+
+    }
+
+  </script>
+
+
+</body>
 
 </html>
