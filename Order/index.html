@@ -3,85 +3,193 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Order Management System with Edit</title>
+  <title>Order Management System</title>
   <style>
     body { font-family: system-ui, -apple-system, sans-serif; padding: 20px; max-width: 900px; margin: 0 auto; background-color: #f4f6f8; }
-    .card { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); margin-bottom: 20px; }
+    
+    /* Login Screen Style */
+    #login-screen { max-width: 400px; margin: 80px auto; background: white; padding: 30px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+    #app-screen { display: none; }
+
+    /* Tabs Style */
+    .tab-container { display: flex; border-bottom: 2px solid #ccc; margin-bottom: 20px; background: white; border-radius: 8px 8px 0 0; overflow: hidden; }
+    .tab-btn { flex: 1; padding: 15px; border: none; background: #e9ecef; cursor: pointer; font-size: 16px; font-weight: bold; color: #495057; transition: 0.3s; }
+    .tab-btn.active { background: #007bff; color: white; }
+
+    /* Content Box */
+    .tab-content { display: none; background: white; padding: 20px; border-radius: 0 0 8px 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+    .tab-content.active { display: block; }
+
+    /* Form & Controls */
     input, select, textarea, button { width: 100%; padding: 10px; margin-top: 8px; margin-bottom: 12px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; }
     button { background-color: #007bff; color: white; border: none; font-weight: bold; cursor: pointer; }
     button:hover { background-color: #0056b3; }
     .btn-edit { background-color: #ffc107; color: black; padding: 6px 12px; border: none; border-radius: 4px; cursor: pointer; font-weight: bold; }
     .btn-cancel { background-color: #6c757d; display: none; margin-top: 5px; }
+
+    /* Table Style */
     table { width: 100%; border-collapse: collapse; margin-top: 10px; background: white; }
     th, td { border: 1px solid #ddd; padding: 10px; text-align: left; font-size: 14px; }
     th { background-color: #f1f1f1; }
-    .badge { padding: 4px 8px; border-radius: 4px; color: white; font-size: 12px; }
+    .badge { padding: 4px 8px; border-radius: 4px; color: white; font-size: 12px; display: inline-block; }
     .delivered { background-color: #28a745; }
     .pending { background-color: #ffc107; color: black; }
   </style>
 </head>
 <body>
 
-  <div class="card">
-    <h2 id="formTitle">Order အသစ်ထည့်ရန်</h2>
-    <form id="orderForm">
-      <!-- Row ID ကို ယာယီမှတ်ထားရန် Hidden Input -->
-      <input type="hidden" id="rowId" value="">
-      <input type="hidden" id="existingVoucherLink" value="">
+  <!-- 1. LOGIN SCREEN -->
+  <div id="login-screen">
+    <h2 style="text-align:center; margin-bottom: 20px;">🔒 Admin Login</h2>
+    <form id="loginForm">
+      <label>Username</label>
+      <input type="text" id="loginUser" required placeholder="Username ထည့်ပါ">
 
-      <label>နာမည်</label>
-      <input type="text" id="name" required placeholder="အမည်ထည့်ပါ">
+      <label>Password</label>
+      <input type="password" id="loginPass" required placeholder="Password ထည့်ပါ">
 
-      <label>ဖုန်းနံပါတ်</label>
-      <input type="tel" id="phone" required placeholder="09xxxxxxxxx">
-
-      <label>နေရပ်လိပ်စာ</label>
-      <textarea id="address" rows="3" required placeholder="မြို့နယ်/လိပ်စာ အပြည့်အစုံ"></textarea>
-
-      <label>ပို့ဆောင်မှု အခြေအနေ (Status)</label>
-      <select id="status">
-        <option value="မပို့ရသေး">မပို့ရသေး (Pending)</option>
-        <option value="ပို့ပြီး">ပို့ပြီး (Delivered)</option>
-      </select>
-
-      <label>ဘာနဲ့ ပို့ထားလဲ (Courier Service)</label>
-      <input type="text" id="courier" placeholder="ဥပမာ - Royal Express, Delivery Gate">
-
-      <label>ဘောင်ချာ ပုံ (မပြောင်းချင်ပါက ရွေးစရာမလိုပါ)</label>
-      <input type="file" id="voucherFile" accept="image/*">
-
-      <button type="submit" id="submitBtn">Order သိမ်းမည်</button>
-      <button type="button" id="cancelBtn" class="btn-cancel" onclick="resetForm()">Edit မလုပ်တော့ပါ (Cancel)</button>
+      <button type="submit" id="loginBtn">Login ဝင်မည်</button>
     </form>
   </div>
 
-  <div class="card">
-    <h2>Order စာရင်းများ</h2>
-    <button onclick="loadOrders()" style="background-color: #28a745; margin-bottom: 15px;">Refresh စာရင်းကြည့်မည်</button>
-    <div style="overflow-x:auto;">
-      <table>
-        <thead>
-          <tr>
-            <th>နာမည်</th>
-            <th>ဖုန်း</th>
-            <th>လိပ်စာ</th>
-            <th>Status</th>
-            <th>Courier</th>
-            <th>Voucher</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody id="orderTableBody">
-          <tr><td colspan="7" style="text-align:center;">စာရင်းဆွဲယူနေပါသည်...</td></tr>
-        </tbody>
-      </table>
+  <!-- 2. MAIN APP SCREEN -->
+  <div id="app-screen">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+      <h3 style="margin: 0;">Order Management Dashboard</h3>
+      <button onclick="logout()" style="background-color: #dc3545; width: auto; margin: 0; padding: 8px 16px;">Logout</button>
+    </div>
+
+    <!-- Navigation Tabs -->
+    <div class="tab-container">
+      <button class="tab-btn active" onclick="switchTab('add-tab')">➕ Order အသစ်ထည့်ရန်</button>
+      <button class="tab-btn" onclick="switchTab('list-tab')">📋 Order စာရင်းများ</button>
+    </div>
+
+    <!-- Tab 1: Order Add/Edit -->
+    <div id="add-tab" class="tab-content active">
+      <h2 id="formTitle">Order အသစ်ထည့်ရန်</h2>
+      <form id="orderForm">
+        <input type="hidden" id="rowId" value="">
+        <input type="hidden" id="existingVoucherLink" value="">
+
+        <label>နာမည်</label>
+        <input type="text" id="name" required placeholder="အမည်ထည့်ပါ">
+
+        <label>ဖုန်းနံပါတ်</label>
+        <input type="tel" id="phone" required placeholder="09xxxxxxxxx">
+
+        <label>နေရပ်လိပ်စာ</label>
+        <textarea id="address" rows="3" required placeholder="မြို့နယ်/လိပ်စာ အပြည့်အစုံ"></textarea>
+
+        <label>ပို့ဆောင်မှု အခြေအနေ (Status)</label>
+        <select id="status">
+          <option value="မပို့ရသေး">မပို့ရသေး (Pending)</option>
+          <option value="ပို့ပြီး">ပို့ပြီး (Delivered)</option>
+        </select>
+
+        <label>ဘာနဲ့ ပို့ထားလဲ (Courier Service)</label>
+        <input type="text" id="courier" placeholder="ဥပမာ - Royal Express, Delivery Gate">
+
+        <label>ဘောင်ချာ ပုံ (မပြောင်းချင်ပါက ရွေးစရာမလိုပါ)</label>
+        <input type="file" id="voucherFile" accept="image/*">
+
+        <button type="submit" id="submitBtn">Order သိမ်းမည်</button>
+        <button type="button" id="cancelBtn" class="btn-cancel" onclick="resetForm()">Edit မလုပ်တော့ပါ (Cancel)</button>
+      </form>
+    </div>
+
+    <!-- Tab 2: Order List -->
+    <div id="list-tab" class="tab-content">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+        <h2>Order စာရင်းများ</h2>
+        <button onclick="loadOrders()" style="background-color: #28a745; width: auto; margin: 0;">Refresh စာရင်းကြည့်မည်</button>
+      </div>
+      <div style="overflow-x:auto;">
+        <table>
+          <thead>
+            <tr>
+              <th>နာမည်</th>
+              <th>ဖုန်း</th>
+              <th>လိပ်စာ</th>
+              <th>Status</th>
+              <th>Courier</th>
+              <th>Voucher</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody id="orderTableBody">
+            <tr><td colspan="7" style="text-align:center;">စာရင်းဆွဲယူနေပါသည်...</td></tr>
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
 
   <script>
     const API_URL = "https://script.google.com/macros/s/AKfycbww5K_aj0P2WSjnZqtgfsqR1Mf7bCwQLlQBuxV8swmFRwHIvxUEdrQy6VonmKmM1_EC/exec";
-    let ordersData = []; // Loaded orders data ထိန်းထားရန် variable
+    let ordersData = [];
 
+    // Login Check on Page Load
+    window.onload = function() {
+      if (sessionStorage.getItem('isLoggedIn') === 'true') {
+        showAppScreen();
+      }
+    };
+
+    // Login Handler
+    document.getElementById('loginForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const user = document.getElementById('loginUser').value;
+      const pass = document.getElementById('loginPass').value;
+      const btn = document.getElementById('loginBtn');
+
+      btn.disabled = true;
+      btn.innerText = "စစ်ဆေးနေပါသည်...";
+
+      fetch(API_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action: "login", username: user, password: pass })
+      })
+      .then(() => {
+        sessionStorage.setItem('isLoggedIn', 'true');
+        showAppScreen();
+      })
+      .catch(err => {
+        alert("Login ဝင်ရောက်၍ မရပါ");
+        btn.disabled = false;
+        btn.innerText = "Login ဝင်မည်";
+      });
+    });
+
+    function showAppScreen() {
+      document.getElementById('login-screen').style.display = 'none';
+      document.getElementById('app-screen').style.display = 'block';
+      loadOrders();
+    }
+
+    function logout() {
+      sessionStorage.removeItem('isLoggedIn');
+      location.reload();
+    }
+
+    // Tab Switching Function
+    function switchTab(tabId) {
+      document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+      document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+
+      document.getElementById(tabId).classList.add('active');
+      
+      if (tabId === 'add-tab') {
+        document.querySelectorAll('.tab-btn')[0].classList.add('active');
+      } else {
+        document.querySelectorAll('.tab-btn')[1].classList.add('active');
+        loadOrders();
+      }
+    }
+
+    // Order Submit Handler
     document.getElementById('orderForm').addEventListener('submit', async function(e) {
       e.preventDefault();
       const btn = document.getElementById('submitBtn');
@@ -92,9 +200,7 @@
       btn.innerText = isEdit ? "ပြင်ဆင်နေပါသည်..." : "သိမ်းဆည်းနေပါသည်...";
 
       const fileInput = document.getElementById('voucherFile');
-      let fileData = null;
-      let fileName = "";
-      let fileMimeType = "";
+      let fileData = null, fileName = "", fileMimeType = "";
 
       if (fileInput.files.length > 0) {
         const file = fileInput.files[0];
@@ -126,17 +232,15 @@
       .then(() => {
         alert(isEdit ? "Order စာရင်း ပြင်ဆင်ပြီးပါပြီ!" : "Order အသစ် သိမ်းဆည်းပြီးပါပြီ!");
         resetForm();
-        loadOrders();
+        switchTab('list-tab'); // သိမ်းပြီးပါက စာရင်း Tab သို့ ပြောင်းပေးမည်
       })
       .catch(err => {
         alert("အမှားအယွင်းရှိနေပါသည်။");
-        console.error(err);
         btn.disabled = false;
         btn.innerText = isEdit ? "Update လုပ်မည်" : "Order သိမ်းမည်";
       });
     });
 
-    // Helper: File to Base64
     function convertFileToBase64(file) {
       return new Promise((resolve, reject) => {
         const reader = new FileReader();
@@ -146,7 +250,7 @@
       });
     }
 
-    // Data များကို Load လုပ်ခြင်း
+    // Order စာရင်း ဆွဲယူခြင်း (နောက်ဆုံးထည့်သော စာရင်းကို အပေါ်ဆုံးထားခြင်း)
     function loadOrders() {
       fetch(API_URL)
         .then(res => res.json())
@@ -160,7 +264,10 @@
             return;
           }
 
-          data.forEach(item => {
+          // စာရင်းများကို အနောက်မှ အရှေ့သို့ ပြောင်းပြန်လှန်ခြင်း
+          const reversedData = [...data].reverse();
+
+          reversedData.forEach(item => {
             const statusClass = item.status === 'ပို့ပြီး' ? 'delivered' : 'pending';
             const voucher = item.voucherLink && item.voucherLink !== '-' 
               ? `<a href="${item.voucherLink}" target="_blank" style="color:#007bff;font-weight:bold;">ကြည့်ရန်</a>` 
@@ -182,7 +289,7 @@
         });
     }
 
-    // Edit Button နှိပ်လိုက်လျှင် Form ထဲသို့ Data များ ဖြည့်ပေးခြင်း
+    // Edit Order
     function editOrder(rowId) {
       const order = ordersData.find(o => o.rowId === rowId);
       if (!order) return;
@@ -195,16 +302,14 @@
       document.getElementById('courier').value = order.courier === '-' ? '' : order.courier;
       document.getElementById('existingVoucherLink').value = order.voucherLink;
 
-      // UI ပြောင်းလဲခြင်း
       document.getElementById('formTitle').innerText = "Order စာရင်း ပြင်ဆင်ရန် (Row: " + rowId + ")";
       document.getElementById('submitBtn').innerText = "Update လုပ်မည်";
       document.getElementById('cancelBtn').style.display = "block";
 
-      // Form ဆီသို့ Scroll ဆွဲတင်ပေးခြင်း
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      switchTab('add-tab'); // Edit Form သို့ ပို့ပေးခြင်း
     }
 
-    // Edit ပြန်ဖျက်၍ Form ကို မူလအခြေအနေသို့ ပြန်ထားခြင်း
+    // Reset Form
     function resetForm() {
       document.getElementById('orderForm').reset();
       document.getElementById('rowId').value = "";
@@ -214,9 +319,6 @@
       document.getElementById('submitBtn').innerText = "Order သိမ်းမည်";
       document.getElementById('cancelBtn').style.display = "none";
     }
-
-    // Page စတင်ချိန်တွင် Load လုပ်ရန်
-    loadOrders();
   </script>
 </body>
 </html>
