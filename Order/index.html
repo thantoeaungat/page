@@ -1,153 +1,222 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="my">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TTA Order System</title>
-
-    <link rel="stylesheet" href="css/style.css">
-
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Order Management System with Edit</title>
+  <style>
+    body { font-family: system-ui, -apple-system, sans-serif; padding: 20px; max-width: 900px; margin: 0 auto; background-color: #f4f6f8; }
+    .card { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); margin-bottom: 20px; }
+    input, select, textarea, button { width: 100%; padding: 10px; margin-top: 8px; margin-bottom: 12px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; }
+    button { background-color: #007bff; color: white; border: none; font-weight: bold; cursor: pointer; }
+    button:hover { background-color: #0056b3; }
+    .btn-edit { background-color: #ffc107; color: black; padding: 6px 12px; border: none; border-radius: 4px; cursor: pointer; font-weight: bold; }
+    .btn-cancel { background-color: #6c757d; display: none; margin-top: 5px; }
+    table { width: 100%; border-collapse: collapse; margin-top: 10px; background: white; }
+    th, td { border: 1px solid #ddd; padding: 10px; text-align: left; font-size: 14px; }
+    th { background-color: #f1f1f1; }
+    .badge { padding: 4px 8px; border-radius: 4px; color: white; font-size: 12px; }
+    .delivered { background-color: #28a745; }
+    .pending { background-color: #ffc107; color: black; }
+  </style>
 </head>
-
 <body>
 
-<header>
+  <div class="card">
+    <h2 id="formTitle">Order အသစ်ထည့်ရန်</h2>
+    <form id="orderForm">
+      <!-- Row ID ကို ယာယီမှတ်ထားရန် Hidden Input -->
+      <input type="hidden" id="rowId" value="">
+      <input type="hidden" id="existingVoucherLink" value="">
 
-<div class="container nav">
+      <label>နာမည်</label>
+      <input type="text" id="name" required placeholder="အမည်ထည့်ပါ">
 
-<div class="logo">
+      <label>ဖုန်းနံပါတ်</label>
+      <input type="tel" id="phone" required placeholder="09xxxxxxxxx">
 
-TTA ORDER
+      <label>နေရပ်လိပ်စာ</label>
+      <textarea id="address" rows="3" required placeholder="မြို့နယ်/လိပ်စာ အပြည့်အစုံ"></textarea>
 
-</div>
+      <label>ပို့ဆောင်မှု အခြေအနေ (Status)</label>
+      <select id="status">
+        <option value="မပို့ရသေး">မပို့ရသေး (Pending)</option>
+        <option value="ပို့ပြီး">ပို့ပြီး (Delivered)</option>
+      </select>
 
-<ul>
+      <label>ဘာနဲ့ ပို့ထားလဲ (Courier Service)</label>
+      <input type="text" id="courier" placeholder="ဥပမာ - Royal Express, Delivery Gate">
 
-<li><a href="#">Home</a></li>
+      <label>ဘောင်ချာ ပုံ (မပြောင်းချင်ပါက ရွေးစရာမလိုပါ)</label>
+      <input type="file" id="voucherFile" accept="image/*">
 
-<li><a href="#products">Products</a></li>
+      <button type="submit" id="submitBtn">Order သိမ်းမည်</button>
+      <button type="button" id="cancelBtn" class="btn-cancel" onclick="resetForm()">Edit မလုပ်တော့ပါ (Cancel)</button>
+    </form>
+  </div>
 
-<li><a href="#order">Order</a></li>
+  <div class="card">
+    <h2>Order စာရင်းများ</h2>
+    <button onclick="loadOrders()" style="background-color: #28a745; margin-bottom: 15px;">Refresh စာရင်းကြည့်မည်</button>
+    <div style="overflow-x:auto;">
+      <table>
+        <thead>
+          <tr>
+            <th>နာမည်</th>
+            <th>ဖုန်း</th>
+            <th>လိပ်စာ</th>
+            <th>Status</th>
+            <th>Courier</th>
+            <th>Voucher</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody id="orderTableBody">
+          <tr><td colspan="7" style="text-align:center;">စာရင်းဆွဲယူနေပါသည်...</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
 
-</ul>
+  <script>
+    const API_URL = "https://script.google.com/macros/s/AKfycbww5K_aj0P2WSjnZqtgfsqR1Mf7bCwQLlQBuxV8swmFRwHIvxUEdrQy6VonmKmM1_EC/exec";
+    let ordersData = []; // Loaded orders data ထိန်းထားရန် variable
 
-</div>
+    document.getElementById('orderForm').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const btn = document.getElementById('submitBtn');
+      const rowId = document.getElementById('rowId').value;
+      const isEdit = rowId !== "";
 
-</header>
+      btn.disabled = true;
+      btn.innerText = isEdit ? "ပြင်ဆင်နေပါသည်..." : "သိမ်းဆည်းနေပါသည်...";
 
+      const fileInput = document.getElementById('voucherFile');
+      let fileData = null;
+      let fileName = "";
+      let fileMimeType = "";
 
-<section class="hero">
+      if (fileInput.files.length > 0) {
+        const file = fileInput.files[0];
+        fileName = file.name;
+        fileMimeType = file.type;
+        fileData = await convertFileToBase64(file);
+      }
 
-<div class="container">
+      const payload = {
+        action: isEdit ? "update" : "create",
+        rowId: rowId,
+        name: document.getElementById('name').value,
+        phone: document.getElementById('phone').value,
+        address: document.getElementById('address').value,
+        status: document.getElementById('status').value,
+        courier: document.getElementById('courier').value,
+        existingVoucherLink: document.getElementById('existingVoucherLink').value,
+        fileData: fileData,
+        fileName: fileName,
+        fileMimeType: fileMimeType
+      };
 
-<h1>Welcome To TTA Order System</h1>
+      fetch(API_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      })
+      .then(() => {
+        alert(isEdit ? "Order စာရင်း ပြင်ဆင်ပြီးပါပြီ!" : "Order အသစ် သိမ်းဆည်းပြီးပါပြီ!");
+        resetForm();
+        loadOrders();
+      })
+      .catch(err => {
+        alert("အမှားအယွင်းရှိနေပါသည်။");
+        console.error(err);
+        btn.disabled = false;
+        btn.innerText = isEdit ? "Update လုပ်မည်" : "Order သိမ်းမည်";
+      });
+    });
 
-<p>
+    // Helper: File to Base64
+    function convertFileToBase64(file) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = error => reject(error);
+      });
+    }
 
-Fast • Simple • Responsive
+    // Data များကို Load လုပ်ခြင်း
+    function loadOrders() {
+      fetch(API_URL)
+        .then(res => res.json())
+        .then(data => {
+          ordersData = data;
+          const tbody = document.getElementById('orderTableBody');
+          tbody.innerHTML = '';
+          
+          if(!data || data.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;">Order စာရင်းမရှိသေးပါ</td></tr>';
+            return;
+          }
 
-</p>
+          data.forEach(item => {
+            const statusClass = item.status === 'ပို့ပြီး' ? 'delivered' : 'pending';
+            const voucher = item.voucherLink && item.voucherLink !== '-' 
+              ? `<a href="${item.voucherLink}" target="_blank" style="color:#007bff;font-weight:bold;">ကြည့်ရန်</a>` 
+              : '-';
 
-<a href="#products" class="btn">
+            const row = `<tr>
+              <td>${item.name}</td>
+              <td>${item.phone}</td>
+              <td>${item.address}</td>
+              <td><span class="badge ${statusClass}">${item.status}</span></td>
+              <td>${item.courier}</td>
+              <td>${voucher}</td>
+              <td>
+                <button class="btn-edit" onclick="editOrder(${item.rowId})">Edit</button>
+              </td>
+            </tr>`;
+            tbody.innerHTML += row;
+          });
+        });
+    }
 
-View Products
+    // Edit Button နှိပ်လိုက်လျှင် Form ထဲသို့ Data များ ဖြည့်ပေးခြင်း
+    function editOrder(rowId) {
+      const order = ordersData.find(o => o.rowId === rowId);
+      if (!order) return;
 
-</a>
+      document.getElementById('rowId').value = order.rowId;
+      document.getElementById('name').value = order.name;
+      document.getElementById('phone').value = order.phone;
+      document.getElementById('address').value = order.address;
+      document.getElementById('status').value = order.status;
+      document.getElementById('courier').value = order.courier === '-' ? '' : order.courier;
+      document.getElementById('existingVoucherLink').value = order.voucherLink;
 
-</div>
+      // UI ပြောင်းလဲခြင်း
+      document.getElementById('formTitle').innerText = "Order စာရင်း ပြင်ဆင်ရန် (Row: " + rowId + ")";
+      document.getElementById('submitBtn').innerText = "Update လုပ်မည်";
+      document.getElementById('cancelBtn').style.display = "block";
 
-</section>
+      // Form ဆီသို့ Scroll ဆွဲတင်ပေးခြင်း
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
 
+    // Edit ပြန်ဖျက်၍ Form ကို မူလအခြေအနေသို့ ပြန်ထားခြင်း
+    function resetForm() {
+      document.getElementById('orderForm').reset();
+      document.getElementById('rowId').value = "";
+      document.getElementById('existingVoucherLink').value = "";
+      document.getElementById('formTitle').innerText = "Order အသစ်ထည့်ရန်";
+      document.getElementById('submitBtn').disabled = false;
+      document.getElementById('submitBtn').innerText = "Order သိမ်းမည်";
+      document.getElementById('cancelBtn').style.display = "none";
+    }
 
-<section id="products">
-
-<div class="container">
-
-<h2>
-
-Products
-
-</h2>
-
-<div id="productList" class="product-grid">
-
-</div>
-
-</div>
-
-</section>
-
-
-<section id="order">
-
-<div class="container">
-
-<h2>
-
-Place Order
-
-</h2>
-
-<form id="orderForm">
-
-<input
-type="text"
-id="customer"
-placeholder="Customer Name"
-required>
-
-<input
-type="text"
-id="phone"
-placeholder="Phone Number"
-required>
-
-<textarea
-id="address"
-placeholder="Address"
-required></textarea>
-
-<select id="product">
-
-<option>Select Product</option>
-
-</select>
-
-<input
-type="number"
-id="qty"
-value="1"
-min="1">
-
-<textarea
-id="note"
-placeholder="Note"></textarea>
-
-<button type="submit">
-
-Submit Order
-
-</button>
-
-</form>
-
-</div>
-
-</section>
-
-
-<footer>
-
-<div class="container">
-
-Copyright © 2026 TTA
-
-</div>
-
-</footer>
-
-<script src="js/app.js"></script>
-
+    // Page စတင်ချိန်တွင် Load လုပ်ရန်
+    loadOrders();
+  </script>
 </body>
 </html>
