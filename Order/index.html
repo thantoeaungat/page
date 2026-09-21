@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Order Management System</title>
   <style>
-    body { font-family: system-ui, -apple-system, sans-serif; padding: 20px; max-width: 900px; margin: 0 auto; background-color: #f4f6f8; }
+    body { font-family: system-ui, -apple-system, sans-serif; padding: 20px; max-width: 1000px; margin: 0 auto; background-color: #f4f6f8; }
     
     /* Login Screen Style */
     #login-screen { max-width: 400px; margin: 80px auto; background: white; padding: 30px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
@@ -21,10 +21,14 @@
     .tab-content.active { display: block; }
 
     /* Form & Controls */
-    input, select, textarea, button { width: 100%; padding: 10px; margin-top: 8px; margin-bottom: 12px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; }
+    input, select, textarea, button { width: 100%; padding: 10px; margin-top: 6px; margin-bottom: 12px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; }
     button { background-color: #007bff; color: white; border: none; font-weight: bold; cursor: pointer; }
-    button:hover { background-color: #0056b3; }
-    .btn-edit { background-color: #ffc107; color: black; padding: 6px 12px; border: none; border-radius: 4px; cursor: pointer; font-weight: bold; }
+    button:hover { opacity: 0.9; }
+    
+    /* Action Buttons */
+    .btn-action { display: flex; gap: 5px; }
+    .btn-edit { background-color: #ffc107; color: black; padding: 6px 10px; border: none; border-radius: 4px; cursor: pointer; font-weight: bold; width: auto; margin: 0; }
+    .btn-delete { background-color: #dc3545; color: white; padding: 6px 10px; border: none; border-radius: 4px; cursor: pointer; font-weight: bold; width: auto; margin: 0; }
     .btn-cancel { background-color: #6c757d; display: none; margin-top: 5px; }
 
     /* Table Style */
@@ -34,6 +38,18 @@
     .badge { padding: 4px 8px; border-radius: 4px; color: white; font-size: 12px; display: inline-block; }
     .delivered { background-color: #28a745; }
     .pending { background-color: #ffc107; color: black; }
+
+    /* Filter Bar & Controls */
+    .filter-bar { display: flex; gap: 10px; align-items: center; justify-content: space-between; margin-bottom: 15px; flex-wrap: wrap; }
+    .filter-group { display: flex; gap: 10px; align-items: center; flex: 1; min-width: 250px; }
+    .filter-bar input, .filter-bar select { margin: 0; }
+
+    /* Pagination Style */
+    .pagination-container { display: flex; justify-content: space-between; align-items: center; margin-top: 15px; }
+    .pagination-btns { display: flex; gap: 5px; }
+    .page-btn { padding: 6px 12px; border: 1px solid #007bff; background: white; color: #007bff; border-radius: 4px; cursor: pointer; width: auto; margin: 0; font-size: 14px; }
+    .page-btn.active { background: #007bff; color: white; }
+    .page-btn:disabled { border-color: #ccc; color: #ccc; cursor: not-allowed; }
   </style>
 </head>
 <body>
@@ -104,6 +120,21 @@
         <h2>Order စာရင်းများ</h2>
         <button onclick="loadOrders()" style="background-color: #28a745; width: auto; margin: 0;">Refresh စာရင်းကြည့်မည်</button>
       </div>
+
+      <!-- Controls: Search & Sort -->
+      <div class="filter-bar">
+        <div class="filter-group">
+          <input type="text" id="searchInput" placeholder="🔍 နာမည်/ဖုန်းဖြင့် ရှာရန်..." oninput="onFilterChange()">
+        </div>
+        <div class="filter-group" style="max-width: 250px;">
+          <select id="sortOrder" onchange="onFilterChange()">
+            <option value="desc">⬆️ အသစ်ဆုံး အပေါ်ထားမည်</option>
+            <option value="asc">⬇️ အဟောင်းဆုံး အပေါ်ထားမည်</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Table -->
       <div style="overflow-x:auto;">
         <table>
           <thead>
@@ -122,12 +153,21 @@
           </tbody>
         </table>
       </div>
+
+      <!-- Pagination Footer -->
+      <div class="pagination-container">
+        <span id="pageInfo">Page 1 of 1 (စုစုပေါင်း 0)</span>
+        <div class="pagination-btns" id="paginationBtns"></div>
+      </div>
     </div>
   </div>
 
   <script>
     const API_URL = "https://script.google.com/macros/s/AKfycbww5K_aj0P2WSjnZqtgfsqR1Mf7bCwQLlQBuxV8swmFRwHIvxUEdrQy6VonmKmM1_EC/exec";
     let ordersData = [];
+    let filteredData = [];
+    let currentPage = 1;
+    const rowsPerPage = 20; // စာမျက်နှာတစ်ခုလျှင် ၂၀ စီပြသမည်
 
     // Login Check on Page Load
     window.onload = function() {
@@ -232,7 +272,7 @@
       .then(() => {
         alert(isEdit ? "Order စာရင်း ပြင်ဆင်ပြီးပါပြီ!" : "Order အသစ် သိမ်းဆည်းပြီးပါပြီ!");
         resetForm();
-        switchTab('list-tab'); // သိမ်းပြီးပါက စာရင်း Tab သို့ ပြောင်းပေးမည်
+        switchTab('list-tab');
       })
       .catch(err => {
         alert("အမှားအယွင်းရှိနေပါသည်။");
@@ -250,43 +290,115 @@
       });
     }
 
-    // Order စာရင်း ဆွဲယူခြင်း (နောက်ဆုံးထည့်သော စာရင်းကို အပေါ်ဆုံးထားခြင်း)
+    // Order စာရင်း ဆွဲယူခြင်း
     function loadOrders() {
       fetch(API_URL)
         .then(res => res.json())
         .then(data => {
-          ordersData = data;
-          const tbody = document.getElementById('orderTableBody');
-          tbody.innerHTML = '';
-          
-          if(!data || data.length === 0) {
-            tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;">Order စာရင်းမရှိသေးပါ</td></tr>';
-            return;
-          }
-
-          // စာရင်းများကို အနောက်မှ အရှေ့သို့ ပြောင်းပြန်လှန်ခြင်း
-          const reversedData = [...data].reverse();
-
-          reversedData.forEach(item => {
-            const statusClass = item.status === 'ပို့ပြီး' ? 'delivered' : 'pending';
-            const voucher = item.voucherLink && item.voucherLink !== '-' 
-              ? `<a href="${item.voucherLink}" target="_blank" style="color:#007bff;font-weight:bold;">ကြည့်ရန်</a>` 
-              : '-';
-
-            const row = `<tr>
-              <td>${item.name}</td>
-              <td>${item.phone}</td>
-              <td>${item.address}</td>
-              <td><span class="badge ${statusClass}">${item.status}</span></td>
-              <td>${item.courier}</td>
-              <td>${voucher}</td>
-              <td>
-                <button class="btn-edit" onclick="editOrder(${item.rowId})">Edit</button>
-              </td>
-            </tr>`;
-            tbody.innerHTML += row;
-          });
+          ordersData = data || [];
+          onFilterChange(); // Filter နဲ့ Sort ပြုလုပ်ပြီး ရလဒ်ပြပေးမည်
         });
+    }
+
+    // Filter, Search, and Sort Function
+    function onFilterChange() {
+      const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+      const sortOrder = document.getElementById('sortOrder').value;
+
+      // 1. Search Filter
+      filteredData = ordersData.filter(item => {
+        const nameMatch = item.name && item.name.toLowerCase().includes(searchTerm);
+        const phoneMatch = item.phone && item.phone.toString().includes(searchTerm);
+        return nameMatch || phoneMatch;
+      });
+
+      // 2. Sort (အသစ်ဆုံး အပေါ်ထား သို့ အဟောင်းဆုံး အပေါ်ထား)
+      if (sortOrder === 'desc') {
+        filteredData.reverse(); // နောက်ဆုံးဝင်တာ အပေါ်ဆုံး
+      }
+
+      currentPage = 1; // Filter ပြောင်းတိုင်း Page 1 မှ ပြန်စမည်
+      renderTable();
+    }
+
+    // Table Render with Pagination (1 Page = 20 Rows)
+    function renderTable() {
+      const tbody = document.getElementById('orderTableBody');
+      tbody.innerHTML = '';
+
+      if (!filteredData || filteredData.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;">Order စာရင်းမရှိသေးပါ</td></tr>';
+        document.getElementById('pageInfo').innerText = 'စုစုပေါင်း 0 ခု';
+        document.getElementById('paginationBtns').innerHTML = '';
+        return;
+      }
+
+      // Calculate Pagination
+      const totalPages = Math.ceil(filteredData.length / rowsPerPage);
+      const startIndex = (currentPage - 1) * rowsPerPage;
+      const endIndex = startIndex + rowsPerPage;
+      const paginatedData = filteredData.slice(startIndex, endIndex);
+
+      paginatedData.forEach(item => {
+        const statusClass = item.status === 'ပို့ပြီး' ? 'delivered' : 'pending';
+        const voucher = item.voucherLink && item.voucherLink !== '-' 
+          ? `<a href="${item.voucherLink}" target="_blank" style="color:#007bff;font-weight:bold;">ကြည့်ရန်</a>` 
+          : '-';
+
+        const row = `<tr>
+          <td>${item.name}</td>
+          <td>${item.phone}</td>
+          <td>${item.address}</td>
+          <td><span class="badge ${statusClass}">${item.status}</span></td>
+          <td>${item.courier}</td>
+          <td>${voucher}</td>
+          <td>
+            <div class="btn-action">
+              <button class="btn-edit" onclick="editOrder(${item.rowId})">Edit</button>
+              <button class="btn-delete" onclick="deleteOrder(${item.rowId})">Delete</button>
+            </div>
+          </td>
+        </tr>`;
+        tbody.innerHTML += row;
+      });
+
+      // Render Pagination Buttons
+      renderPaginationControls(totalPages);
+    }
+
+    // Pagination Controls
+    function renderPaginationControls(totalPages) {
+      document.getElementById('pageInfo').innerText = `Page ${currentPage} of ${totalPages} (စုစုပေါင်း ${filteredData.length} ခု)`;
+      const container = document.getElementById('paginationBtns');
+      container.innerHTML = '';
+
+      // Prev Button
+      const prevBtn = document.createElement('button');
+      prevBtn.className = 'page-btn';
+      prevBtn.innerText = '« Prev';
+      prevBtn.disabled = currentPage === 1;
+      prevBtn.onclick = () => { currentPage--; renderTable(); };
+      container.appendChild(prevBtn);
+
+      // Page Numbers (e.g. 1 2 3)
+      for (let i = 1; i <= totalPages; i++) {
+        // စာမျက်နှာအများကြီးဖြစ်လာပါက လက်ရှိ စာမျက်နှာ ဝန်းကျင်ကိုပဲ ပြသမည်
+        if (i === 1 || i === totalPages || (i >= currentPage - 1 && i <= currentPage + 1)) {
+          const pageBtn = document.createElement('button');
+          pageBtn.className = `page-btn ${i === currentPage ? 'active' : ''}`;
+          pageBtn.innerText = i;
+          pageBtn.onclick = () => { currentPage = i; renderTable(); };
+          container.appendChild(pageBtn);
+        }
+      }
+
+      // Next Button
+      const nextBtn = document.createElement('button');
+      nextBtn.className = 'page-btn';
+      nextBtn.innerText = 'Next »';
+      nextBtn.disabled = currentPage === totalPages;
+      nextBtn.onclick = () => { currentPage++; renderTable(); };
+      container.appendChild(nextBtn);
     }
 
     // Edit Order
@@ -306,7 +418,26 @@
       document.getElementById('submitBtn').innerText = "Update လုပ်မည်";
       document.getElementById('cancelBtn').style.display = "block";
 
-      switchTab('add-tab'); // Edit Form သို့ ပို့ပေးခြင်း
+      switchTab('add-tab');
+    }
+
+    // Delete Order
+    function deleteOrder(rowId) {
+      if (!confirm("ဤ Order ကို စာရင်းထဲမှ အပြီးတိုင် ဖျက်မှာ သေချာပါသလား?")) return;
+
+      fetch(API_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action: "delete", rowId: rowId })
+      })
+      .then(() => {
+        alert("Order ဖျက်ပြီးပါပြီ!");
+        loadOrders(); // စာရင်းပြန်လည် ဆွဲယူမည်
+      })
+      .catch(err => {
+        alert("ဖျက်၍ မရပါ၊ အမှားအယွင်းရှိနေပါသည်။");
+      });
     }
 
     // Reset Form
