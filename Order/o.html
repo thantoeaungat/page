@@ -5,84 +5,58 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Order Management System</title>
   <style>
-    * { box-sizing: border-box; }
-    body { font-family: system-ui, -apple-system, sans-serif; padding: 15px; max-width: 1000px; margin: 0 auto; background-color: #f4f6f8; color: #333; }
+    body { font-family: system-ui, -apple-system, sans-serif; padding: 20px; max-width: 1000px; margin: 0 auto; background-color: #f4f6f8; }
     
     /* Login Screen Style */
-    #login-screen { max-width: 400px; margin: 60px auto; background: white; padding: 25px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+    #login-screen { max-width: 400px; margin: 80px auto; background: white; padding: 30px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
     #app-screen { display: none; }
 
-    /* Header Bar */
-    .header-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; background: white; padding: 15px; border-radius: 10px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
-    .header-bar h3 { margin: 0; font-size: 18px; color: #007bff; }
-
     /* Tabs Style */
-    .tab-container { display: flex; border-bottom: 2px solid #ddd; margin-bottom: 15px; background: white; border-radius: 10px 10px 0 0; overflow: hidden; }
-    .tab-btn { flex: 1; padding: 12px; border: none; background: #e9ecef; cursor: pointer; font-size: 15px; font-weight: bold; color: #495057; transition: 0.3s; }
+    .tab-container { display: flex; border-bottom: 2px solid #ccc; margin-bottom: 20px; background: white; border-radius: 8px 8px 0 0; overflow: hidden; }
+    .tab-btn { flex: 1; padding: 15px; border: none; background: #e9ecef; cursor: pointer; font-size: 16px; font-weight: bold; color: #495057; transition: 0.3s; }
     .tab-btn.active { background: #007bff; color: white; }
 
     /* Content Box */
-    .tab-content { display: none; background: white; padding: 20px; border-radius: 0 0 10px 10px; box-shadow: 0 2px 6px rgba(0,0,0,0.08); }
+    .tab-content { display: none; background: white; padding: 20px; border-radius: 0 0 8px 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
     .tab-content.active { display: block; }
 
-    /* Form Inputs */
-    label { font-weight: bold; font-size: 14px; margin-top: 10px; display: block; }
-    input, select, textarea, button { width: 100%; padding: 12px; margin-top: 6px; margin-bottom: 12px; border: 1px solid #ccc; border-radius: 6px; font-size: 14px; }
-    button { background-color: #007bff; color: white; border: none; font-weight: bold; cursor: pointer; transition: 0.2s; }
+    /* Form & Controls */
+    input, select, textarea, button { width: 100%; padding: 10px; margin-top: 6px; margin-bottom: 12px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; }
+    button { background-color: #007bff; color: white; border: none; font-weight: bold; cursor: pointer; }
     button:hover { opacity: 0.9; }
     
     /* Action Buttons */
-    .btn-action { display: flex; gap: 8px; }
-    .btn-edit { background-color: #ffc107; color: black; padding: 8px 12px; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; width: auto; margin: 0; }
-    .btn-delete { background-color: #dc3545; color: white; padding: 8px 12px; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; width: auto; margin: 0; }
+    .btn-action { display: flex; gap: 5px; }
+    .btn-edit { background-color: #ffc107; color: black; padding: 6px 10px; border: none; border-radius: 4px; cursor: pointer; font-weight: bold; width: auto; margin: 0; }
+    .btn-delete { background-color: #dc3545; color: white; padding: 6px 10px; border: none; border-radius: 4px; cursor: pointer; font-weight: bold; width: auto; margin: 0; }
     .btn-cancel { background-color: #6c757d; display: none; margin-top: 5px; }
 
-    /* Filter Bar & Controls */
-    .filter-bar { display: flex; gap: 10px; align-items: center; justify-content: space-between; margin-bottom: 15px; flex-wrap: wrap; }
-    .filter-group { flex: 1; min-width: 200px; }
-    .filter-bar input, .filter-bar select { margin: 0; }
-
-    /* Desktop Table View */
-    .table-container { overflow-x: auto; }
-    table { width: 100%; border-collapse: collapse; background: white; }
-    th, td { border: 1px solid #eee; padding: 12px; text-align: left; font-size: 14px; }
-    th { background-color: #f8f9fa; font-weight: bold; }
-    
-    /* Mobile Card View (When Screen <= 768px) */
-    .mobile-cards { display: none; flex-direction: column; gap: 12px; }
-    .order-card { background: #fff; border: 1px solid #e0e0e0; border-radius: 8px; padding: 15px; box-shadow: 0 2px 4px rgba(0,0,0,0.03); }
-    .card-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #f0f0f0; padding-bottom: 8px; margin-bottom: 8px; }
-    .card-title { font-size: 16px; font-weight: bold; color: #111; }
-    .card-row { margin-bottom: 6px; font-size: 14px; color: #555; }
-    .card-row strong { color: #222; }
-
-    /* Badges */
-    .badge { padding: 4px 10px; border-radius: 20px; color: white; font-size: 12px; font-weight: bold; display: inline-block; }
+    /* Table Style */
+    table { width: 100%; border-collapse: collapse; margin-top: 10px; background: white; }
+    th, td { border: 1px solid #ddd; padding: 10px; text-align: left; font-size: 14px; }
+    th { background-color: #f1f1f1; }
+    .badge { padding: 4px 8px; border-radius: 4px; color: white; font-size: 12px; display: inline-block; }
     .delivered { background-color: #28a745; }
     .pending { background-color: #ffc107; color: black; }
 
+    /* Filter Bar & Controls */
+    .filter-bar { display: flex; gap: 10px; align-items: center; justify-content: space-between; margin-bottom: 15px; flex-wrap: wrap; }
+    .filter-group { display: flex; gap: 10px; align-items: center; flex: 1; min-width: 250px; }
+    .filter-bar input, .filter-bar select { margin: 0; }
+
     /* Pagination Style */
-    .pagination-container { display: flex; justify-content: space-between; align-items: center; margin-top: 20px; flex-wrap: wrap; gap: 10px; }
+    .pagination-container { display: flex; justify-content: space-between; align-items: center; margin-top: 15px; }
     .pagination-btns { display: flex; gap: 5px; }
-    .page-btn { padding: 8px 14px; border: 1px solid #007bff; background: white; color: #007bff; border-radius: 6px; cursor: pointer; width: auto; margin: 0; font-size: 13px; font-weight: bold; }
+    .page-btn { padding: 6px 12px; border: 1px solid #007bff; background: white; color: #007bff; border-radius: 4px; cursor: pointer; width: auto; margin: 0; font-size: 14px; }
     .page-btn.active { background: #007bff; color: white; }
     .page-btn:disabled { border-color: #ccc; color: #ccc; cursor: not-allowed; }
-
-    /* Responsive Toggle Screen */
-    @media (max-width: 768px) {
-      .table-container { display: none; }
-      .mobile-cards { display: flex; }
-      body { padding: 10px; }
-      .filter-bar { flex-direction: column; align-items: stretch; }
-      .pagination-container { flex-direction: column; text-align: center; }
-    }
   </style>
 </head>
 <body>
 
   <!-- 1. LOGIN SCREEN -->
   <div id="login-screen">
-    <h2 style="text-align:center; margin-bottom: 20px; color: #007bff;">🔒 Admin Login</h2>
+    <h2 style="text-align:center; margin-bottom: 20px;">🔒 Admin Login</h2>
     <form id="loginForm">
       <label>Username</label>
       <input type="text" id="loginUser" required placeholder="Username ထည့်ပါ">
@@ -96,20 +70,20 @@
 
   <!-- 2. MAIN APP SCREEN -->
   <div id="app-screen">
-    <div class="header-bar">
-      <h3>Order Dashboard</h3>
-      <button onclick="logout()" style="background-color: #dc3545; width: auto; margin: 0; padding: 8px 14px;">Logout</button>
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+      <h3 style="margin: 0;">Order Management Dashboard</h3>
+      <button onclick="logout()" style="background-color: #dc3545; width: auto; margin: 0; padding: 8px 16px;">Logout</button>
     </div>
 
     <!-- Navigation Tabs -->
     <div class="tab-container">
-      <button class="tab-btn active" onclick="switchTab('add-tab')">➕ Order ထည့်ရန်</button>
+      <button class="tab-btn active" onclick="switchTab('add-tab')">➕ Order အသစ်ထည့်ရန်</button>
       <button class="tab-btn" onclick="switchTab('list-tab')">📋 Order စာရင်းများ</button>
     </div>
 
     <!-- Tab 1: Order Add/Edit -->
     <div id="add-tab" class="tab-content active">
-      <h2 id="formTitle" style="margin-top:0;">Order အသစ်ထည့်ရန်</h2>
+      <h2 id="formTitle">Order အသစ်ထည့်ရန်</h2>
       <form id="orderForm">
         <input type="hidden" id="rowId" value="">
         <input type="hidden" id="existingVoucherLink" value="">
@@ -142,17 +116,17 @@
 
     <!-- Tab 2: Order List -->
     <div id="list-tab" class="tab-content">
-      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; flex-wrap: wrap; gap: 10px;">
-        <h2 style="margin: 0;">Order စာရင်းများ</h2>
-        <button onclick="loadOrders()" style="background-color: #28a745; width: auto; margin: 0; padding: 8px 14px;">🔄 Refresh စာရင်းကြည့်မည်</button>
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+        <h2>Order စာရင်းများ</h2>
+        <button onclick="loadOrders()" style="background-color: #28a745; width: auto; margin: 0;">Refresh စာရင်းကြည့်မည်</button>
       </div>
 
-      <!-- Search & Sorting Controls -->
+      <!-- Controls: Search & Sort -->
       <div class="filter-bar">
         <div class="filter-group">
           <input type="text" id="searchInput" placeholder="🔍 နာမည်/ဖုန်းဖြင့် ရှာရန်..." oninput="onFilterChange()">
         </div>
-        <div class="filter-group">
+        <div class="filter-group" style="max-width: 250px;">
           <select id="sortOrder" onchange="onFilterChange()">
             <option value="desc">⬆️ အသစ်ဆုံး အပေါ်ထားမည်</option>
             <option value="asc">⬇️ အဟောင်းဆုံး အပေါ်ထားမည်</option>
@@ -160,8 +134,8 @@
         </div>
       </div>
 
-      <!-- Desktop View (Table) -->
-      <div class="table-container">
+      <!-- Table -->
+      <div style="overflow-x:auto;">
         <table>
           <thead>
             <tr>
@@ -180,14 +154,9 @@
         </table>
       </div>
 
-      <!-- Mobile View (Cards) -->
-      <div class="mobile-cards" id="mobileCardsContainer">
-        <div style="text-align:center; padding: 20px; color: #666;">စာရင်းဆွဲယူနေပါသည်...</div>
-      </div>
-
       <!-- Pagination Footer -->
       <div class="pagination-container">
-        <span id="pageInfo" style="font-size: 14px; font-weight: bold; color: #555;">Page 1 of 1 (စုစုပေါင်း 0)</span>
+        <span id="pageInfo">Page 1 of 1 (စုစုပေါင်း 0)</span>
         <div class="pagination-btns" id="paginationBtns"></div>
       </div>
     </div>
@@ -198,7 +167,7 @@
     let ordersData = [];
     let filteredData = [];
     let currentPage = 1;
-    const rowsPerPage = 20; // 1 Page = 20 Orders
+    const rowsPerPage = 20; // စာမျက်နှာတစ်ခုလျှင် ၂၀ စီပြသမည်
 
     // Login Check on Page Load
     window.onload = function() {
@@ -321,46 +290,44 @@
       });
     }
 
-    // Load Orders Data
+    // Order စာရင်း ဆွဲယူခြင်း
     function loadOrders() {
       fetch(API_URL)
         .then(res => res.json())
         .then(data => {
           ordersData = data || [];
-          onFilterChange();
+          onFilterChange(); // Filter နဲ့ Sort ပြုလုပ်ပြီး ရလဒ်ပြပေးမည်
         });
     }
 
-    // Filter, Search & Sort
+    // Filter, Search, and Sort Function
     function onFilterChange() {
       const searchTerm = document.getElementById('searchInput').value.toLowerCase();
       const sortOrder = document.getElementById('sortOrder').value;
 
+      // 1. Search Filter
       filteredData = ordersData.filter(item => {
         const nameMatch = item.name && item.name.toLowerCase().includes(searchTerm);
         const phoneMatch = item.phone && item.phone.toString().includes(searchTerm);
         return nameMatch || phoneMatch;
       });
 
+      // 2. Sort (အသစ်ဆုံး အပေါ်ထား သို့ အဟောင်းဆုံး အပေါ်ထား)
       if (sortOrder === 'desc') {
         filteredData.reverse(); // နောက်ဆုံးဝင်တာ အပေါ်ဆုံး
       }
 
-      currentPage = 1;
-      renderViews();
+      currentPage = 1; // Filter ပြောင်းတိုင်း Page 1 မှ ပြန်စမည်
+      renderTable();
     }
 
-    // Render Both Desktop Table & Mobile Cards
-    function renderViews() {
+    // Table Render with Pagination (1 Page = 20 Rows)
+    function renderTable() {
       const tbody = document.getElementById('orderTableBody');
-      const mobileContainer = document.getElementById('mobileCardsContainer');
-      
       tbody.innerHTML = '';
-      mobileContainer.innerHTML = '';
 
       if (!filteredData || filteredData.length === 0) {
         tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;">Order စာရင်းမရှိသေးပါ</td></tr>';
-        mobileContainer.innerHTML = '<div style="text-align:center; padding: 20px; color: #888;">Order စာရင်းမရှိသေးပါ</div>';
         document.getElementById('pageInfo').innerText = 'စုစုပေါင်း 0 ခု';
         document.getElementById('paginationBtns').innerHTML = '';
         return;
@@ -378,7 +345,6 @@
           ? `<a href="${item.voucherLink}" target="_blank" style="color:#007bff;font-weight:bold;">ကြည့်ရန်</a>` 
           : '-';
 
-        // 1. Desktop Table Row
         const row = `<tr>
           <td>${item.name}</td>
           <td>${item.phone}</td>
@@ -394,25 +360,9 @@
           </td>
         </tr>`;
         tbody.innerHTML += row;
-
-        // 2. Mobile Card View
-        const card = `<div class="order-card">
-          <div class="card-header">
-            <span class="card-title">${item.name}</span>
-            <span class="badge ${statusClass}">${item.status}</span>
-          </div>
-          <div class="card-row"><strong>📞 ဖုန်း:</strong> ${item.phone}</div>
-          <div class="card-row"><strong>📍 လိပ်စာ:</strong> ${item.address}</div>
-          <div class="card-row"><strong>🚚 Courier:</strong> ${item.courier}</div>
-          <div class="card-row"><strong>🧾 Voucher:</strong> ${voucher}</div>
-          <div style="margin-top: 10px;" class="btn-action">
-            <button class="btn-edit" style="flex:1;" onclick="editOrder(${item.rowId})">✏️ Edit</button>
-            <button class="btn-delete" style="flex:1;" onclick="deleteOrder(${item.rowId})">🗑️ Delete</button>
-          </div>
-        </div>`;
-        mobileContainer.innerHTML += card;
       });
 
+      // Render Pagination Buttons
       renderPaginationControls(totalPages);
     }
 
@@ -427,16 +377,17 @@
       prevBtn.className = 'page-btn';
       prevBtn.innerText = '« Prev';
       prevBtn.disabled = currentPage === 1;
-      prevBtn.onclick = () => { currentPage--; renderViews(); window.scrollTo(0,0); };
+      prevBtn.onclick = () => { currentPage--; renderTable(); };
       container.appendChild(prevBtn);
 
-      // Page Numbers
+      // Page Numbers (e.g. 1 2 3)
       for (let i = 1; i <= totalPages; i++) {
+        // စာမျက်နှာအများကြီးဖြစ်လာပါက လက်ရှိ စာမျက်နှာ ဝန်းကျင်ကိုပဲ ပြသမည်
         if (i === 1 || i === totalPages || (i >= currentPage - 1 && i <= currentPage + 1)) {
           const pageBtn = document.createElement('button');
           pageBtn.className = `page-btn ${i === currentPage ? 'active' : ''}`;
           pageBtn.innerText = i;
-          pageBtn.onclick = () => { currentPage = i; renderViews(); window.scrollTo(0,0); };
+          pageBtn.onclick = () => { currentPage = i; renderTable(); };
           container.appendChild(pageBtn);
         }
       }
@@ -446,7 +397,7 @@
       nextBtn.className = 'page-btn';
       nextBtn.innerText = 'Next »';
       nextBtn.disabled = currentPage === totalPages;
-      nextBtn.onclick = () => { currentPage++; renderViews(); window.scrollTo(0,0); };
+      nextBtn.onclick = () => { currentPage++; renderTable(); };
       container.appendChild(nextBtn);
     }
 
@@ -468,7 +419,6 @@
       document.getElementById('cancelBtn').style.display = "block";
 
       switchTab('add-tab');
-      window.scrollTo(0,0);
     }
 
     // Delete Order
@@ -483,7 +433,7 @@
       })
       .then(() => {
         alert("Order ဖျက်ပြီးပါပြီ!");
-        loadOrders();
+        loadOrders(); // စာရင်းပြန်လည် ဆွဲယူမည်
       })
       .catch(err => {
         alert("ဖျက်၍ မရပါ၊ အမှားအယွင်းရှိနေပါသည်။");
