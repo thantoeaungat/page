@@ -1,575 +1,262 @@
 <!DOCTYPE html>
-<html lang="my">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TTA G3 - Order Management System</title>
-<style>
-*{box-sizing:border-box}
-:root{
-  --primary:#2563eb;--primary2:#1d4ed8;--success:#16a34a;--warning:#d97706;
-  --danger:#dc2626;--info:#0891b2;--dark:#111827;--muted:#6b7280;
-  --bg:#f3f4f6;--card:#fff;--border:#e5e7eb;
-}
-body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",sans-serif;background:var(--bg);color:#1f2937}
-button,input,select,textarea{font:inherit}
-button{cursor:pointer}
-.hidden{display:none!important}
-
-/* LOGIN */
-#login-screen{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px}
-.login-box{width:100%;max-width:420px;background:#fff;padding:30px;border-radius:18px;box-shadow:0 15px 45px #00000018}
-.logo{width:64px;height:64px;border-radius:16px;background:var(--primary);color:#fff;display:grid;place-items:center;font-size:25px;font-weight:800;margin:0 auto 15px}
-.login-box h2{text-align:center;margin:0 0 5px}
-.login-box p{text-align:center;color:var(--muted);margin:0 0 25px}
-
-/* APP */
-#app-screen{display:none}
-.topbar{height:64px;background:#fff;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 22px;position:sticky;top:0;z-index:50}
-.brand{font-weight:800;color:var(--primary);font-size:19px}
-.user-area{display:flex;align-items:center;gap:10px}
-.container{max-width:1400px;margin:auto;padding:20px}
-
-/* NAV */
-.nav{display:flex;gap:8px;background:#fff;padding:8px;border-radius:12px;margin-bottom:18px;overflow:auto}
-.nav button{white-space:nowrap;border:0;background:#f3f4f6;color:#4b5563;padding:11px 16px;border-radius:9px;font-weight:700}
-.nav button.active{background:var(--primary);color:#fff}
-
-/* CARDS */
-.grid{display:grid;grid-template-columns:repeat(6,1fr);gap:12px;margin-bottom:18px}
-.stat{background:#fff;border:1px solid var(--border);border-radius:13px;padding:16px}
-.stat .label{font-size:13px;color:var(--muted);font-weight:700}
-.stat .value{font-size:25px;font-weight:800;margin-top:5px}
-.stat.primary{border-left:4px solid var(--primary)}
-.stat.success{border-left:4px solid var(--success)}
-.stat.warning{border-left:4px solid var(--warning)}
-.stat.danger{border-left:4px solid var(--danger)}
-.stat.info{border-left:4px solid var(--info)}
-
-/* PANEL */
-.panel{background:#fff;border:1px solid var(--border);border-radius:14px;padding:20px;margin-bottom:18px}
-.panel-title{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:16px}
-.panel-title h2{font-size:19px;margin:0}
-
-/* FORM */
-.form-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
-.field.full{grid-column:1/-1}
-label{display:block;font-weight:700;font-size:13px;margin-bottom:6px}
-input,select,textarea{width:100%;border:1px solid #d1d5db;border-radius:8px;padding:10px 12px;background:#fff;outline:none}
-input:focus,select:focus,textarea:focus{border-color:var(--primary);box-shadow:0 0 0 3px #2563eb18}
-textarea{resize:vertical}
-.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:15px}
-.btn{border:0;border-radius:8px;padding:10px 14px;font-weight:700}
-.btn-primary{background:var(--primary);color:#fff}
-.btn-success{background:var(--success);color:#fff}
-.btn-warning{background:#f59e0b;color:#111}
-.btn-danger{background:var(--danger);color:#fff}
-.btn-secondary{background:#6b7280;color:#fff}
-.btn-light{background:#f3f4f6;color:#374151;border:1px solid var(--border)}
-.btn:disabled{opacity:.55;cursor:not-allowed}
-
-/* TABLE */
-.toolbar{display:grid;grid-template-columns:2fr 1fr 1fr 1fr auto;gap:9px;margin-bottom:14px}
-.table-wrap{overflow:auto}
-table{width:100%;border-collapse:collapse;min-width:1050px}
-th,td{padding:11px;border-bottom:1px solid var(--border);text-align:left;font-size:13px;vertical-align:middle}
-th{background:#f9fafb;color:#4b5563;white-space:nowrap}
-tr:hover td{background:#fafafa}
-.badge{display:inline-flex;align-items:center;border-radius:999px;padding:4px 9px;font-size:11px;font-weight:800;white-space:nowrap}
-.b-new{background:#dbeafe;color:#1d4ed8}.b-check{background:#e0f2fe;color:#0369a1}
-.b-progress{background:#fef3c7;color:#92400e}.b-wait{background:#f3e8ff;color:#7e22ce}
-.b-complete{background:#dcfce7;color:#166534}.b-delivered{background:#d1fae5;color:#065f46}
-.b-cancel{background:#fee2e2;color:#991b1b}
-.b-paid{background:#dcfce7;color:#166534}.b-partial{background:#fef3c7;color:#92400e}.b-unpaid{background:#fee2e2;color:#991b1b}
-.small{font-size:12px;color:var(--muted)}
-.money{font-weight:800}
-.action-row{display:flex;gap:5px}
-.icon-btn{border:0;border-radius:7px;padding:7px 9px;background:#f3f4f6}
-
-/* PAGINATION */
-.pagination{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:15px}
-.pages{display:flex;gap:5px;flex-wrap:wrap}
-.page{border:1px solid #d1d5db;background:#fff;border-radius:6px;padding:7px 11px}
-.page.active{background:var(--primary);color:#fff;border-color:var(--primary)}
-
-/* MODAL */
-.modal{position:fixed;inset:0;background:#0008;display:none;align-items:center;justify-content:center;padding:20px;z-index:100}
-.modal.show{display:flex}
-.modal-box{width:100%;max-width:850px;max-height:90vh;overflow:auto;background:#fff;border-radius:16px;padding:22px}
-.modal-head{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--border);padding-bottom:12px;margin-bottom:16px}
-.detail-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
-.detail{padding:12px;background:#f9fafb;border-radius:9px}
-.detail b{display:block;font-size:11px;color:var(--muted);margin-bottom:3px}
-
-/* MOBILE */
-.mobile-cards{display:none}
-.order-card{background:#fff;border:1px solid var(--border);border-radius:12px;padding:14px;margin-bottom:10px}
-.card-head{display:flex;justify-content:space-between;gap:10px;margin-bottom:10px}
-.card-row{font-size:13px;margin:6px 0}
-@media(max-width:1100px){.grid{grid-template-columns:repeat(3,1fr)}.form-grid{grid-template-columns:repeat(2,1fr)}.toolbar{grid-template-columns:2fr 1fr 1fr}}
-@media(max-width:700px){
-  .container{padding:10px}.topbar{padding:0 12px}.grid{grid-template-columns:repeat(2,1fr)}
-  .form-grid{grid-template-columns:1fr}.field.full{grid-column:auto}
-  .toolbar{grid-template-columns:1fr}.table-wrap{display:none}.mobile-cards{display:block}
-  .panel{padding:14px}.detail-grid{grid-template-columns:1fr}.pagination{flex-direction:column}
-}
-</style>
+<title>TTA G3 — Service Management</title>
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<!-- LOGIN -->
-<div id="login-screen">
-  <div class="login-box">
-    <div class="logo">TTA</div>
-    <h2>Order Management</h2>
-    <p>TTA G3 Service Management System</p>
-    <form id="loginForm">
+<div id="loginScreen" class="login-screen">
+  <div class="login-card">
+    <div class="login-brand">
+      <div class="brand-logo">T</div>
+      <div><h1>TTA G3</h1><p>Service Management System</p></div>
+    </div>
+    <div class="field">
       <label>Username</label>
-      <input id="loginUser" required autocomplete="username" placeholder="Username">
-      <label style="margin-top:12px">Password</label>
-      <input id="loginPass" required type="password" autocomplete="current-password" placeholder="Password">
-      <button class="btn btn-primary" style="width:100%;margin-top:15px" id="loginBtn">Login ဝင်မည်</button>
+      <input id="loginUser" class="input" value="admin" autocomplete="username">
+    </div>
+    <div class="field">
+      <label>Password</label>
+      <input id="loginPass" class="input" type="password" value="123456" autocomplete="current-password">
+    </div>
+    <div id="loginError" class="login-error"></div>
+    <button class="btn primary" style="width:100%;padding:11px" onclick="login()">Sign In</button>
+    <div class="login-note">
+      Backend: Google Apps Script + Google Sheets.<br>
+      For production, replace the demo authentication with a secure auth provider/backend.
+    </div>
+  </div>
+</div>
+
+<div id="app" class="app hidden">
+  <aside id="sidebar" class="sidebar">
+    <div class="brand">
+      <div class="brand-logo">T</div>
+      <div class="brand-text"><strong>TTA G3</strong><span>Service Management</span></div>
+    </div>
+    <nav class="nav">
+      <div class="nav-title">Main</div>
+      <button data-page="dashboard" class="active" onclick="showPage('dashboard')"><span class="ico">📊</span>Dashboard</button>
+      <button data-page="orders" onclick="showPage('orders')"><span class="ico">📦</span>Orders</button>
+      <button data-page="customers" onclick="showPage('customers')"><span class="ico">👤</span>Customers</button>
+      <button data-page="payments" onclick="showPage('payments')"><span class="ico">💰</span>Payments</button>
+      <div class="nav-title">Management</div>
+      <button data-page="staff" onclick="showPage('staff')"><span class="ico">👨‍🔧</span>Staff</button>
+      <button data-page="reports" onclick="showPage('reports')"><span class="ico">📈</span>Reports</button>
+      <button data-page="settings" onclick="showPage('settings')"><span class="ico">⚙️</span>Settings</button>
+    </nav>
+    <div class="sidebar-bottom">
+      <div class="user-mini">Signed in as <strong id="currentUser">admin</strong></div>
+      <button class="logout" onclick="logout()">Sign out</button>
+    </div>
+  </aside>
+
+  <main class="main">
+    <header class="topbar">
+      <div style="display:flex;align-items:center;gap:12px">
+        <button class="mobile-menu" onclick="toggleSidebar()">☰</button>
+        <div id="pageTitle" class="page-title">Dashboard</div>
+      </div>
+      <div class="top-actions">
+        <span class="date muted" id="todayLabel"></span>
+        <button class="btn small" onclick="refreshCurrentPage()">↻ Refresh</button>
+        <button class="btn primary small" onclick="openOrderModal()">＋ New Order</button>
+      </div>
+    </header>
+
+    <div class="content">
+
+      <!-- DASHBOARD -->
+      <section id="page-dashboard" class="page">
+        <div class="grid stats">
+          <div class="card stat"><div class="stat-top"><span>Today's Orders</span><div class="stat-icon">📦</div></div><div id="dTodayOrders" class="stat-value">0</div><div class="stat-sub">Orders created today</div></div>
+          <div class="card stat"><div class="stat-top"><span>Today's Revenue</span><div class="stat-icon">💵</div></div><div id="dTodayRevenue" class="stat-value">0</div><div class="stat-sub">Paid amount today</div></div>
+          <div class="card stat"><div class="stat-top"><span>Pending</span><div class="stat-icon">⏳</div></div><div id="dPending" class="stat-value">0</div><div class="stat-sub">New / pending jobs</div></div>
+          <div class="card stat"><div class="stat-top"><span>In Progress</span><div class="stat-icon">🔧</div></div><div id="dProgress" class="stat-value">0</div><div class="stat-sub">Currently working</div></div>
+          <div class="card stat"><div class="stat-top"><span>Unpaid</span><div class="stat-icon">💳</div></div><div id="dUnpaid" class="stat-value">0</div><div class="stat-sub">Unpaid orders</div></div>
+        </div>
+
+        <div class="grid two" style="margin-top:18px">
+          <div class="card chart-card">
+            <div class="section-head" style="margin:0 0 10px"><h2>Monthly Revenue</h2><span class="muted" style="font-size:12px">Order price</span></div>
+            <div id="revenueChart" class="chart"></div>
+          </div>
+          <div class="card" style="padding:20px">
+            <div class="section-head" style="margin:0 0 14px"><h2>Payment Overview</h2></div>
+            <div class="grid three">
+              <div><div class="muted" style="font-size:11px">Paid</div><strong id="dPaid" style="font-size:22px">0</strong></div>
+              <div><div class="muted" style="font-size:11px">Partial</div><strong id="dPartial" style="font-size:22px">0</strong></div>
+              <div><div class="muted" style="font-size:11px">Unpaid</div><strong id="dUnpaid2" style="font-size:22px">0</strong></div>
+            </div>
+            <hr style="border:0;border-top:1px solid var(--line);margin:20px 0">
+            <div class="grid three">
+              <div><div class="muted" style="font-size:11px">Total Price</div><strong id="dTotalRevenue">0</strong></div>
+              <div><div class="muted" style="font-size:11px">Collected</div><strong id="dTotalPaid">0</strong></div>
+              <div><div class="muted" style="font-size:11px">Balance</div><strong id="dTotalBalance">0</strong></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="section-head"><h2>Recent Orders</h2><button class="btn small" onclick="showPage('orders')">View All</button></div>
+        <div class="card table-wrap"><table class="table"><thead><tr><th>Job</th><th>Customer</th><th>Service</th><th>Status</th><th>Payment</th><th>Price</th><th>Action</th></tr></thead><tbody id="recentOrders"></tbody></table></div>
+      </section>
+
+      <!-- ORDERS -->
+      <section id="page-orders" class="page hidden">
+        <div class="section-head" style="margin-top:0">
+          <div><h2>All Orders</h2><div class="muted" style="font-size:12px;margin-top:3px">Manage service jobs, payments and assignments</div></div>
+          <button class="btn primary" onclick="openOrderModal()">＋ New Order</button>
+        </div>
+        <div class="card filters">
+          <input id="orderSearch" class="input" placeholder="Search job code, customer, phone, IMEI, model..." oninput="renderOrders()">
+          <select id="orderStatusFilter" class="select" onchange="renderOrders()"><option value="">All Status</option><option>New</option><option>In Progress</option><option>Completed</option><option>Cancelled</option></select>
+          <select id="orderPaymentFilter" class="select" onchange="renderOrders()"><option value="">All Payments</option><option>Paid</option><option>Partial</option><option>Unpaid</option></select>
+          <select id="orderStaffFilter" class="select" onchange="renderOrders()"><option value="">All Staff</option></select>
+          <button class="btn filter-reset" onclick="resetOrderFilters()">Reset</button>
+        </div>
+        <div class="card table-wrap" style="margin-top:14px">
+          <table class="table"><thead><tr><th>Job Code</th><th>Customer</th><th>Device</th><th>Service</th><th>Staff</th><th>Status</th><th>Price</th><th>Paid</th><th>Balance</th><th>Action</th></tr></thead><tbody id="ordersBody"></tbody></table>
+        </div>
+        <div id="ordersPagination" class="pagination"></div>
+      </section>
+
+      <!-- CUSTOMERS -->
+      <section id="page-customers" class="page hidden">
+        <div class="section-head" style="margin-top:0"><div><h2>Customers</h2><div class="muted" style="font-size:12px">Customer list and order history</div></div></div>
+        <div class="card" style="padding:14px;margin-bottom:14px"><input id="customerSearch" class="input" placeholder="Search customer name or phone..." oninput="renderCustomers()"></div>
+        <div class="card table-wrap"><table class="table"><thead><tr><th>Customer</th><th>Phone</th><th>Address</th><th>Orders</th><th>Total Price</th><th>Paid</th><th>Balance</th><th>Last Order</th><th>Action</th></tr></thead><tbody id="customersBody"></tbody></table></div>
+      </section>
+
+      <!-- PAYMENTS -->
+      <section id="page-payments" class="page hidden">
+        <div class="grid three" style="margin-bottom:18px">
+          <div class="card stat"><div class="stat-top"><span>Total Revenue</span><div class="stat-icon">💰</div></div><div id="pRevenue" class="stat-value">0</div></div>
+          <div class="card stat"><div class="stat-top"><span>Total Collected</span><div class="stat-icon">✅</div></div><div id="pPaid" class="stat-value">0</div></div>
+          <div class="card stat"><div class="stat-top"><span>Total Balance</span><div class="stat-icon">⚠️</div></div><div id="pBalance" class="stat-value">0</div></div>
+        </div>
+        <div class="section-head" style="margin-top:0"><h2>Payment Records</h2></div>
+        <div class="card filters" style="grid-template-columns:2fr 1fr auto"><input id="paymentSearch" class="input" placeholder="Search job, customer, phone..." oninput="renderPayments()"><select id="paymentStatusFilter" class="select" onchange="renderPayments()"><option value="">All</option><option>Paid</option><option>Partial</option><option>Unpaid</option></select><button class="btn" onclick="document.getElementById('paymentSearch').value='';document.getElementById('paymentStatusFilter').value='';renderPayments()">Reset</button></div>
+        <div class="card table-wrap" style="margin-top:14px"><table class="table"><thead><tr><th>Job</th><th>Customer</th><th>Service</th><th>Price</th><th>Paid</th><th>Balance</th><th>Status</th><th>Method</th><th>Action</th></tr></thead><tbody id="paymentsBody"></tbody></table></div>
+      </section>
+
+      <!-- STAFF -->
+      <section id="page-staff" class="page hidden">
+        <div class="section-head" style="margin-top:0"><div><h2>Staff</h2><div class="muted" style="font-size:12px">Technicians and assigned work</div></div><button class="btn primary" onclick="openStaffModal()">＋ Add Staff</button></div>
+        <div class="card table-wrap"><table class="table"><thead><tr><th>Staff</th><th>Phone</th><th>Role</th><th>Status</th><th>Orders</th><th>Completed</th><th>Revenue</th><th>Collected</th><th>Action</th></tr></thead><tbody id="staffBody"></tbody></table></div>
+      </section>
+
+      <!-- REPORTS -->
+      <section id="page-reports" class="page hidden">
+        <div class="section-head" style="margin-top:0"><div><h2>Reports</h2><div class="muted" style="font-size:12px">Daily, weekly, monthly, service and staff reports</div></div></div>
+        <div class="grid two">
+          <div class="card" style="padding:18px"><h3 style="margin-top:0">Monthly Report</h3><div class="table-wrap"><table class="table" style="min-width:500px"><thead><tr><th>Month</th><th>Orders</th><th>Revenue</th><th>Paid</th></tr></thead><tbody id="monthlyReportBody"></tbody></table></div></div>
+          <div class="card" style="padding:18px"><h3 style="margin-top:0">Service Report</h3><div class="table-wrap"><table class="table" style="min-width:500px"><thead><tr><th>Service</th><th>Orders</th><th>Revenue</th><th>Paid</th></tr></thead><tbody id="serviceReportBody"></tbody></table></div></div>
+        </div>
+        <div class="card" style="padding:18px;margin-top:16px"><h3 style="margin-top:0">Staff Report</h3><div class="table-wrap"><table class="table" style="min-width:650px"><thead><tr><th>Staff</th><th>Orders</th><th>Revenue</th><th>Paid</th></tr></thead><tbody id="staffReportBody"></tbody></table></div></div>
+      </section>
+
+      <!-- SETTINGS -->
+      <section id="page-settings" class="page hidden">
+        <div class="grid two">
+          <div class="card" style="padding:20px"><h2 style="font-size:17px;margin-top:0">Services</h2><div class="section-actions" style="margin-bottom:12px"><button class="btn primary" onclick="openServiceModal()">＋ Add Service</button></div><div class="table-wrap"><table class="table" style="min-width:600px"><thead><tr><th>Type</th><th>Service</th><th>Price</th><th>Status</th><th>Action</th></tr></thead><tbody id="servicesBody"></tbody></table></div></div>
+          <div class="card" style="padding:20px"><h2 style="font-size:17px;margin-top:0">System Settings</h2><div class="field" style="margin-bottom:12px"><label>Company Name</label><input id="settingCompany" class="input"></div><div class="field" style="margin-bottom:12px"><label>Currency</label><input id="settingCurrency" class="input"></div><div class="field" style="margin-bottom:12px"><label>Default Status</label><select id="settingDefaultStatus" class="select"><option>New</option><option>In Progress</option><option>Completed</option><option>Cancelled</option></select></div><button class="btn primary" onclick="saveSettings()">Save Settings</button></div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+</div>
+
+<!-- ORDER MODAL -->
+<div id="orderModal" class="modal-backdrop">
+  <div class="modal">
+    <div class="modal-head"><h3 id="orderModalTitle">New Order</h3><button class="close" onclick="closeModal('orderModal')">×</button></div>
+    <form id="orderForm" onsubmit="saveOrder(event)">
+      <input type="hidden" id="fRowID"><input type="hidden" id="fJobCode">
+      <div class="modal-body">
+        <div class="form-section">
+          <h3>👤 Customer</h3>
+          <div class="form-grid">
+            <div class="field"><label>Name *</label><input id="fCustomerName" class="input" required></div>
+            <div class="field"><label>Phone *</label><input id="fPhone" class="input" required></div>
+            <div class="field full"><label>Address</label><input id="fAddress" class="input"></div>
+          </div>
+        </div>
+        <div class="form-section">
+          <h3>🔧 Service & Device</h3>
+          <div class="form-grid">
+            <div class="field"><label>Service Type</label><select id="fServiceType" class="select" onchange="filterServiceNames()"></select></div>
+            <div class="field"><label>Service Name</label><select id="fServiceName" class="select" onchange="applyServicePrice()"></select></div>
+            <div class="field"><label>Brand</label><select id="fBrand" class="select"><option value="">Select Brand</option><option>Xiaomi</option><option>Redmi</option><option>POCO</option><option>Samsung</option><option>Huawei</option><option>Honor</option><option>Apple</option><option>OPPO</option><option>Realme</option><option>Vivo</option><option>OnePlus</option><option>Other</option></select></div>
+            <div class="field"><label>Model</label><input id="fModel" class="input" placeholder="e.g. 2312DRA50G"></div>
+            <div class="field"><label>IMEI</label><input id="fIMEI" class="input"></div>
+            <div class="field"><label>Serial Number</label><input id="fSerial" class="input"></div>
+          </div>
+        </div>
+        <div class="form-section">
+          <h3>👨‍🔧 Assignment</h3>
+          <div class="form-grid">
+            <div class="field"><label>Status</label><select id="fStatus" class="select"><option>New</option><option>In Progress</option><option>Completed</option><option>Cancelled</option></select></div>
+            <div class="field"><label>Assigned Staff</label><select id="fStaff" class="select"><option value="">Unassigned</option></select></div>
+          </div>
+        </div>
+        <div class="form-section">
+          <h3>💰 Payment</h3>
+          <div class="form-grid">
+            <div class="field"><label>Price (MMK)</label><input id="fPrice" class="input" type="number" min="0" step="1" oninput="calculateBalance()"></div>
+            <div class="field"><label>Paid (MMK)</label><input id="fPaid" class="input" type="number" min="0" step="1" oninput="calculateBalance()"></div>
+            <div class="field"><label>Balance</label><input id="fBalance" class="input" readonly></div>
+            <div class="field"><label>Payment Method</label><select id="fPaymentMethod" class="select"><option value="">Select</option><option>Cash</option><option>KPay</option><option>Wave Money</option><option>Bank Transfer</option><option>Other</option></select></div>
+          </div>
+        </div>
+        <div class="form-section">
+          <h3>📝 Notes</h3>
+          <div class="form-grid">
+            <div class="field"><label>Customer Note</label><textarea id="fCustomerNote" class="textarea"></textarea></div>
+            <div class="field"><label>Internal Note</label><textarea id="fInternalNote" class="textarea"></textarea></div>
+            <div class="field full"><label>Voucher / Screenshot URL</label><input id="fVoucher" class="input" placeholder="Paste Google Drive / image URL"></div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-foot"><button type="button" class="btn" onclick="closeModal('orderModal')">Cancel</button><button class="btn primary" type="submit">Save Order</button></div>
     </form>
   </div>
 </div>
 
-<!-- APP -->
-<div id="app-screen">
-<header class="topbar">
-  <div class="brand">TTA G3 • Order Management</div>
-  <div class="user-area"><span id="currentUser" class="small">Admin</span><button class="btn btn-danger" onclick="logout()">Logout</button></div>
-</header>
-
-<main class="container">
-  <nav class="nav">
-    <button class="active" onclick="showSection('dashboard',this)">📊 Dashboard</button>
-    <button onclick="showSection('orders',this)">📦 Orders</button>
-    <button onclick="showSection('customers',this)">👤 Customers</button>
-    <button onclick="showSection('payments',this)">💰 Payments</button>
-    <button onclick="showSection('reports',this)">📈 Reports</button>
-  </nav>
-
-  <!-- DASHBOARD -->
-  <section id="dashboard" class="section">
-    <div class="grid">
-      <div class="stat primary"><div class="label">စုစုပေါင်း Orders</div><div class="value" id="sTotal">0</div></div>
-      <div class="stat info"><div class="label">Today Orders</div><div class="value" id="sToday">0</div></div>
-      <div class="stat warning"><div class="label">In Progress</div><div class="value" id="sProgress">0</div></div>
-      <div class="stat success"><div class="label">Completed</div><div class="value" id="sCompleted">0</div></div>
-      <div class="stat danger"><div class="label">Unpaid / Balance</div><div class="value" id="sBalance">0</div></div>
-      <div class="stat success"><div class="label">Total Revenue</div><div class="value" id="sRevenue">0</div></div>
-    </div>
-
-    <div class="panel">
-      <div class="panel-title"><h2>📋 Recent Orders</h2><button class="btn btn-light" onclick="loadOrders()">🔄 Refresh</button></div>
-      <div class="table-wrap"><table><thead><tr><th>Job Code</th><th>Customer</th><th>Device</th><th>Service</th><th>Status</th><th>Price</th><th>Created</th></tr></thead><tbody id="recentBody"></tbody></table></div>
-      <div id="recentMobile"></div>
-    </div>
-  </section>
-
-  <!-- ORDERS -->
-  <section id="orders" class="section hidden">
-    <div class="panel">
-      <div class="panel-title">
-        <h2>📦 Order Management</h2>
-        <button class="btn btn-primary" onclick="newOrder()">➕ New Order</button>
-      </div>
-
-      <div class="toolbar">
-        <input id="searchInput" placeholder="🔍 Job Code / Name / Phone / IMEI / Model" oninput="applyFilters()">
-        <select id="statusFilter" onchange="applyFilters()"><option value="">All Status</option><option>New</option><option>Checking</option><option>In Progress</option><option>Waiting Customer</option><option>Completed</option><option>Delivered</option><option>Cancelled</option></select>
-        <select id="paymentFilter" onchange="applyFilters()"><option value="">All Payment</option><option>Paid</option><option>Partial</option><option>Unpaid</option></select>
-        <select id="sortOrder" onchange="applyFilters()"><option value="desc">Newest</option><option value="asc">Oldest</option></select>
-        <button class="btn btn-light" onclick="loadOrders()">🔄</button>
-      </div>
-
-      <div class="table-wrap">
-        <table>
-          <thead><tr>
-            <th>Job Code</th><th>Customer</th><th>Device</th><th>Service</th><th>Status</th>
-            <th>Payment</th><th>Price</th><th>Staff</th><th>Created</th><th>Action</th>
-          </tr></thead>
-          <tbody id="orderBody"></tbody>
-        </table>
-      </div>
-      <div class="mobile-cards" id="orderMobile"></div>
-
-      <div class="pagination"><span id="pageInfo">0 Orders</span><div class="pages" id="pages"></div></div>
-    </div>
-  </section>
-
-  <!-- CUSTOMERS -->
-  <section id="customers" class="section hidden">
-    <div class="panel">
-      <div class="panel-title"><h2>👤 Customer Database</h2></div>
-      <input id="customerSearch" placeholder="🔍 Customer Name / Phone" oninput="renderCustomers()">
-      <div class="table-wrap" style="margin-top:12px"><table><thead><tr><th>Customer</th><th>Phone</th><th>Address</th><th>Orders</th><th>Total Spent</th></tr></thead><tbody id="customerBody"></tbody></table></div>
-      <div class="mobile-cards" id="customerMobile"></div>
-    </div>
-  </section>
-
-  <!-- PAYMENTS -->
-  <section id="payments" class="section hidden">
-    <div class="grid">
-      <div class="stat success"><div class="label">Paid</div><div class="value" id="pPaid">0</div></div>
-      <div class="stat warning"><div class="label">Partial</div><div class="value" id="pPartial">0</div></div>
-      <div class="stat danger"><div class="label">Unpaid</div><div class="value" id="pUnpaid">0</div></div>
-      <div class="stat primary"><div class="label">Collected</div><div class="value" id="pCollected">0</div></div>
-      <div class="stat danger"><div class="label">Outstanding</div><div class="value" id="pOutstanding">0</div></div>
-      <div class="stat info"><div class="label">Total Sales</div><div class="value" id="pSales">0</div></div>
-    </div>
-    <div class="panel">
-      <div class="panel-title"><h2>💰 Payment List</h2></div>
-      <div class="table-wrap"><table><thead><tr><th>Job Code</th><th>Customer</th><th>Service</th><th>Price</th><th>Paid</th><th>Balance</th><th>Status</th></tr></thead><tbody id="paymentBody"></tbody></table></div>
-    </div>
-  </section>
-
-  <!-- REPORTS -->
-  <section id="reports" class="section hidden">
-    <div class="panel">
-      <div class="panel-title"><h2>📈 Reports</h2><button class="btn btn-success" onclick="exportCSV()">⬇️ Export CSV</button></div>
-      <div class="grid" style="grid-template-columns:repeat(3,1fr)">
-        <div class="stat primary"><div class="label">Orders</div><div class="value" id="rOrders">0</div></div>
-        <div class="stat success"><div class="label">Revenue</div><div class="value" id="rRevenue">0</div></div>
-        <div class="stat danger"><div class="label">Outstanding</div><div class="value" id="rBalance">0</div></div>
-      </div>
-      <h3>Service Breakdown</h3>
-      <div class="table-wrap"><table><thead><tr><th>Service</th><th>Orders</th><th>Sales</th></tr></thead><tbody id="serviceReport"></tbody></table></div>
-    </div>
-  </section>
-</main>
-</div>
-
-<!-- ORDER MODAL -->
-<div class="modal" id="orderModal">
-<div class="modal-box">
-  <div class="modal-head"><h2 id="modalTitle" style="margin:0">➕ New Order</h2><button class="btn btn-light" onclick="closeModal()">✕</button></div>
-  <form id="orderForm">
-    <input type="hidden" id="rowId"><input type="hidden" id="existingVoucherLink">
-    <div class="form-grid">
-      <div class="field"><label>Job Code</label><input id="jobCode" readonly placeholder="Auto Generate"></div>
-      <div class="field"><label>Customer Name *</label><input id="name" required></div>
-      <div class="field"><label>Phone *</label><input id="phone" required></div>
-
-      <div class="field"><label>Device Brand</label><select id="brand"><option>Xiaomi</option><option>Redmi</option><option>POCO</option><option>Samsung</option><option>Apple</option><option>Huawei</option><option>OPPO</option><option>vivo</option><option>Realme</option><option>Other</option></select></div>
-      <div class="field"><label>Device Model</label><input id="model" placeholder="e.g. Redmi Note 14 Pro"></div>
-      <div class="field"><label>IMEI / Serial</label><input id="imei"></div>
-
-      <div class="field"><label>Service Type *</label><select id="service" required>
-        <option>Xiaomi FRP</option><option>Samsung FRP</option><option>Apple ID</option><option>Flashing</option><option>Bootloader Unlock</option><option>Root</option><option>Software Repair</option><option>Remote Service</option><option>Other</option>
-      </select></div>
-      <div class="field"><label>Status</label><select id="status"><option>New</option><option>Checking</option><option>In Progress</option><option>Waiting Customer</option><option>Completed</option><option>Delivered</option><option>Cancelled</option></select></div>
-      <div class="field"><label>Assigned Staff</label><select id="staff"><option>Admin</option><option>Staff 1</option><option>Staff 2</option><option>Staff 3</option></select></div>
-
-      <div class="field"><label>Service Price (MMK)</label><input id="price" type="number" min="0" value="0"></div>
-      <div class="field"><label>Paid (MMK)</label><input id="paid" type="number" min="0" value="0"></div>
-      <div class="field"><label>Payment Method</label><select id="paymentMethod"><option>Cash</option><option>KBZPay</option><option>WavePay</option><option>Bank</option><option>Other</option></select></div>
-
-      <div class="field"><label>Payment Status</label><select id="paymentStatus"><option>Unpaid</option><option>Partial</option><option>Paid</option></select></div>
-      <div class="field"><label>Courier</label><input id="courier" placeholder="Royal Express / Delivery Gate"></div>
-      <div class="field"><label>Voucher / Payment Screenshot</label><input id="voucherFile" type="file" accept="image/*"></div>
-
-      <div class="field full"><label>Customer Address</label><textarea id="address" rows="2"></textarea></div>
-      <div class="field full"><label>Customer Note</label><textarea id="customerNote" rows="2" placeholder="Customer request / information"></textarea></div>
-      <div class="field full"><label>Internal Staff Note</label><textarea id="internalNote" rows="2" placeholder="Staff only note"></textarea></div>
-    </div>
-    <div class="actions">
-      <button class="btn btn-primary" id="saveBtn">💾 Save Order</button>
-      <button type="button" class="btn btn-light" onclick="closeModal()">Cancel</button>
-    </div>
-  </form>
-</div>
-</div>
-
 <!-- DETAIL MODAL -->
-<div class="modal" id="detailModal">
-<div class="modal-box">
-  <div class="modal-head"><h2 style="margin:0">📋 Order Details</h2><button class="btn btn-light" onclick="closeDetail()">✕</button></div>
-  <div id="detailContent"></div>
-  <div class="actions"><button class="btn btn-primary" onclick="printInvoice()">🧾 Print Invoice</button><button class="btn btn-light" onclick="closeDetail()">Close</button></div>
+<div id="detailModal" class="modal-backdrop">
+  <div class="modal">
+    <div class="modal-head"><h3 id="detailTitle">Order Detail</h3><button class="close" onclick="closeModal('detailModal')">×</button></div>
+    <div id="detailBody" class="modal-body"></div>
+    <div class="modal-foot"><button class="btn" onclick="closeModal('detailModal')">Close</button></div>
+  </div>
 </div>
+
+<!-- STAFF MODAL -->
+<div id="staffModal" class="modal-backdrop">
+  <div class="modal">
+    <div class="modal-head"><h3 id="staffModalTitle">Add Staff</h3><button class="close" onclick="closeModal('staffModal')">×</button></div>
+    <div class="modal-body"><input type="hidden" id="staffId"><div class="form-grid"><div class="field"><label>Name *</label><input id="staffName" class="input"></div><div class="field"><label>Phone</label><input id="staffPhone" class="input"></div><div class="field"><label>Role</label><select id="staffRole" class="select"><option>Technician</option><option>Admin</option><option>Manager</option><option>Staff</option></select></div><div class="field"><label>Status</label><select id="staffStatus" class="select"><option>Active</option><option>Inactive</option></select></div></div></div>
+    <div class="modal-foot"><button class="btn" onclick="closeModal('staffModal')">Cancel</button><button class="btn primary" onclick="saveStaff()">Save</button></div>
+  </div>
 </div>
 
-<script>
-const API_URL="const API_URL = "https://script.google.com/macros/s/AKfycbww5K_aj0P2WSjnZqtgfsqR1Mf7bCwQLlQBuxV8swmFRwHIvxUEdrQy6VonmKmM1_EC/exec";";
+<!-- SERVICE MODAL -->
+<div id="serviceModal" class="modal-backdrop">
+  <div class="modal">
+    <div class="modal-head"><h3 id="serviceModalTitle">Add Service</h3><button class="close" onclick="closeModal('serviceModal')">×</button></div>
+    <div class="modal-body"><input type="hidden" id="serviceId"><div class="form-grid"><div class="field"><label>Service Type *</label><input id="serviceType" class="input"></div><div class="field"><label>Service Name *</label><input id="serviceName" class="input"></div><div class="field"><label>Default Price</label><input id="servicePrice" type="number" class="input" min="0"></div><div class="field"><label>Status</label><select id="serviceStatus" class="select"><option>Active</option><option>Inactive</option></select></div></div></div>
+    <div class="modal-foot"><button class="btn" onclick="closeModal('serviceModal')">Cancel</button><button class="btn primary" onclick="saveService()">Save</button></div>
+  </div>
+</div>
 
-let ordersData=[];
-let filteredData=[];
-let currentPage=1;
-const rowsPerPage=20;
-let activeDetail=null;
+<div id="loading" class="loading"><div class="spinner"></div></div>
+<div id="toast" class="toast"></div>
 
-const $=id=>document.getElementById(id);
-const money=n=>Number(n||0).toLocaleString()+" MMK";
-const esc=s=>String(s??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]));
-
-function todayKey(){
-  const d=new Date(); return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");
-}
-function generateJobCode(){
-  const d=new Date();
-  const key=String(d.getFullYear()).slice(2)+String(d.getMonth()+1).padStart(2,"0")+String(d.getDate()).padStart(2,"0");
-  let max=0;
-  ordersData.forEach(o=>{
-    const m=String(o.jobCode||"").match(new RegExp("^TTA-"+key+"-(\\d+)$"));
-    if(m) max=Math.max(max,Number(m[1]));
-  });
-  return `TTA-${key}-${String(max+1).padStart(3,"0")}`;
-}
-function normalize(o){
-  const price=Number(o.price||o.amount||0), paid=Number(o.paid||0);
-  let ps=o.paymentStatus;
-  if(!ps) ps=paid>=price&&price>0?"Paid":paid>0?"Partial":"Unpaid";
-  return {
-    ...o,
-    jobCode:o.jobCode||("TTA-"+String(o.rowId||"").padStart(5,"0")),
-    name:o.name||"-",phone:o.phone||"-",address:o.address||"-",
-    brand:o.brand||"",model:o.model||"",imei:o.imei||"",
-    service:o.service||"Other",status:o.status||"New",staff:o.staff||"Admin",
-    price,paid,balance:Math.max(price-paid,0),paymentStatus:ps,
-    paymentMethod:o.paymentMethod||"-",courier:o.courier||"-",
-    customerNote:o.customerNote||"",internalNote:o.internalNote||"",
-    createdAt:o.createdAt||o.date||o.timestamp||""
-  };
-}
-
-window.onload=()=>{
-  if(sessionStorage.getItem("isLoggedIn")==="true") showApp();
-};
-
-$("loginForm").addEventListener("submit",async e=>{
-  e.preventDefault();
-  const btn=$("loginBtn"); btn.disabled=true; btn.textContent="စစ်ဆေးနေပါသည်...";
-  try{
-    const r=await fetch(API_URL,{method:"POST",headers:{"Content-Type":"application/json"},
-      body:JSON.stringify({action:"login",username:$("loginUser").value,password:$("loginPass").value})});
-    /* Compatible with the existing no-cors Apps Script endpoint:
-       the backend should validate credentials and return success=true/false. */
-    let ok=true;
-    try{const x=await r.json();ok=x.success!==false;}catch(_){}
-    if(!ok) throw new Error("login");
-    sessionStorage.setItem("isLoggedIn","true");
-    sessionStorage.setItem("username",$("loginUser").value);
-    showApp();
-  }catch(err){
-    alert("Login မအောင်မြင်ပါ။ Backend login response ကို စစ်ပါ။");
-  }finally{btn.disabled=false;btn.textContent="Login ဝင်မည်";}
-});
-
-function showApp(){
-  $("login-screen").style.display="none";
-  $("app-screen").style.display="block";
-  $("currentUser").textContent=sessionStorage.getItem("username")||"Admin";
-  loadOrders();
-}
-function logout(){sessionStorage.clear();location.reload()}
-
-function showSection(id,btn){
-  document.querySelectorAll(".section").forEach(x=>x.classList.add("hidden"));
-  $(id).classList.remove("hidden");
-  document.querySelectorAll(".nav button").forEach(x=>x.classList.remove("active"));
-  btn.classList.add("active");
-  if(id==="customers")renderCustomers();
-  if(id==="payments")renderPayments();
-  if(id==="reports")renderReports();
-}
-function newOrder(){
-  $("orderForm").reset();
-  $("rowId").value="";
-  $("existingVoucherLink").value="";
-  $("jobCode").value=generateJobCode();
-  $("price").value=0;$("paid").value=0;
-  $("modalTitle").textContent="➕ New Order";
-  $("orderModal").classList.add("show");
-}
-function closeModal(){$("orderModal").classList.remove("show")}
-function closeDetail(){$("detailModal").classList.remove("show")}
-
-$("orderForm").addEventListener("submit",async e=>{
-  e.preventDefault();
-  const btn=$("saveBtn");btn.disabled=true;btn.textContent="Saving...";
-  const rowId=$("rowId").value;
-  const file=$("voucherFile").files[0];
-  let fileData=null,fileName="",fileMimeType="";
-  if(file){fileData=await toBase64(file);fileName=file.name;fileMimeType=file.type}
-
-  const price=Number($("price").value||0),paid=Number($("paid").value||0);
-  const payload={
-    action:rowId?"update":"create",rowId,
-    jobCode:$("jobCode").value,name:$("name").value,phone:$("phone").value,
-    address:$("address").value,brand:$("brand").value,model:$("model").value,
-    imei:$("imei").value,service:$("service").value,status:$("status").value,
-    staff:$("staff").value,price,paid,balance:Math.max(price-paid,0),
-    paymentStatus:$("paymentStatus").value,paymentMethod:$("paymentMethod").value,
-    courier:$("courier").value,customerNote:$("customerNote").value,
-    internalNote:$("internalNote").value,
-    existingVoucherLink:$("existingVoucherLink").value,
-    fileData,fileName,fileMimeType
-  };
-  try{
-    await fetch(API_URL,{method:"POST",mode:"no-cors",headers:{"Content-Type":"application/json"},body:JSON.stringify(payload)});
-    alert(rowId?"Order update လုပ်ပြီးပါပြီ။":"Order အသစ်သိမ်းပြီးပါပြီ။");
-    closeModal();await loadOrders();
-  }catch(err){alert("Order သိမ်း၍မရပါ။")}
-  finally{btn.disabled=false;btn.textContent="💾 Save Order";}
-});
-function toBase64(file){
-  return new Promise((resolve,reject)=>{const r=new FileReader();r.onload=()=>resolve(r.result);r.onerror=reject;r.readAsDataURL(file)})
-}
-
-async function loadOrders(){
-  try{
-    const r=await fetch(API_URL);const data=await r.json();
-    ordersData=(Array.isArray(data)?data:[]).map(normalize);
-  }catch(e){console.error(e);ordersData=[];alert("Order data ဆွဲယူ၍မရပါ။")}
-  applyFilters();updateDashboard();renderPayments();renderReports();renderCustomers();renderRecent();
-}
-
-function applyFilters(){
-  const q=$("searchInput")?.value.toLowerCase()||"";
-  const st=$("statusFilter")?.value||"",ps=$("paymentFilter")?.value||"";
-  filteredData=ordersData.filter(o=>{
-    const hay=[o.jobCode,o.name,o.phone,o.imei,o.model,o.service].join(" ").toLowerCase();
-    return (!q||hay.includes(q))&&(!st||o.status===st)&&(!ps||o.paymentStatus===ps);
-  });
-  filteredData.sort((a,b)=>{
-    const da=new Date(a.createdAt||0).getTime(),db=new Date(b.createdAt||0).getTime();
-    return ($("sortOrder")?.value||"desc")==="desc"?db-da:da-db;
-  });
-  currentPage=1;renderOrders();
-}
-function statusClass(s){
-  return {"New":"b-new","Checking":"b-check","In Progress":"b-progress","Waiting Customer":"b-wait","Completed":"b-complete","Delivered":"b-delivered","Cancelled":"b-cancel"}[s]||"b-new";
-}
-function paymentClass(s){return s==="Paid"?"b-paid":s==="Partial"?"b-partial":"b-unpaid"}
-
-function renderOrders(){
-  const start=(currentPage-1)*rowsPerPage,items=filteredData.slice(start,start+rowsPerPage);
-  $("orderBody").innerHTML=items.length?items.map(rowHTML).join(""):`<tr><td colspan="10" style="text-align:center">Order မရှိပါ</td></tr>`;
-  $("orderMobile").innerHTML=items.length?items.map(cardHTML).join(""):`<div class="order-card" style="text-align:center">Order မရှိပါ</div>`;
-  const totalPages=Math.max(1,Math.ceil(filteredData.length/rowsPerPage));
-  $("pageInfo").textContent=`Page ${currentPage} / ${totalPages} • ${filteredData.length} Orders`;
-  let p="";
-  for(let i=1;i<=totalPages;i++) if(i===1||i===totalPages||Math.abs(i-currentPage)<=1)p+=`<button class="page ${i===currentPage?"active":""}" onclick="gotoPage(${i})">${i}</button>`;
-  $("pages").innerHTML=`<button class="page" ${currentPage===1?"disabled":""} onclick="gotoPage(${currentPage-1})">«</button>${p}<button class="page" ${currentPage===totalPages?"disabled":""} onclick="gotoPage(${currentPage+1})">»</button>`;
-}
-function gotoPage(p){const max=Math.max(1,Math.ceil(filteredData.length/rowsPerPage));currentPage=Math.min(max,Math.max(1,p));renderOrders();scrollTo(0,0)}
-function rowHTML(o){
-  return `<tr>
-  <td><b>${esc(o.jobCode)}</b><div class="small">${esc(o.imei)}</div></td>
-  <td>${esc(o.name)}<div class="small">${esc(o.phone)}</div></td>
-  <td>${esc(o.brand)} ${esc(o.model)}</td>
-  <td>${esc(o.service)}</td>
-  <td><span class="badge ${statusClass(o.status)}">${esc(o.status)}</span></td>
-  <td><span class="badge ${paymentClass(o.paymentStatus)}">${esc(o.paymentStatus)}</span></td>
-  <td><span class="money">${money(o.price)}</span><div class="small">Bal: ${money(o.balance)}</div></td>
-  <td>${esc(o.staff)}</td><td>${esc(o.createdAt)}</td>
-  <td><div class="action-row">
-    <button class="icon-btn" onclick="viewOrder('${esc(o.rowId)}')">👁️</button>
-    <button class="icon-btn" onclick="editOrder('${esc(o.rowId)}')">✏️</button>
-    <button class="icon-btn" onclick="deleteOrder('${esc(o.rowId)}')">🗑️</button>
-  </div></td></tr>`;
-}
-function cardHTML(o){
- return `<div class="order-card">
-   <div class="card-head"><b>${esc(o.jobCode)}</b><span class="badge ${statusClass(o.status)}">${esc(o.status)}</span></div>
-   <div class="card-row">👤 <b>${esc(o.name)}</b> • ${esc(o.phone)}</div>
-   <div class="card-row">📱 ${esc(o.brand)} ${esc(o.model)}</div>
-   <div class="card-row">🔧 ${esc(o.service)}</div>
-   <div class="card-row">💰 ${money(o.price)} • Paid ${money(o.paid)} • Balance ${money(o.balance)}</div>
-   <div class="card-row">👨‍🔧 ${esc(o.staff)} • <span class="badge ${paymentClass(o.paymentStatus)}">${esc(o.paymentStatus)}</span></div>
-   <div class="actions"><button class="btn btn-light" onclick="viewOrder('${esc(o.rowId)}')">👁️ View</button><button class="btn btn-warning" onclick="editOrder('${esc(o.rowId)}')">✏️ Edit</button><button class="btn btn-danger" onclick="deleteOrder('${esc(o.rowId)}')">🗑️ Delete</button></div>
- </div>`;
-}
-
-function editOrder(rowId){
- const o=ordersData.find(x=>String(x.rowId)===String(rowId));if(!o)return;
- $("rowId").value=o.rowId;$("existingVoucherLink").value=o.voucherLink||"";
- ["jobCode","name","phone","brand","model","imei","service","status","staff","price","paid","paymentMethod","paymentStatus","courier","address","customerNote","internalNote"]
- .forEach(k=>{if($(k))$(k).value=o[k]??""});
- $("modalTitle").textContent=`✏️ Edit Order • ${o.jobCode}`;
- $("orderModal").classList.add("show");
-}
-async function deleteOrder(rowId){
- if(!confirm("ဒီ Order ကို ဖျက်မှာသေချာပါသလား?"))return;
- try{
-   await fetch(API_URL,{method:"POST",mode:"no-cors",headers:{"Content-Type":"application/json"},body:JSON.stringify({action:"delete",rowId})});
-   alert("Order ဖျက်ပြီးပါပြီ");loadOrders();
- }catch(e){alert("Delete မအောင်မြင်ပါ")}
-}
-
-function viewOrder(rowId){
- const o=ordersData.find(x=>String(x.rowId)===String(rowId));if(!o)return;
- activeDetail=o;
- $("detailContent").innerHTML=`<div class="detail-grid">
- ${detail("Job Code",o.jobCode)}${detail("Customer",o.name)}${detail("Phone",o.phone)}
- ${detail("Device",`${o.brand} ${o.model}`)}${detail("IMEI / Serial",o.imei)}${detail("Service",o.service)}
- ${detail("Status",o.status)}${detail("Staff",o.staff)}${detail("Courier",o.courier)}
- ${detail("Price",money(o.price))}${detail("Paid",money(o.paid))}${detail("Balance",money(o.balance))}
- ${detail("Payment",o.paymentStatus+" / "+o.paymentMethod)}${detail("Created",o.createdAt)}
- ${detail("Address",o.address)}${detail("Customer Note",o.customerNote)}
- ${detail("Internal Note",o.internalNote)}
- </div>`;
- $("detailModal").classList.add("show");
-}
-function detail(k,v){return `<div class="detail"><b>${esc(k)}</b>${esc(v||"-")}</div>`}
-
-function updateDashboard(){
- const total=ordersData.length,today=ordersData.filter(o=>String(o.createdAt).includes(todayKey())||String(o.createdAt).includes(new Date().toLocaleDateString())).length;
- const progress=ordersData.filter(o=>["Checking","In Progress","Waiting Customer"].includes(o.status)).length;
- const completed=ordersData.filter(o=>["Completed","Delivered"].includes(o.status)).length;
- const revenue=ordersData.reduce((s,o)=>s+o.paid,0),balance=ordersData.reduce((s,o)=>s+o.balance,0);
- $("sTotal").textContent=total;$("sToday").textContent=today;$("sProgress").textContent=progress;$("sCompleted").textContent=completed;
- $("sRevenue").textContent=money(revenue);$("sBalance").textContent=money(balance);
-}
-function renderRecent(){
- const a=[...ordersData].sort((x,y)=>new Date(y.createdAt||0)-new Date(x.createdAt||0)).slice(0,10);
- $("recentBody").innerHTML=a.map(o=>`<tr><td>${esc(o.jobCode)}</td><td>${esc(o.name)}</td><td>${esc(o.brand)} ${esc(o.model)}</td><td>${esc(o.service)}</td><td><span class="badge ${statusClass(o.status)}">${esc(o.status)}</span></td><td>${money(o.price)}</td><td>${esc(o.createdAt)}</td></tr>`).join("");
- $("recentMobile").innerHTML=a.map(o=>`<div class="order-card"><div class="card-head"><b>${esc(o.jobCode)}</b><span class="badge ${statusClass(o.status)}">${esc(o.status)}</span></div><div class="card-row">${esc(o.name)} • ${esc(o.service)}</div><div class="card-row">${money(o.price)}</div></div>`).join("");
-}
-function renderCustomers(){
- const q=($("customerSearch")?.value||"").toLowerCase(),map={};
- ordersData.forEach(o=>{
-   const key=o.phone;
-   if(!map[key])map[key]={name:o.name,phone:o.phone,address:o.address,orders:0,spent:0};
-   map[key].orders++;map[key].spent+=o.paid;
- });
- const a=Object.values(map).filter(x=>(x.name+" "+x.phone).toLowerCase().includes(q));
- $("customerBody").innerHTML=a.map(x=>`<tr><td>${esc(x.name)}</td><td>${esc(x.phone)}</td><td>${esc(x.address)}</td><td>${x.orders}</td><td>${money(x.spent)}</td></tr>`).join("");
- $("customerMobile").innerHTML=a.map(x=>`<div class="order-card"><b>${esc(x.name)}</b><div class="card-row">📞 ${esc(x.phone)}</div><div class="card-row">Orders: ${x.orders} • Spent: ${money(x.spent)}</div></div>`).join("");
-}
-function renderPayments(){
- const paid=ordersData.filter(o=>o.paymentStatus==="Paid").length,partial=ordersData.filter(o=>o.paymentStatus==="Partial").length,unpaid=ordersData.filter(o=>o.paymentStatus==="Unpaid").length;
- const collected=ordersData.reduce((s,o)=>s+o.paid,0),outstanding=ordersData.reduce((s,o)=>s+o.balance,0),sales=ordersData.reduce((s,o)=>s+o.price,0);
- $("pPaid").textContent=paid;$("pPartial").textContent=partial;$("pUnpaid").textContent=unpaid;$("pCollected").textContent=money(collected);$("pOutstanding").textContent=money(outstanding);$("pSales").textContent=money(sales);
- $("paymentBody").innerHTML=ordersData.map(o=>`<tr><td>${esc(o.jobCode)}</td><td>${esc(o.name)}</td><td>${esc(o.service)}</td><td>${money(o.price)}</td><td>${money(o.paid)}</td><td>${money(o.balance)}</td><td><span class="badge ${paymentClass(o.paymentStatus)}">${esc(o.paymentStatus)}</span></td></tr>`).join("");
-}
-function renderReports(){
- const revenue=ordersData.reduce((s,o)=>s+o.price,0),balance=ordersData.reduce((s,o)=>s+o.balance,0);
- $("rOrders").textContent=ordersData.length;$("rRevenue").textContent=money(revenue);$("rBalance").textContent=money(balance);
- const map={};ordersData.forEach(o=>{if(!map[o.service])map[o.service]={n:0,s:0};map[o.service].n++;map[o.service].s+=o.price});
- $("serviceReport").innerHTML=Object.entries(map).sort((a,b)=>b[1].s-a[1].s).map(([k,v])=>`<tr><td>${esc(k)}</td><td>${v.n}</td><td>${money(v.s)}</td></tr>`).join("");
-}
-function exportCSV(){
- const headers=["Job Code","Customer","Phone","Brand","Model","IMEI","Service","Status","Staff","Price","Paid","Balance","Payment Status","Payment Method","Courier","Created"];
- const rows=ordersData.map(o=>[o.jobCode,o.name,o.phone,o.brand,o.model,o.imei,o.service,o.status,o.staff,o.price,o.paid,o.balance,o.paymentStatus,o.paymentMethod,o.courier,o.createdAt]);
- const csv="\uFEFF"+[headers,...rows].map(r=>r.map(x=>`"${String(x??"").replace(/"/g,'""')}"`).join(",")).join("\n");
- const blob=new Blob([csv],{type:"text/csv;charset=utf-8"}),url=URL.createObjectURL(blob),a=document.createElement("a");
- a.href=url;a.download="TTA-G3-Orders-"+todayKey()+".csv";a.click();URL.revokeObjectURL(url);
-}
-function printInvoice(){
- if(!activeDetail)return;
- const o=activeDetail,w=window.open("","_blank","width=700,height=800");
- w.document.write(`<html><head><title>${esc(o.jobCode)}</title><style>body{font-family:Arial;padding:35px}.box{border:1px solid #ddd;padding:25px}table{width:100%;border-collapse:collapse}td{padding:9px;border-bottom:1px solid #eee}.total{font-size:20px;font-weight:bold}</style></head><body><div class="box"><h1>TTA G3</h1><h3>Service Invoice</h3><table>
- <tr><td>Job Code</td><td>${esc(o.jobCode)}</td></tr><tr><td>Customer</td><td>${esc(o.name)}</td></tr><tr><td>Phone</td><td>${esc(o.phone)}</td></tr><tr><td>Device</td><td>${esc(o.brand)} ${esc(o.model)}</td></tr><tr><td>Service</td><td>${esc(o.service)}</td></tr><tr><td>Price</td><td>${money(o.price)}</td></tr><tr><td>Paid</td><td>${money(o.paid)}</td></tr><tr><td>Balance</td><td class="total">${money(o.balance)}</td></tr></table><p>Thank you for using TTA G3.</p></div><script>window.print()<\/script></body></html>`);
- w.document.close();
-}
-$("price").addEventListener("input",syncPayment);
-$("paid").addEventListener("input",syncPayment);
-function syncPayment(){
- const p=Number($("price").value||0),paid=Number($("paid").value||0);
- $("paymentStatus").value=paid>=p&&p>0?"Paid":paid>0?"Partial":"Unpaid";
-}
-</script>
+<!-- Link to external JS -->
+<script src="app.js"></script>
 </body>
 </html>
