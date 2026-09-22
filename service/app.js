@@ -1,4 +1,6 @@
-const API_URL = "https://script.google.com/macros/s/AKfycbwqamtXzMPYYB8ujWcDhpmENejxoyH21TxFyB_WHCsNq9rXp_8RSm3VzFwR--CcEdbD-w/exec";
+
+
+const API_URL = "https://script.google.com/macros/s/AKfycbwqamtXzMPYYB8ujWcDhpmENejxoyH21TxFyB_WHCsNq9rXp_8RSm3VzFwR--CcEdbD-w/exec"; // သင့်ရဲ့ Web App URL ကို ဤနေရာတွင် ပြောင်းထည့်ပါ
 
 const state = {
   orders: [],
@@ -51,56 +53,51 @@ async function apiGet(action, params={}){
   return data.data;
 }
 
-function apiPost(payload){
-  return fetch(API_URL,{
-    method:"POST",
-    mode:"no-cors",
-    headers:{"Content-Type":"text/plain;charset=utf-8"},
-    body:JSON.stringify(payload)
+// ပြင်ဆင်ထားသော apiPost Function
+async function apiPost(payload){
+  const res = await fetch(API_URL, {
+    method: "POST",
+    headers: { "Content-Type": "text/plain;charset=utf-8" },
+    body: JSON.stringify(payload)
   });
+  
+  const data = await res.json();
+  if(!data.success) throw new Error(data.error || "Failed to process request");
+  return data;
 }
 
-/*
-  IMPORTANT:
-  Apps Script POST + no-cors returns an opaque browser response.
-  Therefore the frontend cannot inspect success/error from POST.
-  After a POST we refresh the related GET data.
-*/
+// ပြင်ဆင်ထားသော postAndRefresh Function
 async function postAndRefresh(payload, callback){
   showLoading(true);
   try{
     await apiPost(payload);
-    toast("Request sent. Updating data...");
-    setTimeout(async()=>{
-      try{await loadAll(); if(callback)callback(); toast("Data refreshed");}
-      catch(e){toast("Saved request sent, but refresh failed");}
-      finally{showLoading(false)}
-    },900);
+    toast("Saved successfully.");
+    await loadAll(); 
+    if(callback) callback();
   }catch(e){
+    toast("Error: " + e.message);
+  }finally{
     showLoading(false);
-    toast("Network error: "+e.message);
   }
 }
 
-function login(){
+async function login(){
   const username=document.getElementById("loginUser").value.trim();
   const password=document.getElementById("loginPass").value;
   document.getElementById("loginError").textContent="";
   if(!username||!password){document.getElementById("loginError").textContent="Enter username and password.";return}
 
-  /*
-    Compatibility login for a static GitHub Pages frontend.
-    Because no-cors hides the POST response, the browser cannot verify
-    the returned login result. This is NOT secure authentication.
-  */
   showLoading(true);
-  apiPost({action:"login",username,password}).then(()=>{
+  try {
+    await apiPost({action:"login",username,password});
     sessionStorage.setItem("tta_logged_in","true");
     sessionStorage.setItem("tta_user",username);
     showApp();
-  }).catch(e=>{
+  } catch(e) {
     document.getElementById("loginError").textContent=e.message||"Connection failed";
-  }).finally(()=>showLoading(false));
+  } finally {
+    showLoading(false);
+  }
 }
 
 function showApp(){
