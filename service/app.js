@@ -1,5 +1,3 @@
-
-
 const API_URL = "https://script.google.com/macros/s/AKfycbwqamtXzMPYYB8ujWcDhpmENejxoyH21TxFyB_WHCsNq9rXp_8RSm3VzFwR--CcEdbD-w/exec"; // သင့်ရဲ့ Web App URL ကို ဤနေရာတွင် ပြောင်းထည့်ပါ
 
 const state = {
@@ -53,31 +51,28 @@ async function apiGet(action, params={}){
   return data.data;
 }
 
-// ပြင်ဆင်ထားသော apiPost Function
-async function apiPost(payload){
-  const res = await fetch(API_URL, {
-    method: "POST",
-    headers: { "Content-Type": "text/plain;charset=utf-8" },
-    body: JSON.stringify(payload)
+function apiPost(payload){
+  return fetch(API_URL,{
+    method:"POST",
+    mode:"no-cors",
+    headers:{"Content-Type":"text/plain;charset=utf-8"},
+    body:JSON.stringify(payload)
   });
-  
-  const data = await res.json();
-  if(!data.success) throw new Error(data.error || "Failed to process request");
-  return data;
 }
 
-// ပြင်ဆင်ထားသော postAndRefresh Function
 async function postAndRefresh(payload, callback){
   showLoading(true);
   try{
     await apiPost(payload);
-    toast("Saved successfully.");
-    await loadAll(); 
-    if(callback) callback();
+    toast("Request sent. Updating data...");
+    setTimeout(async()=>{
+      try{await loadAll(); if(callback)callback(); toast("Data refreshed");}
+      catch(e){toast("Refresh failed");}
+      finally{showLoading(false)}
+    },900);
   }catch(e){
-    toast("Error: " + e.message);
-  }finally{
     showLoading(false);
+    toast("Network error: "+e.message);
   }
 }
 
@@ -89,12 +84,12 @@ async function login(){
 
   showLoading(true);
   try {
-    await apiPost({action:"login",username,password});
+    await apiGet("login", { username: username, password: password }); 
     sessionStorage.setItem("tta_logged_in","true");
     sessionStorage.setItem("tta_user",username);
     showApp();
   } catch(e) {
-    document.getElementById("loginError").textContent=e.message||"Connection failed";
+    document.getElementById("loginError").textContent = e.message || "Invalid username or password";
   } finally {
     showLoading(false);
   }
