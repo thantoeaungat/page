@@ -25,6 +25,12 @@
     .tab-content { display: none; background: white; padding: 20px; border-radius: 0 0 10px 10px; box-shadow: 0 2px 6px rgba(0,0,0,0.08); }
     .tab-content.active { display: block; }
 
+    /* Summary Cards Style */
+    .summary-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; margin-bottom: 20px; }
+    .summary-card { padding: 15px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); color: #ffffff; }
+    .summary-card span { font-size: 13px; font-weight: bold; opacity: 0.95; }
+    .summary-card h2 { margin: 5px 0 0 0; font-size: 24px; }
+
     /* Form Inputs */
     label { font-weight: bold; font-size: 14px; margin-top: 10px; display: block; }
     input, select, textarea, button { width: 100%; padding: 12px; margin-top: 6px; margin-bottom: 12px; border: 1px solid #ccc; border-radius: 6px; font-size: 14px; }
@@ -145,6 +151,22 @@
       <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; flex-wrap: wrap; gap: 10px;">
         <h2 style="margin: 0;">Order စာရင်းများ</h2>
         <button onclick="loadOrders()" style="background-color: #28a745; width: auto; margin: 0; padding: 8px 14px;">🔄 Refresh စာရင်းကြည့်မည်</button>
+      </div>
+
+      <!-- Summary Cards Counter Section (Full Colored Cards with White Text) -->
+      <div class="summary-grid">
+        <div class="summary-card" style="background-color: #007bff;">
+          <span>စုစုပေါင်း Order</span>
+          <h2 id="totalCount">0</h2>
+        </div>
+        <div class="summary-card" style="background-color: #28a745;">
+          <span>✅ ပို့ပြီး အရေအတွက်</span>
+          <h2 id="deliveredCount">0</h2>
+        </div>
+        <div class="summary-card" style="background-color: #f39c12;">
+          <span>⏳ မပို့ရသေး အရေအတွက်</span>
+          <h2 id="pendingCount">0</h2>
+        </div>
       </div>
 
       <!-- Search & Sorting Controls -->
@@ -336,12 +358,24 @@
       const searchTerm = document.getElementById('searchInput').value.toLowerCase();
       const sortOrder = document.getElementById('sortOrder').value;
 
+      // Filter Search Match
       filteredData = ordersData.filter(item => {
         const nameMatch = item.name && item.name.toLowerCase().includes(searchTerm);
         const phoneMatch = item.phone && item.phone.toString().includes(searchTerm);
         return nameMatch || phoneMatch;
       });
 
+      // Calculate Counts for Summary Cards
+      const total = filteredData.length;
+      const delivered = filteredData.filter(item => item.status === 'ပို့ပြီး').length;
+      const pending = filteredData.filter(item => item.status === 'မပို့ရသေး').length;
+
+      // Update UI Counters
+      document.getElementById('totalCount').innerText = total;
+      document.getElementById('deliveredCount').innerText = delivered;
+      document.getElementById('pendingCount').innerText = pending;
+
+      // Sorting
       if (sortOrder === 'desc') {
         filteredData.reverse(); // နောက်ဆုံးဝင်တာ အပေါ်ဆုံး
       }
