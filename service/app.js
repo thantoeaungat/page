@@ -424,13 +424,13 @@ async function customerHistory(phone){
   openModal("detailModal");
 }
 
-function openStaffModal(s=null){
-  document.getElementById("staffId").value=s?.StaffID||"";
-  document.getElementById("staffName").value=s?.StaffName||"";
-  document.getElementById("staffPhone").value=s?.Phone||"";
-  document.getElementById("staffRole").value=s?.Role||"Technician";
-  document.getElementById("staffStatus").value=s?.Status||"Active";
-  document.getElementById("staffModalTitle").textContent=s?"Edit Staff":"Add Staff";
+function openStaffModal(s) {
+  document.getElementById("staffId").value = s ? (s.StaffID || "") : "";
+  document.getElementById("staffName").value = s ? (s.StaffName || "") : "";
+  document.getElementById("staffPhone").value = s ? (s.Phone || "") : "";
+  document.getElementById("staffRole").value = s ? (s.Role || "Technician") : "Technician";
+  document.getElementById("staffStatus").value = s ? (s.Status || "Active") : "Active";
+  document.getElementById("staffModalTitle").textContent = s ? "Edit Staff" : "Add Staff";
   openModal("staffModal");
 }
 function editStaff(id){const s=state.staff.find(x=>x.StaffID===id);if(s)openStaffModal(s)}
