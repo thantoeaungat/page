@@ -8,103 +8,79 @@
         body { font-family: 'Segoe UI', Arial, sans-serif; background: #f0f2f5; padding: 20px; margin: 0;}
         .container { max-width: 800px; margin: auto; }
         
-        /* Global Loading Overlay */
-        .global-loader {
-            display: none; /* Hidden by default */
-            position: fixed;
-            z-index: 9999;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(255, 255, 255, 0.85);
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-        }
-        .spinner {
-            border: 6px solid #f3f3f3;
-            border-top: 6px solid #0056b3;
-            border-radius: 50%;
-            width: 50px;
-            height: 50px;
-            animation: spin 1s linear infinite;
-            margin-bottom: 15px;
-        }
-        .loader-text {
-            font-size: 18px;
-            color: #0056b3;
-            font-weight: bold;
-        }
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
+        /* Global Loading */
+        .global-loader { display: none; position: fixed; z-index: 9999; left: 0; top: 0; width: 100%; height: 100%; background: rgba(255, 255, 255, 0.85); flex-direction: column; justify-content: center; align-items: center; }
+        .spinner { border: 6px solid #f3f3f3; border-top: 6px solid #0056b3; border-radius: 50%; width: 50px; height: 50px; animation: spin 1s linear infinite; margin-bottom: 15px; }
+        .loader-text { font-size: 18px; color: #0056b3; font-weight: bold; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
-        /* Login Panel Styles */
+        /* Login Panel */
         .login-panel { background: #fff; padding: 30px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); max-width: 400px; margin: 100px auto; text-align: center; }
         .login-panel input { width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; font-size: 16px;}
         .login-btn { background: #0056b3; color: #fff; padding: 12px; width: 100%; border: none; border-radius: 4px; cursor: pointer; font-size: 16px; font-weight: bold;}
         .login-btn:hover { background: #004494; }
         .error-msg { color: red; margin-top: 10px; display: none; font-size: 14px;}
 
-        /* App Container & Header */
+        /* App Layout */
         #appContainer { display: none; }
         .header { display: flex; justify-content: space-between; align-items: center; background: #fff; padding: 15px 20px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); margin-bottom: 20px; }
-        .header h2 { margin: 0; color: #333; }
+        .header h2 { margin: 0; color: #333; font-size: 20px;}
         .logout-btn { background: #dc3545; color: #fff; padding: 8px 15px; border: none; border-radius: 4px; cursor: pointer; }
-        .logout-btn:hover { background: #c82333; }
 
-        /* Tabs Styles */
+        /* Navigation Tabs */
         .tabs { display: flex; background: #fff; border-radius: 8px 8px 0 0; overflow: hidden; box-shadow: 0 2px 5px rgba(0,0,0,0.1); margin-bottom: 20px;}
         .tab-btn { flex: 1; padding: 15px; text-align: center; background: #e9ecef; border: none; cursor: pointer; font-size: 16px; font-weight: bold; color: #555; transition: 0.3s;}
         .tab-btn.active { background: #0056b3; color: white; }
         .tab-content { display: none; }
         .tab-content.active { display: block; }
 
-        /* Search Bar */
-        .search-box { width: 100%; padding: 15px; margin-bottom: 20px; border: 2px solid #ddd; border-radius: 8px; box-sizing: border-box; font-size: 16px; outline: none; transition: 0.3s;}
-        .search-box:focus { border-color: #0056b3; box-shadow: 0 0 8px rgba(0,86,179,0.2); }
+        /* Brand Navigation Filter */
+        .brand-nav-container { display: flex; align-items: center; gap: 10px; margin-bottom: 15px; }
+        .brand-tabs { display: flex; overflow-x: auto; gap: 10px; padding-bottom: 5px; flex-grow: 1; scrollbar-width: thin; }
+        .brand-pill { background: #fff; border: 1px solid #ccc; color: #333; padding: 8px 15px; border-radius: 20px; cursor: pointer; white-space: nowrap; font-weight: bold; transition: 0.2s;}
+        .brand-pill.active { background: #0056b3; color: #fff; border-color: #0056b3; }
+        .brand-pill:hover:not(.active) { background: #eee; }
+        .manage-brands-btn { background: #28a745; color: #fff; border: none; padding: 8px 15px; border-radius: 20px; cursor: pointer; font-weight: bold; white-space: nowrap;}
+        
+        .search-box { width: 100%; padding: 12px; margin-bottom: 20px; border: 2px solid #ddd; border-radius: 8px; box-sizing: border-box; font-size: 16px; outline: none;}
+        .search-box:focus { border-color: #0056b3; }
 
-        /* Form Styles */
+        /* Form */
         .form-box { background: #fff; padding: 25px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
         .form-box label { font-weight: bold; color: #444; display: block; margin-top: 10px; margin-bottom: 5px;}
-        .form-box input { width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box;}
+        .form-box input, .form-box select { width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box;}
         .form-actions { margin-top: 20px; display: flex; gap: 10px; }
-        .btn-primary { background: #0056b3; color: #fff; padding: 12px 20px; border: none; border-radius: 4px; cursor: pointer; font-size: 16px; flex: 1;}
-        .btn-primary:hover { background: #004494; }
-        .btn-secondary { background: #6c757d; color: #fff; padding: 12px 20px; border: none; border-radius: 4px; cursor: pointer; font-size: 16px; flex: 1;}
+        .btn-primary { background: #0056b3; color: #fff; padding: 12px; border: none; border-radius: 4px; cursor: pointer; font-size: 16px; flex: 1;}
+        .btn-secondary { background: #6c757d; color: #fff; padding: 12px; border: none; border-radius: 4px; cursor: pointer; font-size: 16px; flex: 1;}
 
-        /* Data List Styles */
-        .card { background: #fff; padding: 20px; margin-bottom: 15px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); position: relative;}
-        .card h3 { margin: 0 0 10px 0; color: #0056b3; border-bottom: 1px solid #eee; padding-bottom: 10px;}
+        /* Cards */
+        .card { background: #fff; padding: 20px; margin-bottom: 15px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); border-left: 5px solid #0056b3;}
+        .card-brand-badge { background: #e9ecef; color: #333; padding: 3px 8px; border-radius: 12px; font-size: 12px; font-weight: bold; margin-bottom: 10px; display: inline-block;}
+        .card h3 { margin: 0 0 10px 0; color: #0056b3; }
         .card p { margin: 8px 0; color: #444;}
-        
-        /* Screenshot Thumbnail Prieview Enlarged */
-        .screenshot { max-width: 250px; max-height: 250px; object-fit: cover; margin-top: 10px; border-radius: 8px; border: 2px solid #ddd; cursor: pointer; transition: 0.2s;}
-        .screenshot:hover { opacity: 0.8; transform: scale(1.02); }
-        
+        .screenshot { max-width: 250px; max-height: 250px; object-fit: cover; margin-top: 10px; border-radius: 8px; border: 2px solid #ddd; cursor: pointer; }
         .card-actions { margin-top: 15px; border-top: 1px solid #eee; padding-top: 15px; text-align: right;}
         .btn-edit { background: #ffc107; color: #000; padding: 8px 15px; border: none; border-radius: 4px; cursor: pointer; font-weight: bold;}
         .btn-delete { background: #dc3545; color: #fff; padding: 8px 15px; border: none; border-radius: 4px; cursor: pointer; margin-left: 5px; font-weight: bold;}
 
-        /* Fullscreen Image Modal (Lightbox) */
-        .modal { display: none; position: fixed; z-index: 10000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.85); overflow: auto; }
-        .modal-content { margin: auto; display: block; max-width: 90%; max-height: 90vh; margin-top: 3%; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.5); animation: zoomIn 0.3s ease; }
-        .close-modal { position: absolute; top: 15px; right: 25px; color: #fff; font-size: 40px; font-weight: bold; cursor: pointer; transition: 0.3s; }
-        .close-modal:hover { color: #bbb; }
-        @keyframes zoomIn { from {transform: scale(0.8); opacity: 0;} to {transform: scale(1); opacity: 1;} }
+        /* Modals */
+        .modal { display: none; position: fixed; z-index: 10000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); overflow: auto; }
+        .modal-content { margin: auto; display: block; max-width: 90%; max-height: 90vh; margin-top: 3%; border-radius: 8px; }
+        .close-modal { position: absolute; top: 15px; right: 25px; color: #fff; font-size: 40px; font-weight: bold; cursor: pointer; }
+        
+        .brand-modal-content { background: #fff; margin: 10% auto; padding: 20px; width: 90%; max-width: 400px; border-radius: 8px; }
+        .brand-modal-close { float: right; font-size: 24px; cursor: pointer; color: #555; }
+        .brand-list-item { display: flex; justify-content: space-between; align-items: center; padding: 10px; border-bottom: 1px solid #eee;}
+        .add-brand-row { display: flex; gap: 10px; margin-top: 15px; }
     </style>
 </head>
 <body>
 
-<!-- Global Loading Overlay -->
 <div id="globalLoader" class="global-loader">
     <div class="spinner"></div>
     <div class="loader-text" id="loaderText">Loading...</div>
 </div>
 
-<!-- Login Panel -->
 <div id="loginPanel" class="login-panel">
     <h2 style="margin-top: 0; color: #333;">Admin Login</h2>
     <input type="text" id="username" placeholder="Username" required>
@@ -113,29 +89,32 @@
     <div id="loginError" class="error-msg">Username သို့မဟုတ် Password မှားယွင်းနေပါသည်။</div>
 </div>
 
-<!-- Main App Container -->
 <div id="appContainer" class="container">
-    
     <div class="header">
-        <h2>📱 Service မှတ်တမ်းများ</h2>
+        <h2>📱 Service မှတ်တမ်း</h2>
         <button class="logout-btn" onclick="logout()">Logout</button>
     </div>
 
-    <!-- Tabs Navigation -->
     <div class="tabs">
-        <button id="viewTabBtn" class="tab-btn active" onclick="switchTab('view')">မှတ်တမ်းများ ကြည့်ရန်</button>
-        <button id="addTabBtn" class="tab-btn" onclick="switchTab('add')">မှတ်တမ်း အသစ်ထည့်ရန်</button>
+        <button id="viewTabBtn" class="tab-btn active" onclick="switchTab('view')">မှတ်တမ်းများ</button>
+        <button id="addTabBtn" class="tab-btn" onclick="switchTab('add')">အသစ်ထည့်ရန်</button>
     </div>
 
-    <!-- Tab 1: Records List -->
+    <!-- Tab 1: Records View -->
     <div id="viewTabContent" class="tab-content active">
-        <!-- Model Search Bar -->
-        <input type="text" id="searchInput" class="search-box" placeholder="🔍 Model အမည်ဖြင့် အမြန်ရှာဖွေရန်..." onkeyup="searchModel()">
         
+        <div class="brand-nav-container">
+            <div id="brandTabsContainer" class="brand-tabs">
+                <!-- Brands will load here -->
+            </div>
+            <button class="manage-brands-btn" onclick="openBrandSettings()">⚙️ ြပင်မည်</button>
+        </div>
+
+        <input type="text" id="searchInput" class="search-box" placeholder="🔍 Model အမည်ဖြင့် အမြန်ရှာဖွေရန်..." onkeyup="filterRecords()">
         <div id="recordsList"></div>
     </div>
 
-    <!-- Tab 2: Add/Edit Form -->
+    <!-- Tab 2: Add/Edit Record Form -->
     <div id="addTabContent" class="tab-content">
         <div class="form-box">
             <h3 id="formTitle" style="margin-top:0; color:#0056b3; border-bottom: 2px solid #eee; padding-bottom: 10px;">မှတ်တမ်း အသစ်ထည့်ရန်</h3>
@@ -144,19 +123,24 @@
                 <input type="hidden" id="actionType" value="add">
                 <input type="hidden" id="existingScreenshotUrl">
                 
+                <label>Brand (ဖုန်းအမျိုးအစား)</label>
+                <select id="brandSelect" required>
+                    <!-- Options load here -->
+                </select>
+
                 <label>Model</label>
-                <input type="text" id="model" placeholder="ဥပမာ - iPhone 11 Pro" required>
+                <input type="text" id="model" required>
                 
                 <label>Software</label>
-                <input type="text" id="software" placeholder="ဥပမာ - 3uTools">
+                <input type="text" id="software">
                 
                 <label>Mode & Method</label>
-                <input type="text" id="mode" placeholder="ဥပမာ - DFU Mode Restore">
+                <input type="text" id="mode">
                 
                 <label>Remark (မှတ်ချက်)</label>
-                <input type="text" id="remark" placeholder="ဥပမာ - အောင်မြင်သည် / Error 4013 ပြသည်">
+                <input type="text" id="remark">
                 
-                <label>Screenshot တင်ရန် (ပုံရွေးပါ)</label>
+                <label>Screenshot တင်ရန်</label>
                 <input type="file" id="screenshotFile" accept="image/*" style="padding: 8px;">
                 <div id="editImagePreview" style="margin-top: 5px; color: #28a745; font-size: 13px;"></div>
                 
@@ -167,232 +151,224 @@
             </form>
         </div>
     </div>
-
 </div>
 
-<!-- Fullscreen Image Modal -->
+<!-- Image Modal -->
 <div id="imageModal" class="modal" onclick="closeModal(event)">
     <span class="close-modal" onclick="closeModal(event)">&times;</span>
     <img class="modal-content" id="expandedImg">
 </div>
 
+<!-- Manage Brands Modal -->
+<div id="manageBrandsModal" class="modal" style="background: rgba(0,0,0,0.6);">
+    <div class="brand-modal-content">
+        <span class="brand-modal-close" onclick="closeBrandSettings()">&times;</span>
+        <h3 style="margin-top:0; color:#333;">Brands စီမံရန်</h3>
+        <div id="brandsListUI" style="max-height: 300px; overflow-y: auto; margin-bottom: 15px;"></div>
+        <div class="add-brand-row">
+            <input type="text" id="newBrandInput" placeholder="Brand အသစ်အမည်" style="flex:1; padding:10px; border:1px solid #ccc; border-radius:4px;">
+            <button onclick="addBrand()" style="background:#0056b3; color:#fff; border:none; padding:10px 15px; border-radius:4px; cursor:pointer;">Add</button>
+        </div>
+    </div>
+</div>
+
 <script>
-    // သင့် Google Apps Script Web App URL ထည့်ပါ။
     const API_URL = 'https://script.google.com/macros/s/AKfycbwLszpZ_CnuKlvzSHdhkrsHaHT69aKbz4WtLHxZtQImMdOnwJzASXfbcguSvn3QWLoisQ/exec';
 
     let globalRecords = [];
+    let globalBrands = [];
+    let activeBrandFilter = 'All';
 
-    // ---- Loading UI စနစ် ----
-    function showLoader(text) {
-        document.getElementById('loaderText').innerText = text || "Loading...";
-        document.getElementById('globalLoader').style.display = "flex";
-    }
-
-    function hideLoader() {
-        document.getElementById('globalLoader').style.display = "none";
-    }
-
-    // ---- Login စနစ် ----
-    function checkAuth() {
-        if (sessionStorage.getItem('isLoggedIn') === 'true') {
-            document.getElementById('loginPanel').style.display = 'none';
-            document.getElementById('appContainer').style.display = 'block';
-            loadData();
-        }
-    }
-
-    function checkLogin() {
-        let user = document.getElementById('username').value;
-        let pass = document.getElementById('password').value;
-        let errorMsg = document.getElementById('loginError');
-
-        if (user === 'admin' && pass === '12345') {
-            sessionStorage.setItem('isLoggedIn', 'true');
-            errorMsg.style.display = 'none';
-            document.getElementById('loginPanel').style.display = 'none';
-            document.getElementById('appContainer').style.display = 'block';
-            loadData();
-        } else {
-            errorMsg.style.display = 'block';
-        }
-    }
-
-    function logout() {
-        sessionStorage.removeItem('isLoggedIn');
-        document.getElementById('username').value = '';
-        document.getElementById('password').value = '';
-        document.getElementById('appContainer').style.display = 'none';
-        document.getElementById('loginPanel').style.display = 'block';
-    }
-
-    // ---- Tabs စနစ် ----
+    // Core UI Helpers
+    function showLoader(text) { document.getElementById('loaderText').innerText = text || "Loading..."; document.getElementById('globalLoader').style.display = "flex"; }
+    function hideLoader() { document.getElementById('globalLoader').style.display = "none"; }
+    function checkAuth() { if (sessionStorage.getItem('isLoggedIn') === 'true') { document.getElementById('loginPanel').style.display = 'none'; document.getElementById('appContainer').style.display = 'block'; loadData(); } }
+    function checkLogin() { if (document.getElementById('username').value === 'admin' && document.getElementById('password').value === '12345') { sessionStorage.setItem('isLoggedIn', 'true'); checkAuth(); } else { document.getElementById('loginError').style.display = 'block'; } }
+    function logout() { sessionStorage.removeItem('isLoggedIn'); location.reload(); }
+    
     function switchTab(tabName) {
-        document.getElementById('viewTabBtn').classList.remove('active');
-        document.getElementById('addTabBtn').classList.remove('active');
-        document.getElementById('viewTabContent').classList.remove('active');
-        document.getElementById('addTabContent').classList.remove('active');
-
-        document.getElementById(tabName + 'TabBtn').classList.add('active');
-        document.getElementById(tabName + 'TabContent').classList.add('active');
-
-        if(tabName === 'add' && document.getElementById('actionType').value !== 'edit') {
-            resetForm();
-        }
+        document.getElementById('viewTabBtn').classList.remove('active'); document.getElementById('addTabBtn').classList.remove('active');
+        document.getElementById('viewTabContent').classList.remove('active'); document.getElementById('addTabContent').classList.remove('active');
+        document.getElementById(tabName + 'TabBtn').classList.add('active'); document.getElementById(tabName + 'TabContent').classList.add('active');
+        if(tabName === 'add' && document.getElementById('actionType').value !== 'edit') resetForm();
     }
 
-    // ---- Data ဆွဲယူခြင်း နှင့် ပြသခြင်း ----
+    // Main Data Loader
     function loadData() {
         showLoader("Data များကို ဆွဲယူနေပါသည်...");
         fetch(API_URL)
             .then(res => res.json())
             .then(data => {
-                globalRecords = data.reverse(); 
-                renderRecords(globalRecords);
+                globalRecords = data.records.reverse(); 
+                globalBrands = data.brands;
+                renderBrandsUI();
+                filterRecords();
                 hideLoader();
             })
-            .catch(err => {
-                document.getElementById('recordsList').innerHTML = '<div style="color:red; text-align:center;">Data ဆွဲယူရာတွင် အခက်အခဲရှိပါသည်။</div>';
-                hideLoader();
-            });
+            .catch(err => { hideLoader(); alert("Data ဆွဲယူရာတွင် Error ဖြစ်နေပါသည်။"); });
     }
 
-    function renderRecords(dataArray) {
+    // Render Brands (Pills & Select Dropdown)
+    function renderBrandsUI() {
+        // Render Top Navigation Pills
+        let pillsHtml = `<div class="brand-pill ${activeBrandFilter === 'All' ? 'active' : ''}" onclick="setBrandFilter('All')">All</div>`;
+        globalBrands.forEach(b => {
+            pillsHtml += `<div class="brand-pill ${activeBrandFilter === b ? 'active' : ''}" onclick="setBrandFilter('${b}')">${b}</div>`;
+        });
+        document.getElementById('brandTabsContainer').innerHTML = pillsHtml;
+
+        // Render Select Options in Form
+        let selectHtml = `<option value="">-- Brand ရွေးချယ်ပါ --</option>`;
+        globalBrands.forEach(b => { selectHtml += `<option value="${b}">${b}</option>`; });
+        document.getElementById('brandSelect').innerHTML = selectHtml;
+
+        // Render Settings Modal List
+        let modalListHtml = '';
+        globalBrands.forEach(b => {
+            modalListHtml += `
+                <div class="brand-list-item">
+                    <span>${b}</span>
+                    <button onclick="deleteBrand('${b}')" style="background:#dc3545; color:#fff; border:none; padding:5px 10px; border-radius:4px; cursor:pointer;">Delete</button>
+                </div>
+            `;
+        });
+        document.getElementById('brandsListUI').innerHTML = modalListHtml || "Brand မရှိသေးပါ။";
+    }
+
+    function setBrandFilter(brand) {
+        activeBrandFilter = brand;
+        renderBrandsUI(); // update active class
+        filterRecords();
+    }
+
+    // Filter & Render Records
+    function filterRecords() {
+        let searchText = document.getElementById('searchInput').value.toLowerCase();
+        let filtered = globalRecords;
+        
+        if(activeBrandFilter !== 'All') {
+            filtered = filtered.filter(r => r.Brand === activeBrandFilter);
+        }
+        if(searchText) {
+            filtered = filtered.filter(r => r.Model && r.Model.toLowerCase().includes(searchText));
+        }
+
         let html = '';
-        dataArray.forEach(row => {
+        filtered.forEach(row => {
             if (row.ID) {
                 html += `
                     <div class="card">
+                        ${row.Brand ? `<div class="card-brand-badge">${row.Brand}</div>` : ''}
                         <h3>${row.Model}</h3>
                         <p><strong>Software:</strong> ${row.Software}</p>
                         <p><strong>Mode/Method:</strong> ${row.Mode_Method}</p>
                         <p><strong>Remark:</strong> ${row.Remark}</p>
-                        ${row.Screenshot_URL ? `<img src="${row.Screenshot_URL}" class="screenshot" onclick="openModal('${row.Screenshot_URL}')" title="ပုံကိုအကြီးချဲ့ကြည့်ရန် နှိပ်ပါ">` : ''}
+                        ${row.Screenshot_URL ? `<img src="${row.Screenshot_URL}" class="screenshot" onclick="openModal('${row.Screenshot_URL}')">` : ''}
                         
                         <div class="card-actions">
-                            <button class="btn-edit" onclick="editRecord('${row.ID}', '${row.Model}', '${row.Software}', '${row.Mode_Method}', '${row.Remark}', '${row.Screenshot_URL}')">Edit (ပြင်မည်)</button>
-                            <button class="btn-delete" onclick="deleteRecord('${row.ID}')">Delete (ဖျက်မည်)</button>
+                            <button class="btn-edit" onclick="editRecord('${row.ID}', '${row.Brand}', '${row.Model}', '${row.Software}', '${row.Mode_Method}', '${row.Remark}', '${row.Screenshot_URL}')">Edit</button>
+                            <button class="btn-delete" onclick="deleteRecord('${row.ID}')">Delete</button>
                         </div>
                     </div>
                 `;
             }
         });
-        document.getElementById('recordsList').innerHTML = html || '<div style="text-align:center; padding:20px; color:#555;">မှတ်တမ်းများ မတွေ့ရှိပါ။</div>';
+        document.getElementById('recordsList').innerHTML = html || '<div style="text-align:center; padding:20px; color:#555;">မှတ်တမ်း မတွေ့ရှိပါ။</div>';
     }
 
-    // ---- Model Name ဖြင့် ရှာဖွေခြင်း (Search) ----
-    function searchModel() {
-        let input = document.getElementById('searchInput').value.toLowerCase();
-        let filteredData = globalRecords.filter(row => row.Model && row.Model.toLowerCase().includes(input));
-        renderRecords(filteredData);
-    }
-
-    // ---- Image Popup Modal စနစ် ----
-    function openModal(imageSrc) {
-        let modal = document.getElementById('imageModal');
-        let modalImg = document.getElementById("expandedImg");
-        modal.style.display = "block";
-        modalImg.src = imageSrc;
-    }
-
-    function closeModal(event) {
-        if (event.target.id === 'imageModal' || event.target.className === 'close-modal') {
-            document.getElementById('imageModal').style.display = "none";
-        }
-    }
-
-    // ---- Form တင်ခြင်း (Add / Edit / Image Upload) ----
+    // Record Save Logic
     document.getElementById('recordForm').addEventListener('submit', function(e) {
         e.preventDefault();
+        showLoader("Uploading & Saving...");
         
-        showLoader("Uploading & Saving... ကျေးဇူးပြု၍ ခဏစောင့်ပါ");
-        
-        let fileInput = document.getElementById('screenshotFile');
-        let file = fileInput.files[0];
-
+        let file = document.getElementById('screenshotFile').files[0];
         if (file) {
             let reader = new FileReader();
-            reader.onload = function(event) {
-                let base64String = event.target.result.split(',')[1];
-                sendData(base64String, file.type, file.name);
-            };
+            reader.onload = function(event) { sendRecordData(event.target.result.split(',')[1], file.type, file.name); };
             reader.readAsDataURL(file);
         } else {
-            sendData('', '', '');
+            sendRecordData('', '', '');
         }
     });
 
-    function sendData(base64Data, mimeType, fileName) {
+    function sendRecordData(base64Data, mimeType, fileName) {
         let formData = new URLSearchParams();
         formData.append('action', document.getElementById('actionType').value);
         formData.append('id', document.getElementById('recordId').value);
+        formData.append('Brand', document.getElementById('brandSelect').value);
         formData.append('Model', document.getElementById('model').value);
         formData.append('Software', document.getElementById('software').value);
         formData.append('Mode_Method', document.getElementById('mode').value);
         formData.append('Remark', document.getElementById('remark').value);
         formData.append('existingScreenshotUrl', document.getElementById('existingScreenshotUrl').value);
-        formData.append('base64Data', base64Data);
-        formData.append('mimeType', mimeType);
-        formData.append('fileName', fileName);
+        formData.append('base64Data', base64Data); formData.append('mimeType', mimeType); formData.append('fileName', fileName);
 
-        fetch(API_URL, { method: 'POST', body: formData })
-            .then(res => res.json())
-            .then(res => {
-                resetForm();
-                document.getElementById('searchInput').value = ''; 
-                loadData(); // loadData က hideLoader ပြန်လုပ်ပေးသွားမည်
-                switchTab('view'); 
-            });
+        fetch(API_URL, { method: 'POST', body: formData }).then(res => res.json()).then(res => {
+            resetForm(); loadData(); switchTab('view');
+        });
     }
 
-    // ---- Edit လုပ်ရန် ----
-    function editRecord(id, model, software, mode, remark, screenshot) {
+    function editRecord(id, brand, model, software, mode, remark, screenshot) {
         document.getElementById('formTitle').innerText = "မှတ်တမ်း ပြင်ဆင်ရန်";
-        document.getElementById('addTabBtn').innerText = "မှတ်တမ်း ပြင်ဆင်ရန်";
         document.getElementById('actionType').value = "edit";
         document.getElementById('recordId').value = id;
+        document.getElementById('brandSelect').value = brand && brand !== 'undefined' ? brand : '';
         document.getElementById('model').value = model !== 'undefined' ? model : '';
         document.getElementById('software').value = software !== 'undefined' ? software : '';
         document.getElementById('mode').value = mode !== 'undefined' ? mode : '';
         document.getElementById('remark').value = remark !== 'undefined' ? remark : '';
-        
         document.getElementById('existingScreenshotUrl').value = screenshot !== 'undefined' ? screenshot : '';
-        if(screenshot && screenshot !== 'undefined') {
-            document.getElementById('editImagePreview').innerText = "✅ ယခင်ထည့်ထားသောပုံ ရှိပါသည်။ (ပုံအသစ်မပြောင်းလိုပါက အလွတ်ထားပါ။)";
-        } else {
-            document.getElementById('editImagePreview').innerText = "";
-        }
-        
-        switchTab('add'); 
-        window.scrollTo(0, 0);
+        document.getElementById('editImagePreview').innerText = (screenshot && screenshot !== 'undefined') ? "✅ ယခင်ထည့်ထားသောပုံ ရှိပါသည်။" : "";
+        switchTab('add'); window.scrollTo(0, 0);
     }
 
-    // ---- Delete လုပ်ရန် ----
     function deleteRecord(id) {
         if(confirm("ဤမှတ်တမ်းကို ဖျက်ရန် သေချာပါသလား?")) {
             showLoader("မှတ်တမ်းကို ဖျက်နေပါသည်...");
-            
-            let formData = new URLSearchParams();
-            formData.append('action', 'delete');
-            formData.append('id', id);
-
-            fetch(API_URL, { method: 'POST', body: formData })
-                .then(res => res.json())
-                .then(res => loadData());
+            let formData = new URLSearchParams(); formData.append('action', 'delete'); formData.append('id', id);
+            fetch(API_URL, { method: 'POST', body: formData }).then(res => res.json()).then(res => loadData());
         }
     }
 
-    // ---- Form ကို ရှင်းလင်းရန် ----
     function resetForm() {
         document.getElementById('recordForm').reset();
         document.getElementById('formTitle').innerText = "မှတ်တမ်း အသစ်ထည့်ရန်";
-        document.getElementById('addTabBtn').innerText = "မှတ်တမ်း အသစ်ထည့်ရန်";
         document.getElementById('actionType').value = "add";
         document.getElementById('recordId').value = "";
         document.getElementById('existingScreenshotUrl').value = "";
         document.getElementById('editImagePreview').innerText = "";
     }
 
-    // Page အစတွင် Login ဝင်ထားပြီးသားလား စစ်ဆေးရန်
+    // --- Brand Management Actions ---
+    function openBrandSettings() { document.getElementById('manageBrandsModal').style.display = 'block'; }
+    function closeBrandSettings() { document.getElementById('manageBrandsModal').style.display = 'none'; }
+    
+    function addBrand() {
+        let newBrand = document.getElementById('newBrandInput').value.trim();
+        if(!newBrand) return;
+        showLoader("Brand ထည့်နေပါသည်...");
+        let formData = new URLSearchParams(); formData.append('action', 'add_brand'); formData.append('brandName', newBrand);
+        fetch(API_URL, { method: 'POST', body: formData }).then(res => res.json()).then(res => {
+            document.getElementById('newBrandInput').value = '';
+            loadData(); 
+        });
+    }
+
+    function deleteBrand(brandName) {
+        if(confirm(`"${brandName}" Brand ကို ဖျက်ရန် သေချာပါသလား?`)) {
+            showLoader("Brand ဖျက်နေပါသည်...");
+            let formData = new URLSearchParams(); formData.append('action', 'delete_brand'); formData.append('brandName', brandName);
+            fetch(API_URL, { method: 'POST', body: formData }).then(res => res.json()).then(res => {
+                if(activeBrandFilter === brandName) activeBrandFilter = 'All';
+                loadData(); 
+            });
+        }
+    }
+
+    // Modal Image
+    function openModal(src) { document.getElementById('imageModal').style.display = "block"; document.getElementById("expandedImg").src = src; }
+    function closeModal(e) { if (e.target.id === 'imageModal' || e.target.className === 'close-modal') document.getElementById('imageModal').style.display = "none"; }
+
     window.onload = checkAuth;
 </script>
 
