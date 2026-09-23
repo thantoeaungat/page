@@ -206,7 +206,7 @@
     function showLoader(text) { document.getElementById('loaderText').innerText = text || "Loading..."; document.getElementById('globalLoader').style.display = "flex"; }
     function hideLoader() { document.getElementById('globalLoader').style.display = "none"; }
     function checkAuth() { if (sessionStorage.getItem('isLoggedIn') === 'true') { document.getElementById('loginPanel').style.display = 'none'; document.getElementById('appContainer').style.display = 'block'; loadData(); } }
-    function checkLogin() { if (document.getElementById('username').value === 'admin' && document.getElementById('password').value === '12345') { sessionStorage.setItem('isLoggedIn', 'true'); checkAuth(); } else { document.getElementById('loginError').style.display = 'block'; } }
+    function checkLogin() { if (document.getElementById('username').value === 'tta' && document.getElementById('password').value === '221122') { sessionStorage.setItem('isLoggedIn', 'true'); checkAuth(); } else { document.getElementById('loginError').style.display = 'block'; } }
     function logout() { sessionStorage.removeItem('isLoggedIn'); location.reload(); }
     
     function switchTab(tabName) {
