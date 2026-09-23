@@ -433,9 +433,9 @@
           <td>${voucher}</td>
           <td>
             <div class="btn-action">
-              <button class="btn-print" onclick="printInvoice(${item.rowId})">🖨️ Print</button>
-              <button class="btn-edit" onclick="editOrder(${item.rowId})">Edit</button>
-              <button class="btn-delete" onclick="deleteOrder(${item.rowId})">Delete</button>
+              <button class="btn-print" onclick="printInvoice('${item.rowId}')">🖨️ Print</button>
+              <button class="btn-edit" onclick="editOrder('${item.rowId}')">Edit</button>
+              <button class="btn-delete" onclick="deleteOrder('${item.rowId}')">Delete</button>
             </div>
           </td>
         </tr>`;
@@ -453,9 +453,9 @@
           <div class="card-row"><strong>🚚 Courier:</strong> ${item.courier}</div>
           <div class="card-row"><strong>🧾 Voucher:</strong> ${voucher}</div>
           <div style="margin-top: 10px;" class="btn-action">
-            <button class="btn-print" style="flex:1;" onclick="printInvoice(${item.rowId})">🖨️ Print Invoice</button>
-            <button class="btn-edit" style="flex:1;" onclick="editOrder(${item.rowId})">✏️ Edit</button>
-            <button class="btn-delete" style="flex:1;" onclick="deleteOrder(${item.rowId})">🗑️ Delete</button>
+            <button class="btn-print" style="flex:1;" onclick="printInvoice('${item.rowId}')">🖨️ Print Invoice</button>
+            <button class="btn-edit" style="flex:1;" onclick="editOrder('${item.rowId}')">✏️ Edit</button>
+            <button class="btn-delete" style="flex:1;" onclick="deleteOrder('${item.rowId}')">🗑️ Delete</button>
           </div>
         </div>`;
         mobileContainer.innerHTML += card;
@@ -495,10 +495,13 @@
       container.appendChild(nextBtn);
     }
 
-    // Edit Order
+    // Edit Order (String conversion applied to avoid type mismatch)
     function editOrder(rowId) {
-      const order = ordersData.find(o => o.rowId === rowId);
-      if (!order) return;
+      const order = ordersData.find(o => String(o.rowId) === String(rowId));
+      if (!order) {
+        alert("Order အချက်အလက် ရှာမတွေ့ပါ။ Refresh ပြန်လုပ်ကြည့်ပါ။");
+        return;
+      }
 
       document.getElementById('rowId').value = order.rowId;
       document.getElementById('orderDate').value = order.date || new Date().toISOString().split('T')[0];
@@ -509,7 +512,7 @@
       document.getElementById('courier').value = order.courier === '-' ? '' : order.courier;
       document.getElementById('existingVoucherLink').value = order.voucherLink;
 
-      document.getElementById('formTitle').innerText = "Order စာရင်း ပြင်ဆင်ရန် (Row: " + rowId + ")";
+      document.getElementById('formTitle').innerText = "Order စာရင်း ပြင်ဆင်ရန် (Row: " + order.rowId + ")";
       document.getElementById('submitBtn').innerText = "Update လုပ်မည်";
       document.getElementById('cancelBtn').style.display = "block";
 
@@ -519,8 +522,11 @@
 
     // Print Invoice / Voucher Function
     function printInvoice(rowId) {
-      const order = ordersData.find(o => o.rowId === rowId);
-      if (!order) return;
+      const order = ordersData.find(o => String(o.rowId) === String(rowId));
+      if (!order) {
+        alert("Invoice ထုတ်ရန် Order ရှာမတွေ့ပါ။");
+        return;
+      }
 
       const printWindow = window.open('', '_blank', 'width=600,height=700');
       const invoiceHTML = `
