@@ -38,9 +38,10 @@
     button:hover { opacity: 0.9; }
     
     /* Action Buttons */
-    .btn-action { display: flex; gap: 8px; }
-    .btn-edit { background-color: #ffc107; color: black; padding: 8px 12px; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; width: auto; margin: 0; }
-    .btn-delete { background-color: #dc3545; color: white; padding: 8px 12px; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; width: auto; margin: 0; }
+    .btn-action { display: flex; gap: 6px; flex-wrap: wrap; }
+    .btn-edit { background-color: #ffc107; color: black; padding: 6px 10px; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; width: auto; margin: 0; font-size: 12px; }
+    .btn-print { background-color: #17a2b8; color: white; padding: 6px 10px; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; width: auto; margin: 0; font-size: 12px; }
+    .btn-delete { background-color: #dc3545; color: white; padding: 6px 10px; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; width: auto; margin: 0; font-size: 12px; }
     .btn-cancel { background-color: #6c757d; display: none; margin-top: 5px; }
 
     /* Filter Bar & Controls */
@@ -51,7 +52,7 @@
     /* Desktop Table View */
     .table-container { overflow-x: auto; }
     table { width: 100%; border-collapse: collapse; background: white; }
-    th, td { border: 1px solid #eee; padding: 12px; text-align: left; font-size: 14px; }
+    th, td { border: 1px solid #eee; padding: 10px; text-align: left; font-size: 13px; }
     th { background-color: #f8f9fa; font-weight: bold; }
     
     /* Mobile Card View (When Screen <= 768px) */
@@ -120,6 +121,9 @@
         <input type="hidden" id="rowId" value="">
         <input type="hidden" id="existingVoucherLink" value="">
 
+        <label>ရက်စွဲ (Added Date)</label>
+        <input type="date" id="orderDate" required>
+
         <label>နာမည်</label>
         <input type="text" id="name" required placeholder="အမည်ထည့်ပါ">
 
@@ -153,7 +157,7 @@
         <button onclick="loadOrders()" style="background-color: #28a745; width: auto; margin: 0; padding: 8px 14px;">🔄 Refresh စာရင်းကြည့်မည်</button>
       </div>
 
-      <!-- Summary Cards Counter Section (Full Colored Cards with White Text) -->
+      <!-- Summary Cards Counter Section -->
       <div class="summary-grid">
         <div class="summary-card" style="background-color: #007bff;">
           <span>စုစုပေါင်း Order</span>
@@ -172,7 +176,7 @@
       <!-- Search & Sorting Controls -->
       <div class="filter-bar">
         <div class="filter-group">
-          <input type="text" id="searchInput" placeholder="🔍 နာမည်/ဖုန်းဖြင့် ရှာရန်..." oninput="onFilterChange()">
+          <input type="text" id="searchInput" placeholder="🔍 နာမည်/ဖုန်း/ရက်စွဲဖြင့် ရှာရန်..." oninput="onFilterChange()">
         </div>
         <div class="filter-group">
           <select id="sortOrder" onchange="onFilterChange()">
@@ -187,6 +191,7 @@
         <table>
           <thead>
             <tr>
+              <th>ရက်စွဲ</th>
               <th>နာမည်</th>
               <th>ဖုန်း</th>
               <th>လိပ်စာ</th>
@@ -197,7 +202,7 @@
             </tr>
           </thead>
           <tbody id="orderTableBody">
-            <tr><td colspan="7" style="text-align:center;">စာရင်းဆွဲယူနေပါသည်...</td></tr>
+            <tr><td colspan="8" style="text-align:center;">စာရင်းဆွဲယူနေပါသည်...</td></tr>
           </tbody>
         </table>
       </div>
@@ -220,10 +225,17 @@
     let ordersData = [];
     let filteredData = [];
     let currentPage = 1;
-    const rowsPerPage = 20; // 1 Page = 20 Orders
+    const rowsPerPage = 20;
+
+    // Set today's date into input field
+    function setTodayDate() {
+      const today = new Date().toISOString().split('T')[0];
+      document.getElementById('orderDate').value = today;
+    }
 
     // Login Check on Page Load
     window.onload = function() {
+      setTodayDate();
       if (sessionStorage.getItem('isLoggedIn') === 'true') {
         showAppScreen();
       }
@@ -305,6 +317,7 @@
       const payload = {
         action: isEdit ? "update" : "create",
         rowId: rowId,
+        date: document.getElementById('orderDate').value,
         name: document.getElementById('name').value,
         phone: document.getElementById('phone').value,
         address: document.getElementById('address').value,
@@ -358,26 +371,23 @@
       const searchTerm = document.getElementById('searchInput').value.toLowerCase();
       const sortOrder = document.getElementById('sortOrder').value;
 
-      // Filter Search Match
       filteredData = ordersData.filter(item => {
         const nameMatch = item.name && item.name.toLowerCase().includes(searchTerm);
         const phoneMatch = item.phone && item.phone.toString().includes(searchTerm);
-        return nameMatch || phoneMatch;
+        const dateMatch = item.date && item.date.toString().includes(searchTerm);
+        return nameMatch || phoneMatch || dateMatch;
       });
 
-      // Calculate Counts for Summary Cards
       const total = filteredData.length;
       const delivered = filteredData.filter(item => item.status === 'ပို့ပြီး').length;
       const pending = filteredData.filter(item => item.status === 'မပို့ရသေး').length;
 
-      // Update UI Counters
       document.getElementById('totalCount').innerText = total;
       document.getElementById('deliveredCount').innerText = delivered;
       document.getElementById('pendingCount').innerText = pending;
 
-      // Sorting
       if (sortOrder === 'desc') {
-        filteredData.reverse(); // နောက်ဆုံးဝင်တာ အပေါ်ဆုံး
+        filteredData.reverse();
       }
 
       currentPage = 1;
@@ -393,14 +403,13 @@
       mobileContainer.innerHTML = '';
 
       if (!filteredData || filteredData.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;">Order စာရင်းမရှိသေးပါ</td></tr>';
+        tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;">Order စာရင်းမရှိသေးပါ</td></tr>';
         mobileContainer.innerHTML = '<div style="text-align:center; padding: 20px; color: #888;">Order စာရင်းမရှိသေးပါ</div>';
         document.getElementById('pageInfo').innerText = 'စုစုပေါင်း 0 ခု';
         document.getElementById('paginationBtns').innerHTML = '';
         return;
       }
 
-      // Calculate Pagination
       const totalPages = Math.ceil(filteredData.length / rowsPerPage);
       const startIndex = (currentPage - 1) * rowsPerPage;
       const endIndex = startIndex + rowsPerPage;
@@ -408,12 +417,14 @@
 
       paginatedData.forEach(item => {
         const statusClass = item.status === 'ပို့ပြီး' ? 'delivered' : 'pending';
+        const displayDate = item.date || '-';
         const voucher = item.voucherLink && item.voucherLink !== '-' 
           ? `<a href="${item.voucherLink}" target="_blank" style="color:#007bff;font-weight:bold;">ကြည့်ရန်</a>` 
           : '-';
 
         // 1. Desktop Table Row
         const row = `<tr>
+          <td>${displayDate}</td>
           <td>${item.name}</td>
           <td>${item.phone}</td>
           <td>${item.address}</td>
@@ -422,6 +433,7 @@
           <td>${voucher}</td>
           <td>
             <div class="btn-action">
+              <button class="btn-print" onclick="printInvoice(${item.rowId})">🖨️ Print</button>
               <button class="btn-edit" onclick="editOrder(${item.rowId})">Edit</button>
               <button class="btn-delete" onclick="deleteOrder(${item.rowId})">Delete</button>
             </div>
@@ -435,11 +447,13 @@
             <span class="card-title">${item.name}</span>
             <span class="badge ${statusClass}">${item.status}</span>
           </div>
+          <div class="card-row"><strong>📅 ရက်စွဲ:</strong> ${displayDate}</div>
           <div class="card-row"><strong>📞 ဖုန်း:</strong> ${item.phone}</div>
           <div class="card-row"><strong>📍 လိပ်စာ:</strong> ${item.address}</div>
           <div class="card-row"><strong>🚚 Courier:</strong> ${item.courier}</div>
           <div class="card-row"><strong>🧾 Voucher:</strong> ${voucher}</div>
           <div style="margin-top: 10px;" class="btn-action">
+            <button class="btn-print" style="flex:1;" onclick="printInvoice(${item.rowId})">🖨️ Print Invoice</button>
             <button class="btn-edit" style="flex:1;" onclick="editOrder(${item.rowId})">✏️ Edit</button>
             <button class="btn-delete" style="flex:1;" onclick="deleteOrder(${item.rowId})">🗑️ Delete</button>
           </div>
@@ -456,7 +470,6 @@
       const container = document.getElementById('paginationBtns');
       container.innerHTML = '';
 
-      // Prev Button
       const prevBtn = document.createElement('button');
       prevBtn.className = 'page-btn';
       prevBtn.innerText = '« Prev';
@@ -464,7 +477,6 @@
       prevBtn.onclick = () => { currentPage--; renderViews(); window.scrollTo(0,0); };
       container.appendChild(prevBtn);
 
-      // Page Numbers
       for (let i = 1; i <= totalPages; i++) {
         if (i === 1 || i === totalPages || (i >= currentPage - 1 && i <= currentPage + 1)) {
           const pageBtn = document.createElement('button');
@@ -475,7 +487,6 @@
         }
       }
 
-      // Next Button
       const nextBtn = document.createElement('button');
       nextBtn.className = 'page-btn';
       nextBtn.innerText = 'Next »';
@@ -490,6 +501,7 @@
       if (!order) return;
 
       document.getElementById('rowId').value = order.rowId;
+      document.getElementById('orderDate').value = order.date || new Date().toISOString().split('T')[0];
       document.getElementById('name').value = order.name;
       document.getElementById('phone').value = order.phone;
       document.getElementById('address').value = order.address;
@@ -503,6 +515,57 @@
 
       switchTab('add-tab');
       window.scrollTo(0,0);
+    }
+
+    // Print Invoice / Voucher Function
+    function printInvoice(rowId) {
+      const order = ordersData.find(o => o.rowId === rowId);
+      if (!order) return;
+
+      const printWindow = window.open('', '_blank', 'width=600,height=700');
+      const invoiceHTML = `
+        <!DOCTYPE html>
+        <html>
+        <head>
+          <title>Invoice - Order #${order.rowId}</title>
+          <style>
+            body { font-family: system-ui, sans-serif; padding: 20px; line-height: 1.5; color: #222; }
+            .invoice-box { border: 2px solid #333; padding: 25px; border-radius: 8px; max-width: 500px; margin: auto; }
+            .header { text-align: center; border-bottom: 2px dashed #ccc; padding-bottom: 10px; margin-bottom: 15px; }
+            .header h2 { margin: 0; color: #007bff; }
+            .info-table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+            .info-table td { padding: 8px 0; border-bottom: 1px solid #f0f0f0; }
+            .info-table td:first-child { font-weight: bold; width: 35%; color: #555; }
+            .footer { margin-top: 30px; text-align: center; font-size: 12px; color: #777; border-top: 1px solid #eee; padding-top: 10px; }
+            @media print {
+              .print-btn { display: none; }
+            }
+          </style>
+        </head>
+        <body>
+          <div class="invoice-box">
+            <div class="header">
+              <h2>ORDER INVOICE</h2>
+              <p style="margin: 3px 0; font-size: 13px;">Order ID: #${order.rowId}</p>
+            </div>
+            <table class="info-table">
+              <tr><td>ရက်စွဲ (Date):</td><td>${order.date || '-'}</td></tr>
+              <tr><td>ဝယ်သူအမည်:</td><td>${order.name}</td></tr>
+              <tr><td>ဖုန်းနံပါတ်:</td><td>${order.phone}</td></tr>
+              <tr><td>နေရပ်လိပ်စာ:</td><td>${order.address}</td></tr>
+              <tr><td>Courier Service:</td><td>${order.courier || '-'}</td></tr>
+              <tr><td>အခြေအနေ (Status):</td><td><strong>${order.status}</strong></td></tr>
+            </table>
+            <div class="footer">
+              <p>အားပေးမှုကို အထူးကျေးဇူးတင်ရှိပါသည်။</p>
+            </div>
+            <button class="print-btn" onclick="window.print()" style="width:100%; padding:10px; background:#007bff; color:white; border:none; border-radius:5px; font-weight:bold; cursor:pointer; margin-top:20px;">🖨️ Print / Save as PDF</button>
+          </div>
+        </body>
+        </html>
+      `;
+      printWindow.document.write(invoiceHTML);
+      printWindow.document.close();
     }
 
     // Delete Order
@@ -527,6 +590,7 @@
     // Reset Form
     function resetForm() {
       document.getElementById('orderForm').reset();
+      setTodayDate();
       document.getElementById('rowId').value = "";
       document.getElementById('existingVoucherLink').value = "";
       document.getElementById('formTitle').innerText = "Order အသစ်ထည့်ရန်";
