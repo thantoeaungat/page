@@ -42,8 +42,12 @@
         .brand-pill:hover:not(.active) { background: #eee; }
         .manage-brands-btn { background: #28a745; color: #fff; border: none; padding: 8px 15px; border-radius: 20px; cursor: pointer; font-weight: bold; white-space: nowrap;}
         
-        .search-box { width: 100%; padding: 12px; margin-bottom: 20px; border: 2px solid #ddd; border-radius: 8px; box-sizing: border-box; font-size: 16px; outline: none;}
+        /* Search & Sort UI */
+        .filter-controls { display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; }
+        .search-box { flex: 2; min-width: 200px; padding: 12px; border: 2px solid #ddd; border-radius: 8px; box-sizing: border-box; font-size: 16px; outline: none;}
         .search-box:focus { border-color: #0056b3; }
+        .sort-box { flex: 1; min-width: 150px; padding: 12px; border: 2px solid #ddd; border-radius: 8px; font-size: 16px; outline: none; background: #fff; cursor: pointer;}
+        .sort-box:focus { border-color: #0056b3; }
 
         /* Form */
         .form-box { background: #fff; padding: 25px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
@@ -56,17 +60,24 @@
         /* Cards */
         .card { background: #fff; padding: 20px; margin-bottom: 15px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); border-left: 5px solid #0056b3;}
         .card-brand-badge { background: #e9ecef; color: #333; padding: 3px 8px; border-radius: 12px; font-size: 12px; font-weight: bold; margin-bottom: 10px; display: inline-block;}
+        .price-badge { color: #d9534f; font-weight: bold; font-size: 18px; float: right;}
         .card h3 { margin: 0 0 10px 0; color: #0056b3; }
         .card p { margin: 8px 0; color: #444;}
-        .screenshot { max-width: 250px; max-height: 250px; object-fit: cover; margin-top: 10px; border-radius: 8px; border: 2px solid #ddd; cursor: pointer; }
+        
+        .screenshot { max-width: 250px; max-height: 250px; object-fit: cover; margin-top: 10px; border-radius: 8px; border: 2px solid #ddd; cursor: pointer; transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); }
+        .screenshot:hover { transform: translateY(-5px) scale(1.02); box-shadow: 0 10px 20px rgba(0,0,0,0.2); border-color: #0056b3;}
+        
         .card-actions { margin-top: 15px; border-top: 1px solid #eee; padding-top: 15px; text-align: right;}
         .btn-edit { background: #ffc107; color: #000; padding: 8px 15px; border: none; border-radius: 4px; cursor: pointer; font-weight: bold;}
         .btn-delete { background: #dc3545; color: #fff; padding: 8px 15px; border: none; border-radius: 4px; cursor: pointer; margin-left: 5px; font-weight: bold;}
 
         /* Modals */
-        .modal { display: none; position: fixed; z-index: 10000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); overflow: auto; }
-        .modal-content { margin: auto; display: block; max-width: 90%; max-height: 90vh; margin-top: 3%; border-radius: 8px; }
-        .close-modal { position: absolute; top: 15px; right: 25px; color: #fff; font-size: 40px; font-weight: bold; cursor: pointer; }
+        .modal { display: none; position: fixed; z-index: 10000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); backdrop-filter: blur(5px); overflow: auto; }
+        .modal-content { margin: auto; display: block; max-width: 90%; max-height: 90vh; margin-top: 3%; border-radius: 12px; border: 3px solid #fff; box-shadow: 0 15px 40px rgba(0,0,0,0.5); animation: popUp 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        @keyframes popUp { 0% { transform: scale(0.6); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
+        
+        .close-modal { position: absolute; top: 15px; right: 25px; color: #fff; font-size: 40px; font-weight: bold; cursor: pointer; transition: 0.3s; }
+        .close-modal:hover { color: #f44336; transform: scale(1.1); }
         
         .brand-modal-content { background: #fff; margin: 10% auto; padding: 20px; width: 90%; max-width: 400px; border-radius: 8px; }
         .brand-modal-close { float: right; font-size: 24px; cursor: pointer; color: #555; }
@@ -110,7 +121,16 @@
             <button class="manage-brands-btn" onclick="openBrandSettings()">⚙️ ြပင်မည်</button>
         </div>
 
-        <input type="text" id="searchInput" class="search-box" placeholder="🔍 Model အမည်ဖြင့် အမြန်ရှာဖွေရန်..." onkeyup="filterRecords()">
+        <div class="filter-controls">
+            <input type="text" id="searchInput" class="search-box" placeholder="🔍 Model ဖြင့် ရှာဖွေရန်..." onkeyup="filterRecords()">
+            <select id="sortSelect" class="sort-box" onchange="filterRecords()">
+                <option value="date_desc">Latest Update (အသစ်ဆုံး)</option>
+                <option value="date_asc">Oldest Update (အဟောင်းဆုံး)</option>
+                <option value="brand_asc">Brand (A to Z)</option>
+                <option value="brand_desc">Brand (Z to A)</option>
+            </select>
+        </div>
+
         <div id="recordsList"></div>
     </div>
 
@@ -139,6 +159,9 @@
                 
                 <label>Remark (မှတ်ချက်)</label>
                 <input type="text" id="remark">
+
+                <label>Price (ဈေးနှုန်း)</label>
+                <input type="text" id="price" placeholder="ဥပမာ - 15000 Ks">
                 
                 <label>Screenshot တင်ရန်</label>
                 <input type="file" id="screenshotFile" accept="image/*" style="padding: 8px;">
@@ -199,7 +222,8 @@
         fetch(API_URL)
             .then(res => res.json())
             .then(data => {
-                globalRecords = data.records.reverse(); 
+                // မူလအတိုင်းထားပြီး Sorting function ဖြင့် ပြန်လည်စီစဉ်မည်
+                globalRecords = data.records; 
                 globalBrands = data.brands;
                 renderBrandsUI();
                 filterRecords();
@@ -208,21 +232,18 @@
             .catch(err => { hideLoader(); alert("Data ဆွဲယူရာတွင် Error ဖြစ်နေပါသည်။"); });
     }
 
-    // Render Brands (Pills & Select Dropdown)
+    // Render Brands
     function renderBrandsUI() {
-        // Render Top Navigation Pills
         let pillsHtml = `<div class="brand-pill ${activeBrandFilter === 'All' ? 'active' : ''}" onclick="setBrandFilter('All')">All</div>`;
         globalBrands.forEach(b => {
             pillsHtml += `<div class="brand-pill ${activeBrandFilter === b ? 'active' : ''}" onclick="setBrandFilter('${b}')">${b}</div>`;
         });
         document.getElementById('brandTabsContainer').innerHTML = pillsHtml;
 
-        // Render Select Options in Form
         let selectHtml = `<option value="">-- Brand ရွေးချယ်ပါ --</option>`;
         globalBrands.forEach(b => { selectHtml += `<option value="${b}">${b}</option>`; });
         document.getElementById('brandSelect').innerHTML = selectHtml;
 
-        // Render Settings Modal List
         let modalListHtml = '';
         globalBrands.forEach(b => {
             modalListHtml += `
@@ -237,27 +258,50 @@
 
     function setBrandFilter(brand) {
         activeBrandFilter = brand;
-        renderBrandsUI(); // update active class
+        renderBrandsUI(); 
         filterRecords();
     }
 
-    // Filter & Render Records
+    // Filter, Sort & Render Records
     function filterRecords() {
         let searchText = document.getElementById('searchInput').value.toLowerCase();
-        let filtered = globalRecords;
+        let sortType = document.getElementById('sortSelect').value;
+        let filtered = [...globalRecords]; // Array အသစ်ကူးယူခြင်း
         
+        // 1. Filter by Brand
         if(activeBrandFilter !== 'All') {
             filtered = filtered.filter(r => r.Brand === activeBrandFilter);
         }
+        // 2. Filter by Search
         if(searchText) {
             filtered = filtered.filter(r => r.Model && r.Model.toLowerCase().includes(searchText));
         }
 
+        // 3. Sorting Logic
+        filtered.sort((a, b) => {
+            if (sortType.startsWith('date')) {
+                // Updated_At ရှိလျှင် ၎င်းကိုသုံးမည်၊ မရှိလျှင် ID (Creation time) ကိုသုံးမည်
+                let valA = a.Updated_At ? parseInt(a.Updated_At) : parseInt(a.ID);
+                let valB = b.Updated_At ? parseInt(b.Updated_At) : parseInt(b.ID);
+                if(isNaN(valA)) valA = 0;
+                if(isNaN(valB)) valB = 0;
+                return sortType === 'date_desc' ? valB - valA : valA - valB;
+            } else if (sortType.startsWith('brand')) {
+                let valA = (a.Brand || "").toLowerCase();
+                let valB = (b.Brand || "").toLowerCase();
+                if(valA < valB) return sortType === 'brand_asc' ? -1 : 1;
+                if(valA > valB) return sortType === 'brand_asc' ? 1 : -1;
+                return 0;
+            }
+        });
+
+        // 4. Render HTML
         let html = '';
         filtered.forEach(row => {
             if (row.ID) {
                 html += `
                     <div class="card">
+                        ${row.Price ? `<span class="price-badge">${row.Price}</span>` : ''}
                         ${row.Brand ? `<div class="card-brand-badge">${row.Brand}</div>` : ''}
                         <h3>${row.Model}</h3>
                         <p><strong>Software:</strong> ${row.Software}</p>
@@ -266,7 +310,7 @@
                         ${row.Screenshot_URL ? `<img src="${row.Screenshot_URL}" class="screenshot" onclick="openModal('${row.Screenshot_URL}')">` : ''}
                         
                         <div class="card-actions">
-                            <button class="btn-edit" onclick="editRecord('${row.ID}', '${row.Brand}', '${row.Model}', '${row.Software}', '${row.Mode_Method}', '${row.Remark}', '${row.Screenshot_URL}')">Edit</button>
+                            <button class="btn-edit" onclick="editRecord('${row.ID}', '${row.Brand}', '${row.Model}', '${row.Software}', '${row.Mode_Method}', '${row.Remark}', '${row.Screenshot_URL}', '${row.Price || ''}')">Edit</button>
                             <button class="btn-delete" onclick="deleteRecord('${row.ID}')">Delete</button>
                         </div>
                     </div>
@@ -300,6 +344,7 @@
         formData.append('Software', document.getElementById('software').value);
         formData.append('Mode_Method', document.getElementById('mode').value);
         formData.append('Remark', document.getElementById('remark').value);
+        formData.append('Price', document.getElementById('price').value); 
         formData.append('existingScreenshotUrl', document.getElementById('existingScreenshotUrl').value);
         formData.append('base64Data', base64Data); formData.append('mimeType', mimeType); formData.append('fileName', fileName);
 
@@ -308,7 +353,7 @@
         });
     }
 
-    function editRecord(id, brand, model, software, mode, remark, screenshot) {
+    function editRecord(id, brand, model, software, mode, remark, screenshot, price) {
         document.getElementById('formTitle').innerText = "မှတ်တမ်း ပြင်ဆင်ရန်";
         document.getElementById('actionType').value = "edit";
         document.getElementById('recordId').value = id;
@@ -317,6 +362,7 @@
         document.getElementById('software').value = software !== 'undefined' ? software : '';
         document.getElementById('mode').value = mode !== 'undefined' ? mode : '';
         document.getElementById('remark').value = remark !== 'undefined' ? remark : '';
+        document.getElementById('price').value = price !== 'undefined' ? price : '';
         document.getElementById('existingScreenshotUrl').value = screenshot !== 'undefined' ? screenshot : '';
         document.getElementById('editImagePreview').innerText = (screenshot && screenshot !== 'undefined') ? "✅ ယခင်ထည့်ထားသောပုံ ရှိပါသည်။" : "";
         switchTab('add'); window.scrollTo(0, 0);
