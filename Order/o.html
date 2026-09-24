@@ -178,8 +178,14 @@
         <label>နေရပ်လိပ်စာ</label>
         <textarea id="address" rows="3" required placeholder="မြို့နယ်/လိပ်စာ အပြည့်အစုံ"></textarea>
 
-        <label>Customer Username (Telegram သို့မဟုတ် FB)</label>
-        <input type="text" id="username" placeholder="Username ထည့်ပါ">
+        <label>Customer ဆက်သွယ်ရန် (Platform & Username)</label>
+        <div style="display: flex; gap: 10px;">
+          <select id="socialPlatform" style="width: 40%; flex: 1;">
+            <option value="t.me/">Telegram</option>
+            <option value="m.me/">Facebook</option>
+          </select>
+          <input type="text" id="username" style="width: 60%; flex: 2;" placeholder="Username (ဥပမာ: myname123)">
+        </div>
 
         <label>ပို့ဆောင်မှု အခြေအနေ (Status)</label>
         <select id="status">
@@ -377,6 +383,11 @@
         fileData = await convertFileToBase64(file);
       }
 
+      // Username တည်ဆောက်ခြင်း (Platform + Username)
+      const rawUser = document.getElementById('username').value.trim();
+      const platform = document.getElementById('socialPlatform').value;
+      const finalUsername = rawUser ? (platform + rawUser) : "";
+
       const payload = {
         action: isEdit ? "update" : "create",
         rowId: rowId,
@@ -384,7 +395,7 @@
         name: document.getElementById('name').value,
         phone: document.getElementById('phone').value,
         address: document.getElementById('address').value,
-        username: document.getElementById('username').value,
+        username: finalUsername, // ပေါင်းထားသော link အပြည့်အစုံ
         status: document.getElementById('status').value,
         courier: document.getElementById('courier').value,
         existingVoucherLink: document.getElementById('existingVoucherLink').value,
@@ -487,7 +498,7 @@
       renderViews();
     }
 
-    // Render Views
+    // Render Views (Username ကို Link Button အဖြစ်ပြောင်းလဲပေးခြင်း)
     function renderViews() {
       const tbody = document.getElementById('orderTableBody');
       const mobileContainer = document.getElementById('mobileCardsContainer');
@@ -515,12 +526,22 @@
           ? `<a href="${item.voucherLink}" target="_blank" style="color:#007bff;font-weight:bold;">ကြည့်ရန်</a>` 
           : '-';
 
+        // Username ကို Click နှိပ်လို့ရတဲ့ Link ပြောင်းပေးတဲ့ အပိုင်း
+        let userDisplay = item.username || '-';
+        if (item.username && item.username !== '-') {
+          let url = item.username.trim();
+          if (url.toLowerCase().includes('t.me') || url.toLowerCase().includes('m.me') || url.toLowerCase().includes('facebook') || url.startsWith('http')) {
+            let link = url.startsWith('http') ? url : 'https://' + url;
+            userDisplay = `<a href="${link}" target="_blank" style="background-color: #0088cc; color: white; padding: 4px 8px; border-radius: 4px; text-decoration: none; font-size: 12px; display: inline-flex; align-items: center;">💬 ဆက်သွယ်ရန်</a>`;
+          }
+        }
+
         const row = `<tr>
           <td>${displayDate}</td>
           <td>${item.name}</td>
           <td>${item.phone}</td>
           <td>${item.address}</td>
-          <td>${item.username}</td>
+          <td>${userDisplay}</td>
           <td><span class="badge ${statusClass}">${item.status}</span></td>
           <td>${item.courier}</td>
           <td>${voucher}</td>
@@ -542,7 +563,7 @@
           <div class="card-row"><strong>📅 ရက်စွဲ:</strong> ${displayDate}</div>
           <div class="card-row"><strong>📞 ဖုန်း:</strong> ${item.phone}</div>
           <div class="card-row"><strong>📍 လိပ်စာ:</strong> ${item.address}</div>
-          <div class="card-row"><strong>👤 Username:</strong> ${item.username}</div>
+          <div class="card-row"><strong>👤 Username:</strong> ${userDisplay}</div>
           <div class="card-row"><strong>🚚 Courier:</strong> ${item.courier}</div>
           <div class="card-row"><strong>🧾 Voucher:</strong> ${voucher}</div>
           <div style="margin-top: 10px;" class="btn-action">
@@ -594,12 +615,32 @@
         return;
       }
 
+      // Username နှင့် Platform ကို ခွဲထုတ်ခြင်း (Edit လုပ်ရန်)
+      let savedUser = order.username || '';
+      let platform = "t.me/";
+      let userOnly = savedUser;
+
+      if (savedUser.startsWith("t.me/")) {
+        platform = "t.me/";
+        userOnly = savedUser.replace("t.me/", "");
+      } else if (savedUser.startsWith("m.me/")) {
+        platform = "m.me/";
+        userOnly = savedUser.replace("m.me/", "");
+      } else if (savedUser === "-" || savedUser === "") {
+        platform = "t.me/";
+        userOnly = "";
+      } else {
+        // အကယ်၍ အခြား link အပြည့်ထည့်ထားမိခဲ့လျှင်
+        platform = "t.me/"; 
+      }
+
       document.getElementById('rowId').value = order.rowId;
       document.getElementById('orderDate').value = order.date || new Date().toISOString().split('T')[0];
       document.getElementById('name').value = order.name;
       document.getElementById('phone').value = order.phone;
       document.getElementById('address').value = order.address;
-      document.getElementById('username').value = order.username === '-' ? '' : order.username;
+      document.getElementById('socialPlatform').value = platform;
+      document.getElementById('username').value = userOnly;
       document.getElementById('status').value = order.status;
       document.getElementById('courier').value = order.courier === '-' ? '' : order.courier;
       document.getElementById('existingVoucherLink').value = order.voucherLink;
@@ -612,7 +653,6 @@
       window.scrollTo(0,0);
     }
 
-    // Print အစား Copy Text ပြောင်းလဲထားခြင်း
     function copyOrderText(rowId) {
       const order = ordersData.find(o => String(o.rowId) === String(rowId));
       if (!order) {
@@ -656,6 +696,7 @@
       setTodayDate();
       document.getElementById('rowId').value = "";
       document.getElementById('existingVoucherLink').value = "";
+      document.getElementById('socialPlatform').value = "t.me/";
       document.getElementById('username').value = "";
       document.getElementById('formTitle').innerText = "Order အသစ်ထည့်ရန်";
       document.getElementById('submitBtn').disabled = false;

@@ -80,7 +80,7 @@
     /* Action Buttons */
     .btn-action { display: flex; gap: 6px; flex-wrap: wrap; }
     .btn-edit { background-color: #ffc107; color: black; padding: 6px 10px; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; width: auto; margin: 0; font-size: 12px; }
-    .btn-print { background-color: #17a2b8; color: white; padding: 6px 10px; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; width: auto; margin: 0; font-size: 12px; }
+    .btn-copy { background-color: #17a2b8; color: white; padding: 6px 10px; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; width: auto; margin: 0; font-size: 12px; }
     .btn-delete { background-color: #dc3545; color: white; padding: 6px 10px; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; width: auto; margin: 0; font-size: 12px; }
     .btn-cancel { background-color: #6c757d; display: none; margin-top: 5px; }
 
@@ -178,6 +178,15 @@
         <label>နေရပ်လိပ်စာ</label>
         <textarea id="address" rows="3" required placeholder="မြို့နယ်/လိပ်စာ အပြည့်အစုံ"></textarea>
 
+        <label>Customer ဆက်သွယ်ရန် (Platform & Username)</label>
+        <div style="display: flex; gap: 10px;">
+          <select id="socialPlatform" style="width: 40%; flex: 1;">
+            <option value="t.me/">Telegram</option>
+            <option value="m.me/">Facebook</option>
+          </select>
+          <input type="text" id="username" style="width: 60%; flex: 2;" placeholder="Username (ဥပမာ: myname123)">
+        </div>
+
         <label>ပို့ဆောင်မှု အခြေအနေ (Status)</label>
         <select id="status">
           <option value="မပို့ရသေး">မပို့ရသေး (Pending)</option>
@@ -221,7 +230,7 @@
       <!-- Search & Sorting Controls -->
       <div class="filter-bar">
         <div class="filter-group">
-          <input type="text" id="searchInput" placeholder="🔍 နာမည်/ဖုန်း/ရက်စွဲဖြင့် ရှာရန်..." oninput="onFilterChange()">
+          <input type="text" id="searchInput" placeholder="🔍 နာမည်/ဖုန်း/ရက်စွဲ/Username ဖြင့် ရှာရန်..." oninput="onFilterChange()">
         </div>
         <div class="filter-group">
           <select id="sortOrder" onchange="onFilterChange()">
@@ -240,6 +249,7 @@
               <th>နာမည်</th>
               <th>ဖုန်း</th>
               <th>လိပ်စာ</th>
+              <th>Username</th>
               <th>Status</th>
               <th>Courier</th>
               <th>Voucher</th>
@@ -247,7 +257,7 @@
             </tr>
           </thead>
           <tbody id="orderTableBody">
-            <tr><td colspan="8" style="text-align:center;">စာရင်းဆွဲယူနေပါသည်...</td></tr>
+            <tr><td colspan="9" style="text-align:center;">စာရင်းဆွဲယူနေပါသည်...</td></tr>
           </tbody>
         </table>
       </div>
@@ -266,6 +276,7 @@
   </div>
 
   <script>
+    // သင့်ကိုယ်ပိုင် Web App URL ကို ဒီမှာ ပြောင်းထည့်ပေးပါ 
     const API_URL = "https://script.google.com/macros/s/AKfycbww5K_aj0P2WSjnZqtgfsqR1Mf7bCwQLlQBuxV8swmFRwHIvxUEdrQy6VonmKmM1_EC/exec";
     let ordersData = [];
     let filteredData = [];
@@ -372,6 +383,11 @@
         fileData = await convertFileToBase64(file);
       }
 
+      // Username တည်ဆောက်ခြင်း (Platform + Username)
+      const rawUser = document.getElementById('username').value.trim();
+      const platform = document.getElementById('socialPlatform').value;
+      const finalUsername = rawUser ? (platform + rawUser) : "";
+
       const payload = {
         action: isEdit ? "update" : "create",
         rowId: rowId,
@@ -379,6 +395,7 @@
         name: document.getElementById('name').value,
         phone: document.getElementById('phone').value,
         address: document.getElementById('address').value,
+        username: finalUsername, // ပေါင်းထားသော link အပြည့်အစုံ
         status: document.getElementById('status').value,
         courier: document.getElementById('courier').value,
         existingVoucherLink: document.getElementById('existingVoucherLink').value,
@@ -416,7 +433,7 @@
       });
     }
 
-    // Load Orders with Inline Table/Card Spinner
+    // Load Orders
     function loadOrders() {
       const tbody = document.getElementById('orderTableBody');
       const mobileContainer = document.getElementById('mobileCardsContainer');
@@ -426,7 +443,7 @@
 
       tbody.innerHTML = `
         <tr>
-          <td colspan="8" style="text-align:center; padding: 25px;">
+          <td colspan="9" style="text-align:center; padding: 25px;">
             <div class="inline-spinner"></div>
             <div style="color: #666; font-weight: bold;">Google Sheets မှ စာရင်းဆွဲယူနေပါသည်...</div>
           </td>
@@ -447,7 +464,7 @@
         })
         .catch(err => {
           if (refreshBtn) refreshBtn.disabled = false;
-          tbody.innerHTML = '<tr><td colspan="8" style="text-align:center; color: red;">စာရင်းဆွဲယူ၍ မရပါ။ Refresh ပြန်လုပ်ကြည့်ပါ။</td></tr>';
+          tbody.innerHTML = '<tr><td colspan="9" style="text-align:center; color: red;">စာရင်းဆွဲယူ၍ မရပါ။ Refresh ပြန်လုပ်ကြည့်ပါ။</td></tr>';
           mobileContainer.innerHTML = '<div style="text-align:center; padding: 20px; color: red;">စာရင်းဆွဲယူ၍ မရပါ။</div>';
         });
     }
@@ -461,7 +478,8 @@
         const nameMatch = item.name && item.name.toLowerCase().includes(searchTerm);
         const phoneMatch = item.phone && item.phone.toString().includes(searchTerm);
         const dateMatch = item.date && item.date.toString().includes(searchTerm);
-        return nameMatch || phoneMatch || dateMatch;
+        const userMatch = item.username && item.username.toLowerCase().includes(searchTerm);
+        return nameMatch || phoneMatch || dateMatch || userMatch;
       });
 
       const total = filteredData.length;
@@ -480,7 +498,7 @@
       renderViews();
     }
 
-    // Render Views
+    // Render Views (Username ကို Link Button အဖြစ်ပြောင်းလဲပေးခြင်း)
     function renderViews() {
       const tbody = document.getElementById('orderTableBody');
       const mobileContainer = document.getElementById('mobileCardsContainer');
@@ -489,7 +507,7 @@
       mobileContainer.innerHTML = '';
 
       if (!filteredData || filteredData.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;">Order စာရင်းမရှိသေးပါ</td></tr>';
+        tbody.innerHTML = '<tr><td colspan="9" style="text-align:center;">Order စာရင်းမရှိသေးပါ</td></tr>';
         mobileContainer.innerHTML = '<div style="text-align:center; padding: 20px; color: #888;">Order စာရင်းမရှိသေးပါ</div>';
         document.getElementById('pageInfo').innerText = 'စုစုပေါင်း 0 ခု';
         document.getElementById('paginationBtns').innerHTML = '';
@@ -508,17 +526,28 @@
           ? `<a href="${item.voucherLink}" target="_blank" style="color:#007bff;font-weight:bold;">ကြည့်ရန်</a>` 
           : '-';
 
+        // Username ကို Click နှိပ်လို့ရတဲ့ Link ပြောင်းပေးတဲ့ အပိုင်း
+        let userDisplay = item.username || '-';
+        if (item.username && item.username !== '-') {
+          let url = item.username.trim();
+          if (url.toLowerCase().includes('t.me') || url.toLowerCase().includes('m.me') || url.toLowerCase().includes('facebook') || url.startsWith('http')) {
+            let link = url.startsWith('http') ? url : 'https://' + url;
+            userDisplay = `<a href="${link}" target="_blank" style="background-color: #0088cc; color: white; padding: 4px 8px; border-radius: 4px; text-decoration: none; font-size: 12px; display: inline-flex; align-items: center;">💬 ဆက်သွယ်ရန်</a>`;
+          }
+        }
+
         const row = `<tr>
           <td>${displayDate}</td>
           <td>${item.name}</td>
           <td>${item.phone}</td>
           <td>${item.address}</td>
+          <td>${userDisplay}</td>
           <td><span class="badge ${statusClass}">${item.status}</span></td>
           <td>${item.courier}</td>
           <td>${voucher}</td>
           <td>
             <div class="btn-action">
-              <button class="btn-print" onclick="printInvoice('${item.rowId}')">🖨️ Print</button>
+              <button class="btn-copy" onclick="copyOrderText('${item.rowId}')">📋 Copy</button>
               <button class="btn-edit" onclick="editOrder('${item.rowId}')">Edit</button>
               <button class="btn-delete" onclick="deleteOrder('${item.rowId}')">Delete</button>
             </div>
@@ -534,10 +563,11 @@
           <div class="card-row"><strong>📅 ရက်စွဲ:</strong> ${displayDate}</div>
           <div class="card-row"><strong>📞 ဖုန်း:</strong> ${item.phone}</div>
           <div class="card-row"><strong>📍 လိပ်စာ:</strong> ${item.address}</div>
+          <div class="card-row"><strong>👤 Username:</strong> ${userDisplay}</div>
           <div class="card-row"><strong>🚚 Courier:</strong> ${item.courier}</div>
           <div class="card-row"><strong>🧾 Voucher:</strong> ${voucher}</div>
           <div style="margin-top: 10px;" class="btn-action">
-            <button class="btn-print" style="flex:1;" onclick="printInvoice('${item.rowId}')">🖨️ Print</button>
+            <button class="btn-copy" style="flex:1;" onclick="copyOrderText('${item.rowId}')">📋 Copy</button>
             <button class="btn-edit" style="flex:1;" onclick="editOrder('${item.rowId}')">✏️ Edit</button>
             <button class="btn-delete" style="flex:1;" onclick="deleteOrder('${item.rowId}')">🗑️ Delete</button>
           </div>
@@ -585,11 +615,32 @@
         return;
       }
 
+      // Username နှင့် Platform ကို ခွဲထုတ်ခြင်း (Edit လုပ်ရန်)
+      let savedUser = order.username || '';
+      let platform = "t.me/";
+      let userOnly = savedUser;
+
+      if (savedUser.startsWith("t.me/")) {
+        platform = "t.me/";
+        userOnly = savedUser.replace("t.me/", "");
+      } else if (savedUser.startsWith("m.me/")) {
+        platform = "m.me/";
+        userOnly = savedUser.replace("m.me/", "");
+      } else if (savedUser === "-" || savedUser === "") {
+        platform = "t.me/";
+        userOnly = "";
+      } else {
+        // အကယ်၍ အခြား link အပြည့်ထည့်ထားမိခဲ့လျှင်
+        platform = "t.me/"; 
+      }
+
       document.getElementById('rowId').value = order.rowId;
       document.getElementById('orderDate').value = order.date || new Date().toISOString().split('T')[0];
       document.getElementById('name').value = order.name;
       document.getElementById('phone').value = order.phone;
       document.getElementById('address').value = order.address;
+      document.getElementById('socialPlatform').value = platform;
+      document.getElementById('username').value = userOnly;
       document.getElementById('status').value = order.status;
       document.getElementById('courier').value = order.courier === '-' ? '' : order.courier;
       document.getElementById('existingVoucherLink').value = order.voucherLink;
@@ -602,53 +653,20 @@
       window.scrollTo(0,0);
     }
 
-    function printInvoice(rowId) {
+    function copyOrderText(rowId) {
       const order = ordersData.find(o => String(o.rowId) === String(rowId));
       if (!order) {
-        alert("Invoice ထုတ်ရန် Order ရှာမတွေ့ပါ။");
+        alert("Copy ကူးရန် Order ရှာမတွေ့ပါ။");
         return;
       }
 
-      const printWindow = window.open('', '_blank', 'width=600,height=700');
-      const invoiceHTML = `
-        <!DOCTYPE html>
-        <html>
-        <head>
-          <title>Invoice - Order #${order.rowId}</title>
-          <style>
-            body { font-family: system-ui, sans-serif; padding: 20px; line-height: 1.5; color: #222; }
-            .invoice-box { border: 2px solid #333; padding: 25px; border-radius: 8px; max-width: 500px; margin: auto; }
-            .header { text-align: center; border-bottom: 2px dashed #ccc; padding-bottom: 10px; margin-bottom: 15px; }
-            .header h2 { margin: 0; color: #007bff; }
-            .info-table { width: 100%; border-collapse: collapse; margin-top: 10px; }
-            .info-table td { padding: 8px 0; border-bottom: 1px solid #f0f0f0; }
-            .info-table td:first-child { font-weight: bold; width: 35%; color: #555; }
-            .footer { margin-top: 30px; text-align: center; font-size: 12px; color: #777; border-top: 1px solid #eee; padding-top: 10px; }
-            @media print { .print-btn { display: none; } }
-          </style>
-        </head>
-        <body>
-          <div class="invoice-box">
-            <div class="header">
-              <h2>ORDER INVOICE</h2>
-              <p style="margin: 3px 0; font-size: 13px;">Order ID: #${order.rowId}</p>
-            </div>
-            <table class="info-table">
-              <tr><td>ရက်စွဲ (Date):</td><td>${order.date || '-'}</td></tr>
-              <tr><td>ဝယ်သူအမည်:</td><td>${order.name}</td></tr>
-              <tr><td>ဖုန်းနံပါတ်:</td><td>${order.phone}</td></tr>
-              <tr><td>နေရပ်လိပ်စာ:</td><td>${order.address}</td></tr>
-              <tr><td>Courier Service:</td><td>${order.courier || '-'}</td></tr>
-              <tr><td>အခြေအနေ (Status):</td><td><strong>${order.status}</strong></td></tr>
-            </table>
-            <div class="footer"><p>အားပေးမှုကို အထူးကျေးဇူးတင်ရှိပါသည်။</p></div>
-            <button class="print-btn" onclick="window.print()" style="width:100%; padding:10px; background:#007bff; color:white; border:none; border-radius:5px; font-weight:bold; cursor:pointer; margin-top:20px;">🖨️ Print / Save as PDF</button>
-          </div>
-        </body>
-        </html>
-      `;
-      printWindow.document.write(invoiceHTML);
-      printWindow.document.close();
+      const textToCopy = `နာမည် - ${order.name}\nဖုန်း - ${order.phone}\nလိပ်စာ - ${order.address}`;
+      
+      navigator.clipboard.writeText(textToCopy).then(() => {
+        alert("နာမည်၊ ဖုန်း၊ လိပ်စာ ကို Copy ကူးယူပြီးပါပြီ!");
+      }).catch(err => {
+        alert("Copy လုပ်၍ မရပါ။ (Browser ၏ Clipboard Permission ကို ခွင့်ပြုထားခြင်းရှိမရှိ စစ်ဆေးပါ)");
+      });
     }
 
     function deleteOrder(rowId) {
@@ -678,6 +696,8 @@
       setTodayDate();
       document.getElementById('rowId').value = "";
       document.getElementById('existingVoucherLink').value = "";
+      document.getElementById('socialPlatform').value = "t.me/";
+      document.getElementById('username').value = "";
       document.getElementById('formTitle').innerText = "Order အသစ်ထည့်ရန်";
       document.getElementById('submitBtn').disabled = false;
       document.getElementById('submitBtn').innerText = "Order သိမ်းမည်";
