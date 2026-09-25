@@ -86,7 +86,8 @@
 
     /* Filter Bar & Controls */
     .filter-bar { display: flex; gap: 10px; align-items: center; justify-content: space-between; margin-bottom: 15px; flex-wrap: wrap; }
-    .filter-group { flex: 1; min-width: 200px; }
+    .filter-group-search { flex: 2; min-width: 220px; }
+    .filter-group-select { flex: 1; min-width: 200px; }
     .filter-bar input, .filter-bar select { margin: 0; }
 
     /* Desktop Table View */
@@ -227,15 +228,19 @@
         </div>
       </div>
 
-      <!-- Search & Sorting Controls -->
+      <!-- Search & Combined Single Dropdown Filter Bar -->
       <div class="filter-bar">
-        <div class="filter-group">
+        <div class="filter-group-search">
           <input type="text" id="searchInput" placeholder="🔍 နာမည်/ဖုန်း/ရက်စွဲ/Username ဖြင့် ရှာရန်..." oninput="onFilterChange()">
         </div>
-        <div class="filter-group">
-          <select id="sortOrder" onchange="onFilterChange()">
-            <option value="desc">⬆️ အသစ်ဆုံး အပေါ်ထားမည်</option>
-            <option value="asc">⬇️ အဟောင်းဆုံး အပေါ်ထားမည်</option>
+        <div class="filter-group-select">
+          <!-- StatusFilter နှင့် SortOrder ကို Dropdown တစ်ခုတည်းအဖြစ် ပေါင်းစပ်ထားပါသည် -->
+          <select id="combinedFilter" onchange="onFilterChange()">
+            <option value="all-desc">📌 အသစ်ဆုံး အပေါ်ထားမည်</option>
+            <option value="all-asc">📌 အဟောင်းဆုံး အပေါ်ထားမည်</option>
+            <option value="pending-desc">⏳ မပို့ရသေးသည်များ</option>
+            <option value="delivered-desc">✅ ပို့ပြီးသည်များ</option>
+
           </select>
         </div>
       </div>
@@ -395,7 +400,7 @@
         name: document.getElementById('name').value,
         phone: document.getElementById('phone').value,
         address: document.getElementById('address').value,
-        username: finalUsername, // ပေါင်းထားသော link အပြည့်အစုံ
+        username: finalUsername,
         status: document.getElementById('status').value,
         courier: document.getElementById('courier').value,
         existingVoucherLink: document.getElementById('existingVoucherLink').value,
@@ -469,27 +474,40 @@
         });
     }
 
-    // Filter, Search & Sort
+    // Filter, Search & Combined Dropdown Handler
     function onFilterChange() {
       const searchTerm = document.getElementById('searchInput').value.toLowerCase();
-      const sortOrder = document.getElementById('sortOrder').value;
+      const combinedVal = document.getElementById('combinedFilter').value;
+      const [statusKey, sortOrder] = combinedVal.split('-');
 
+      // ၁။ Search & Status Filter
       filteredData = ordersData.filter(item => {
         const nameMatch = item.name && item.name.toLowerCase().includes(searchTerm);
         const phoneMatch = item.phone && item.phone.toString().includes(searchTerm);
         const dateMatch = item.date && item.date.toString().includes(searchTerm);
         const userMatch = item.username && item.username.toLowerCase().includes(searchTerm);
-        return nameMatch || phoneMatch || dateMatch || userMatch;
+        const matchesSearch = nameMatch || phoneMatch || dateMatch || userMatch;
+
+        let matchesStatus = true;
+        if (statusKey === 'pending') {
+          matchesStatus = item.status === 'မပို့ရသေး';
+        } else if (statusKey === 'delivered') {
+          matchesStatus = item.status === 'ပို့ပြီး';
+        }
+
+        return matchesSearch && matchesStatus;
       });
 
-      const total = filteredData.length;
-      const delivered = filteredData.filter(item => item.status === 'ပို့ပြီး').length;
-      const pending = filteredData.filter(item => item.status === 'မပို့ရသေး').length;
+      // စုစုပေါင်း Counter များပြသပေးခြင်း
+      const total = ordersData.length;
+      const delivered = ordersData.filter(item => item.status === 'ပို့ပြီး').length;
+      const pending = ordersData.filter(item => item.status === 'မပို့ရသေး').length;
 
       document.getElementById('totalCount').innerText = total;
       document.getElementById('deliveredCount').innerText = delivered;
       document.getElementById('pendingCount').innerText = pending;
 
+      // ၂။ Sorting (အသစ်ဆုံး/အဟောင်းဆုံး)
       if (sortOrder === 'desc') {
         filteredData.reverse();
       }
@@ -498,7 +516,7 @@
       renderViews();
     }
 
-    // Render Views (Username ကို Link Button အဖြစ်ပြောင်းလဲပေးခြင်း)
+    // Render Views
     function renderViews() {
       const tbody = document.getElementById('orderTableBody');
       const mobileContainer = document.getElementById('mobileCardsContainer');
@@ -507,7 +525,7 @@
       mobileContainer.innerHTML = '';
 
       if (!filteredData || filteredData.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="9" style="text-align:center;">Order စာရင်းမရှိသေးပါ</td></tr>';
+        tbody.innerHTML = '<tr><td colspan="9" style="text-align:center;">Order စာရင်းမရှိသေးပါ (သို့မဟုတ်) ရှာဖွေမှုနှင့် ကိုက်ညီသော စာရင်းမရှိပါ</td></tr>';
         mobileContainer.innerHTML = '<div style="text-align:center; padding: 20px; color: #888;">Order စာရင်းမရှိသေးပါ</div>';
         document.getElementById('pageInfo').innerText = 'စုစုပေါင်း 0 ခု';
         document.getElementById('paginationBtns').innerHTML = '';
@@ -526,7 +544,7 @@
           ? `<a href="${item.voucherLink}" target="_blank" style="color:#007bff;font-weight:bold;">ကြည့်ရန်</a>` 
           : '-';
 
-        // Username ကို Click နှိပ်လို့ရတဲ့ Link ပြောင်းပေးတဲ့ အပိုင်း
+        // Username Link
         let userDisplay = item.username || '-';
         if (item.username && item.username !== '-') {
           let url = item.username.trim();
@@ -615,7 +633,6 @@
         return;
       }
 
-      // Username နှင့် Platform ကို ခွဲထုတ်ခြင်း (Edit လုပ်ရန်)
       let savedUser = order.username || '';
       let platform = "t.me/";
       let userOnly = savedUser;
@@ -630,7 +647,6 @@
         platform = "t.me/";
         userOnly = "";
       } else {
-        // အကယ်၍ အခြား link အပြည့်ထည့်ထားမိခဲ့လျှင်
         platform = "t.me/"; 
       }
 
