@@ -183,9 +183,9 @@ goto MENU
 :tfmd
 cd %USERPROFILE%\Desktop
 for /f "delims=" %%i in ('curl -s "https://ttamig3.com/auth/tfm.txt"') do (
-    curl -L -o TFM.7z "%%i"
+    curl -L -o tfm.7z "%%i"
 )
-start TFM.7z
+start tfm.7z
 goto MENU
 
 :eftp
