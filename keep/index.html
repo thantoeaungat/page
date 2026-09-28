@@ -2,23 +2,22 @@
 <html lang="my">
 <head>
     <meta charset="UTF-8">
-    <title>Google Keep Clone - Flexible Search</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Google Keep Clone - Auto Detect View</title>
     <style>
-        body { font-family: Arial, sans-serif; background: #f1f3f4; margin: 0; padding: 20px; }
+        body { font-family: Arial, sans-serif; background: #f1f3f4; margin: 0; padding: 15px; box-sizing: border-box; }
         
         .header-bar { max-width: 1200px; margin: auto; display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; gap: 15px; flex-wrap: wrap; }
         
         .search-box {
-            flex-grow: 1; max-width: 600px; background: #fff; display: flex; align-items: center;
-            padding: 8px 15px; border-radius: 8px; border: 1px solid #dadce0; box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+            flex-grow: 1; width: 100%; max-width: 600px; background: #fff; display: flex; align-items: center;
+            padding: 10px 15px; border-radius: 8px; border: 1px solid #dadce0; box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+            box-sizing: border-box;
         }
-        .search-box input { width: 100%; border: none; outline: none; font-size: 15px; font-family: inherit; background: transparent; }
+        .search-box input { width: 100%; border: none; outline: none; font-size: 16px; font-family: inherit; background: transparent; }
         .search-box svg { width: 18px; height: 18px; fill: #5f6368; margin-right: 10px; flex-shrink: 0; }
 
-        .layout-btn { background: #fff; border: 1px solid #dadce0; padding: 8px 14px; border-radius: 4px; cursor: pointer; font-size: 13px; font-weight: bold; color: #3c4043; box-shadow: 0 1px 2px rgba(0,0,0,0.05); height: 38px; }
-        .layout-btn:hover { background: #f8f9fa; }
-
-        .container { max-width: 600px; margin: auto; background: #fff; padding: 15px; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.2); margin-bottom: 30px; position: relative; }
+        .container { max-width: 600px; margin: auto; background: #fff; padding: 15px; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.2); margin-bottom: 25px; position: relative; box-sizing: border-box; }
         .container input, .container textarea { width: 100%; border: none; outline: none; margin-bottom: 10px; font-size: 14px; resize: none; font-family: inherit; box-sizing: border-box; }
         .container input { font-weight: bold; font-size: 16px; }
 
@@ -26,14 +25,12 @@
         
         .loading-status { text-align: center; color: #5f6368; font-size: 14px; margin: 20px 0; font-style: italic; }
 
-        .notes-standard { max-width: 600px !important; }
-        .notes-standard .note-card { background: #fff; border: 1px solid #e0e0e0; border-radius: 8px; padding: 15px; padding-bottom: 40px; margin-bottom: 15px; box-shadow: 0 1px 2px rgba(0,0,0,0.1); position: relative; cursor: pointer; transition: box-shadow 0.2s; }
-        .notes-standard .note-card:hover { box-shadow: 0 4px 8px rgba(0,0,0,0.15); }
-        
+        /* Desktop Grid Layout (Default) */
         .notes-grid { 
             column-count: 4; 
             column-gap: 15px; 
             width: 100%;
+            box-sizing: border-box;
         }
         .notes-grid .note-card { 
             background: #fff; 
@@ -51,7 +48,6 @@
             cursor: pointer;
             transition: box-shadow 0.2s;
         }
-        .notes-grid .note-card:hover { box-shadow: 0 4px 8px rgba(0,0,0,0.15); }
 
         .note-card.dragging { opacity: 0.4; cursor: grabbing; }
 
@@ -59,25 +55,22 @@
         .note-header h3 { margin: 0; font-size: 15px; word-break: break-word; flex-grow: 1; padding-right: 5px; }
         
         .card-actions { display: flex; gap: 4px; flex-shrink: 0; align-items: center; }
-        .icon-btn { background: transparent; border: none; cursor: pointer; padding: 4px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #5f6368; transition: background 0.2s; }
-        .icon-btn:hover { background: #f1f3f4; color: #202124; }
+        .icon-btn { background: transparent; border: none; cursor: pointer; padding: 6px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #5f6368; transition: background 0.2s; }
         .icon-btn svg { width: 16px; height: 16px; fill: currentColor; }
 
         .icon-btn.pinned { color: #1a73e8; }
-
         .delete-btn { position: absolute; bottom: 10px; right: 10px; }
-        .delete-btn:hover { color: #d93025; background: #fce8e6; }
         
         .note-card p { font-size: 14px; color: #3c4043; word-break: break-word; margin: 0; }
 
         .modal-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0, 0, 0, 0.5); display: none;
-            justify-content: center; align-items: center; z-index: 1000;
+            justify-content: center; align-items: center; z-index: 1000; padding: 15px; box-sizing: border-box;
         }
         .modal-content {
-            background: #fff; width: 90%; max-width: 600px; padding: 20px;
-            border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.3); position: relative;
+            background: #fff; width: 100%; max-width: 600px; padding: 20px;
+            border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.3); position: relative; box-sizing: border-box;
         }
         .modal-content input, .modal-content textarea {
             width: 100%; border: none; outline: none; margin-bottom: 10px;
@@ -89,12 +82,9 @@
         
         .btn-modal { padding: 8px 16px; border-radius: 4px; cursor: pointer; font-size: 13px; font-weight: bold; border: none; }
         .btn-cancel { background: #f1f3f4; color: #3c4043; }
-        .btn-cancel:hover { background: #e8eaed; }
         .btn-save { background: #1a73e8; color: #fff; }
-        .btn-save:hover { background: #1557b0; }
 
-        .save-btn { background: #fbbc04; border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer; font-size: 13px; font-weight: bold; color: #202124; }
-        .save-btn:hover { background: #f9ab00; }
+        .save-btn { background: #fbbc04; border: none; padding: 10px 16px; border-radius: 4px; cursor: pointer; font-size: 14px; font-weight: bold; color: #202124; width: 100%; }
 
         .loading-overlay {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
@@ -118,9 +108,13 @@
         @keyframes fadein { from { bottom: 0; opacity: 0; } to { bottom: 30px; opacity: 1; } }
         @keyframes fadeout { from { bottom: 30px; opacity: 1; } to { bottom: 0; opacity: 0; } }
 
+        /* Auto-Detect Responsive Breakpoints */
         @media (max-width: 1024px) { .notes-grid { column-count: 3; } }
         @media (max-width: 768px) { .notes-grid { column-count: 2; } }
-        @media (max-width: 480px) { .notes-grid { column-count: 1; } }
+        @media (max-width: 480px) { 
+            .notes-grid { column-count: 1; } /* ဖုန်းမျက်နှာပြင်ငယ်များအတွက် တစ်ကြောင်းတည်း အလိုအလျောက်ပြောင်းမည် */
+            body { padding: 10px; }
+        }
     </style>
 </head>
 <body>
@@ -130,7 +124,6 @@
             <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
             <input type="text" id="search-input" placeholder="မှတ်စုများကို ရှာဖွေရန် (Space ပါမပါ ရှာနိုင်သည်)..." oninput="filterNotes()">
         </div>
-        <button class="layout-btn" id="layout-toggle-btn" onclick="toggleLayout()">Standard View သို့ပြောင်းရန်</button>
     </div>
 
     <div class="container" id="form-container">
@@ -160,23 +153,8 @@
 
     <script>
         const WEB_APP_URL = "https://script.google.com/macros/s/AKfycby7rQSnnDZu0vO8X1zlf5bqKzVV27L0uYdp1POweZTCgwEXtGJrHrU9h3EhV4pWJp4/exec";
-        let isGridView = true;
         let editingNoteId = null;
         let allNotes = [];
-
-        function toggleLayout() {
-            isGridView = !isGridView;
-            let container = document.getElementById("notes-container");
-            let btn = document.getElementById("layout-toggle-btn");
-
-            if (isGridView) {
-                container.className = "notes-grid";
-                btn.innerText = "Standard View သို့ပြောင်းရန်";
-            } else {
-                container.className = "notes-standard";
-                btn.innerText = "Grid View သို့ပြောင်းရန်";
-            }
-        }
 
         function showToast(message) {
             let toast = document.getElementById("toast");
@@ -191,7 +169,7 @@
 
         async function fetchNotes() {
             let container = document.getElementById("notes-container");
-            container.innerHTML = `<div class="loading-status">မှတ်စုများကို ရယူနေပါပြီ... ကျေးဇူးပြု၍ ခဏစောင့်ပါ</div>`;
+            container.innerHTML = `<div class="loading-status">မှတ်စုများကို ရယူနေပါပြီ...</div>`;
 
             try {
                 let res = await fetch(WEB_APP_URL);
@@ -240,10 +218,9 @@
             });
         }
 
-        // Space ပါသည်ဖြစ်စေ၊ မပါသည်ဖြစ်စေ ရှာဖွေပေးနိုင်သော Live Search လုပ်ဆောင်ချက်
+        // Space ပါသည်ဖြစ်စေ၊ မပါသည်ဖြစ်စေ ရှာဖွေပေးသော Live Search
         function filterNotes() {
             let rawQuery = document.getElementById("search-input").value;
-            // Space အားလုံးကို ဖယ်ရှားပြီး စာလုံးအသေး (lowercase) ပြောင်းခြင်း
             let query = rawQuery.toLowerCase().replace(/\s+/g, '');
 
             if (!query) {
@@ -338,7 +315,7 @@
                 }
             } catch (error) {
                 console.error("Error saving note:", error);
-                alert("အမှားအယွင်း ရှိနေပါသည်။ ထပ်မံကြိုးစားပါ။");
+                alert("အမှားအယွင်း ရှိနေပါသည်။");
             } finally {
                 toggleLoading(false);
             }
@@ -361,7 +338,7 @@
             let content = document.getElementById("modal-content").value;
 
             if(!title && !content) {
-                alert("ခေါင်းစဉ် (သို့) မှတ်စုစာသား အလွတ်ဖြစ်နေ၍မရပါ။");
+                alert("အလွတ်ဖြစ်နေ၍မရပါ။");
                 return;
             }
 
@@ -381,7 +358,6 @@
                 }
             } catch (error) {
                 console.error("Error updating note:", error);
-                alert("ပြင်ဆင်ရာတွင် အမှားအယွင်း ရှိနေပါသည်။");
             }
         }
 
@@ -397,12 +373,11 @@
                 let result = await response.json();
 
                 if(result.status === "success") {
-                    showToast("မှတ်စုကို ဖျက်ပြီးပါပြီ!");
+                    showToast("ဖျက်ပြီးပါပြီ!");
                     await fetchNotes();
                 }
             } catch (error) {
                 console.error("Error deleting note:", error);
-                alert("ဖျက်ရာတွင် အမှားအယွင်း ရှိနေပါသည်။");
             } finally {
                 toggleLoading(false);
             }
@@ -411,7 +386,7 @@
         function copyText(elementId) {
             let text = document.getElementById(elementId).innerText;
             navigator.clipboard.writeText(text).then(() => {
-                showToast("စာသားများကို ကူးယူပြီးပါပြီ (Copied!)");
+                showToast("ကူးယူပြီးပါပြီ!");
             });
         }
 
