@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Google Keep Clone - Optimized Partial Update</title>
+    <title>Google Keep Clone - Cached & Fast Load</title>
     <style>
         body { font-family: Arial, sans-serif; background: #f1f3f4; margin: 0; padding: 15px; box-sizing: border-box; }
         
@@ -17,19 +17,17 @@
         .search-box input { width: 100%; border: none; outline: none; font-size: 16px; font-family: inherit; background: transparent; }
         .search-box svg { width: 18px; height: 18px; fill: #5f6368; margin-right: 10px; flex-shrink: 0; }
 
-        /* 30% Wider Container */
         .container { 
-            max-width: 780px; margin: auto; background: #fff; padding: 14px 18px; border-radius: 8px; 
-            box-shadow: 0 1px 3px rgba(0,0,0,0.2); margin-bottom: 25px; position: relative; box-sizing: border-box; 
+            max-width: 600px; margin: auto; background: #fff; padding: 10px 16px; border-radius: 8px; 
+            box-shadow: 0 1px 3px rgba(0,0,0,0.2); margin-bottom: 30px; position: relative; box-sizing: border-box; 
             cursor: pointer; display: flex; align-items: center; justify-content: space-between;
             transition: box-shadow 0.2s ease;
         }
         .container:hover { box-shadow: 0 2px 8px rgba(0,0,0,0.25); }
 
         .collapsed-prompt {
-            color: #5f6368; font-size: 16px; display: flex; align-items: center; width: 100%; justify-content: space-between;
+            color: #5f6368; font-size: 15px; display: flex; align-items: center; width: 100%; justify-content: space-between;
         }
-        .collapsed-prompt span { display: flex; align-items: center; gap: 8px; }
         
         .collapsed-prompt .plus-icon {
             background: #fbbc04; color: #202124; width: 32px; height: 32px; border-radius: 50%;
@@ -38,25 +36,24 @@
         }
 
         .expanded-content { display: none; width: 100%; }
-        .container.active { cursor: default; display: block; padding: 20px; }
+        .container.active { cursor: default; display: block; padding: 16px; }
         .container.active .collapsed-prompt { display: none; }
         .container.active .expanded-content { display: block; }
 
-        .container input, .container textarea { width: 100%; border: none; outline: none; margin-bottom: 12px; font-size: 15px; resize: none; font-family: inherit; box-sizing: border-box; }
-        .container input { font-weight: bold; font-size: 18px; }
-        .container textarea { min-height: 140px; font-size: 16px; }
+        .container input, .container textarea { width: 100%; border: none; outline: none; margin-bottom: 10px; font-size: 15px; resize: none; font-family: inherit; box-sizing: border-box; }
+        .container input { font-weight: bold; font-size: 16px; }
+        .container textarea { min-height: 110px; font-size: 15px; }
 
-        .form-actions { display: flex; justify-content: flex-end; gap: 10px; margin-top: 10px; }
+        .form-actions { display: flex; justify-content: flex-end; gap: 10px; margin-top: 5px; }
         .btn-modal { padding: 8px 18px; border-radius: 4px; cursor: pointer; font-size: 14px; font-weight: bold; border: none; }
         .btn-cancel { background: #f1f3f4; color: #3c4043; }
         .save-btn { background: #fbbc04; color: #202124; }
 
         @keyframes bounceIn {
-            0% { transform: scale(0.9); opacity: 0; }
-            70% { transform: scale(1.02); opacity: 1; }
+            0% { transform: scale(0.98); opacity: 0; }
             100% { transform: scale(1); opacity: 1; }
         }
-        .container.active { animation: bounceIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) both; }
+        .container.active { animation: bounceIn 0.2s ease both; }
 
         #notes-container { 
             max-width: 1200px; margin: auto; display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; align-items: start;
@@ -93,16 +90,17 @@
             background: rgba(0, 0, 0, 0.5); display: none; justify-content: center; align-items: center; z-index: 1000; padding: 15px; box-sizing: border-box;
         }
         .modal-content {
-            background: #fff; width: 100%; max-width: 720px; padding: 24px;
+            background: #fff; width: 100%; max-width: 600px; padding: 24px;
             border-radius: 10px; box-shadow: 0 6px 20px rgba(0,0,0,0.3); position: relative; box-sizing: border-box;
-            animation: bounceIn 0.3s ease both;
+            animation: bounceIn 0.2s ease both;
         }
+		
 
         .modal-content input, .modal-content textarea {
             width: 100%; border: none; outline: none; margin-bottom: 12px; font-size: 16px; font-family: inherit; resize: vertical; box-sizing: border-box;
         }
-        .modal-content input { font-weight: bold; font-size: 20px; border-bottom: 1px solid #f1f3f4; padding-bottom: 10px; }
-        .modal-content textarea { min-height: 190px; font-size: 15px; }
+        .modal-content input { font-weight: bold; font-size: 18px; border-bottom: 1px solid #f1f3f4; padding-bottom: 8px; }
+        .modal-content textarea { min-height: 150px; font-size: 15px; }
         .modal-actions { display: flex; justify-content: flex-end; gap: 10px; margin-top: 15px; }
         
         .loading-overlay {
@@ -149,7 +147,7 @@
 
         <div class="expanded-content" onclick="event.stopPropagation()">
             <input type="text" id="note-title" placeholder="ခေါင်းစဉ် (Title)...">
-            <textarea id="note-content" placeholder="မှတ်စုအသစ် ရေးရန်..." rows="4"></textarea>
+            <textarea id="note-content" placeholder="မှတ်စုအသစ် ရေးရန်..." rows="3"></textarea>
             <div class="form-actions">
                 <button class="btn-modal btn-cancel" onclick="closeAndSaveForm(event)">ပိတ်မည်</button>
                 <button class="btn-modal save-btn" onclick="saveNewNote()">သိမ်းမည်</button>
@@ -234,8 +232,8 @@
                     document.getElementById("form-container").classList.remove("active");
                     showToast("အလိုအလျောက် သိမ်းဆည်းပြီးပါပြီ!");
                     
-                    // 新規作成時のみ全データを再取得する（IDや順番をサーバ側から正確に反映するため）
-                    await fetchNotes();
+                    // ဖန်တီးပြီးတာနဲ့ Background မှ Server သို့ လှမ်းခေါ်ပြီး Cache အသစ်တင်မည်
+                    await fetchNotes(true);
                 }
             } catch (error) {
                 console.error("Error auto-saving note:", error);
@@ -255,17 +253,41 @@
             document.getElementById("loading-overlay").style.display = show ? "flex" : "none";
         }
 
-        async function fetchNotes() {
+        // --- Cache စနစ်သုံးပြီး မှတ်စုများကို မြန်ဆန်စွာ ဆွဲထုတ်ခြင်း ---
+        async function fetchNotes(forceRefresh = false) {
             let container = document.getElementById("notes-container");
-            container.innerHTML = `<div class="loading-status">မှတ်စုများကို ရယူနေပါပြီ...</div>`;
+            
+            // ၁။ LocalStorage ထဲမှာ Cache ရှိမရှိ အရင်စစ်မည်
+            let cachedData = localStorage.getItem("keep_notes_cache");
+            
+            if (cachedData && !forceRefresh) {
+                try {
+                    allNotes = JSON.parse(cachedData);
+                    renderNotes(allNotes); // စက္ကန့်ပိုင်းအတွင်း ချက်ချင်းပေါ်လာစေမည် (Loading လုံးဝမလည်ပါ)
+                } catch (e) {
+                    console.error("Cache parsing error:", e);
+                }
+            } else if (!allNotes.length) {
+                // Cache မရှိသေးရင်မှသာ Loading ပြမည်
+                container.innerHTML = `<div class="loading-status">မှတ်စုများကို ရယူနေပါပြီ...</div>`;
+            }
 
+            // ၂။ Background မှာ Server ကနေ တကယ့်အသစ်တွေ ရှိမရှိ နောက်ကွယ်ကနေ ယူမည် (Background Sync)
             try {
                 let res = await fetch(WEB_APP_URL);
-                allNotes = await res.json();
-                renderNotes(allNotes);
+                let freshNotes = await res.json();
+                
+                // ဒေတာပြောင်းလဲမှုရှိမှသာ UI ကို update လုပ်မည်
+                if (JSON.stringify(freshNotes) !== JSON.stringify(allNotes)) {
+                    allNotes = freshNotes;
+                    localStorage.setItem("keep_notes_cache", JSON.stringify(allNotes)); // Cache ကို အသစ်ထပ်သိမ်းမည်
+                    renderNotes(allNotes);
+                }
             } catch (error) {
-                console.error("Error fetching notes:", error);
-                container.innerHTML = `<div class="loading-status" style="color: #d93025;">မှတ်စုများကို ဆွဲထုတ်ရာတွင် အမှားအယွင်း ရှိနေပါသည်။</div>`;
+                console.error("Error fetching notes in background:", error);
+                if (!allNotes.length) {
+                    container.innerHTML = `<div class="loading-status" style="color: #d93025;">မှတ်စုများကို ဆွဲထုတ်ရာတွင် အမှားအယွင်း ရှိနေပါသည်။</div>`;
+                }
             }
         }
 
@@ -335,6 +357,7 @@
             let movedItem = allNotes.splice(draggedIndex, 1)[0];
             allNotes.splice(targetIndex, 0, movedItem);
 
+            localStorage.setItem("keep_notes_cache", JSON.stringify(allNotes)); // Cache ကိုပါ အပ်ဒိတ်လုပ်မည်
             renderNotes(allNotes);
             showToast("နေရာရွှေ့ပြီးပါပြီ");
         }
@@ -364,10 +387,10 @@
         }
 
         async function togglePin(id, pinStatus) {
-            // Local State ကို အရင် update လုပ်မည် (Loading မဖြစ်စေရန်)
             let note = allNotes.find(n => n.id.toString() === id.toString());
             if(note) {
                 note.pinned = pinStatus;
+                localStorage.setItem("keep_notes_cache", JSON.stringify(allNotes));
                 renderNotes(allNotes);
             }
 
@@ -409,7 +432,6 @@
             }
         }
 
-        // --- ပြင်ဆင်ခြင်း (Edit) - တစ်ခုချင်း အပိုင်းလိုက် Update လုပ်ခြင်း ---
         async function saveModalEdit() {
             let title = document.getElementById("modal-title").value.trim();
             let content = document.getElementById("modal-content").value.trim();
@@ -419,19 +441,17 @@
                 return;
             }
 
-            // ၁။ Local array ထဲက note ကို ရှာပြီး ချက်ချင်း အစားထိုးမည်
             let note = allNotes.find(n => n.id.toString() === editingNoteId.toString());
             if(note) {
                 note.title = title;
                 note.content = content;
             }
 
-            // ၂။ UI ကို ချက်ချင်း ပြန်ဆွဲပြမည် (Loading လုံးဝမလည်တော့ပါ)
+            localStorage.setItem("keep_notes_cache", JSON.stringify(allNotes));
             renderNotes(allNotes);
             closeEditModal();
             showToast("ပြင်ဆင်ပြီးပါပြီ!");
 
-            // ၃။ Background မှာ server ကို request ပို့ပြီး သိမ်းဆည်းမည်
             try {
                 await fetch(WEB_APP_URL, {
                     method: "POST",
@@ -442,18 +462,14 @@
             }
         }
 
-        // --- ဖျက်ခြင်း (Delete) - တစ်ခုချင်း အပိုင်းလိုက် ဖျက်ခြင်း ---
         async function deleteNote(id) {
             if(!confirm("ဒီမှတ်စုကို ဖျက်မှာ သေချာပါသလား?")) return;
 
-            // ၁။ Local array ထဲကနေ သက်ဆိုင်ရာ note ကို ချက်ချင်း ဖြုတ်ထုတ်မည်
             allNotes = allNotes.filter(n => n.id.toString() !== id.toString());
-
-            // ၂။ UI ကို ချက်ချင်း ပြန်ပြမည် (Loading လုံးဝမလည်တော့ပါ)
+            localStorage.setItem("keep_notes_cache", JSON.stringify(allNotes));
             renderNotes(allNotes);
             showToast("ဖျက်ပြီးပါပြီ!");
 
-            // ၃။ Background မှာ server ကို request ပို့ပြီး ဖျက်မည်
             try {
                 await fetch(WEB_APP_URL, {
                     method: "POST",
@@ -471,6 +487,7 @@
             });
         }
 
+        // စစချင်း စာမျက်နှာဖွင့်လျှင် Cache ဖြင့် ချက်ချင်းပြသမည်
         fetchNotes();
     </script>
 </body>
