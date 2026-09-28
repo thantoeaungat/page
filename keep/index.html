@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Google Keep Clone - Auto Detect View</title>
+    <title>Google Keep Clone - Auto Hide Form</title>
     <style>
         body { font-family: Arial, sans-serif; background: #f1f3f4; margin: 0; padding: 15px; box-sizing: border-box; }
         
@@ -17,7 +17,7 @@
         .search-box input { width: 100%; border: none; outline: none; font-size: 16px; font-family: inherit; background: transparent; }
         .search-box svg { width: 18px; height: 18px; fill: #5f6368; margin-right: 10px; flex-shrink: 0; }
 
-        .container { max-width: 600px; margin: auto; background: #fff; padding: 15px; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.2); margin-bottom: 25px; position: relative; box-sizing: border-box; }
+        .container { max-width: 600px; margin: auto; background: #fff; padding: 15px; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.2); margin-bottom: 25px; position: relative; box-sizing: border-box; transition: all 0.3s ease; }
         .container input, .container textarea { width: 100%; border: none; outline: none; margin-bottom: 10px; font-size: 14px; resize: none; font-family: inherit; box-sizing: border-box; }
         .container input { font-weight: bold; font-size: 16px; }
 
@@ -112,7 +112,7 @@
         @media (max-width: 1024px) { .notes-grid { column-count: 3; } }
         @media (max-width: 768px) { .notes-grid { column-count: 2; } }
         @media (max-width: 480px) { 
-            .notes-grid { column-count: 1; } /* ဖုန်းမျက်နှာပြင်ငယ်များအတွက် တစ်ကြောင်းတည်း အလိုအလျောက်ပြောင်းမည် */
+            .notes-grid { column-count: 1; }
             body { padding: 10px; }
         }
     </style>
@@ -126,6 +126,7 @@
         </div>
     </div>
 
+    <!-- 10 စက္ကန့်ကြာလျှင် အလိုအလျောက် ပျောက်သွားမည့် Form -->
     <div class="container" id="form-container">
         <div class="loading-overlay" id="loading-overlay">
             <div class="spinner"></div>
@@ -155,6 +156,20 @@
         const WEB_APP_URL = "https://script.google.com/macros/s/AKfycby7rQSnnDZu0vO8X1zlf5bqKzVV27L0uYdp1POweZTCgwEXtGJrHrU9h3EhV4pWJp4/exec";
         let editingNoteId = null;
         let allNotes = [];
+
+        // Web Loaded ဖြစ်ပြီး ၁၀ စက္ကန့် (၁၀၀၀၀ မီလီစက္ကန့်) ကြာလျှင် Form ကို ဖွက်ရန်
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                let formContainer = document.getElementById("form-container");
+                if(formContainer) {
+                    formContainer.style.opacity = "0";
+                    formContainer.style.transform = "translateY(-10px)";
+                    setTimeout(() => {
+                        formContainer.style.display = "none";
+                    }, 3005); // Animation ပြီးမှ display none လုပ်ရန်
+                }
+            }, 10000); // 10 seconds
+        });
 
         function showToast(message) {
             let toast = document.getElementById("toast");
@@ -218,7 +233,6 @@
             });
         }
 
-        // Space ပါသည်ဖြစ်စေ၊ မပါသည်ဖြစ်စေ ရှာဖွေပေးသော Live Search
         function filterNotes() {
             let rawQuery = document.getElementById("search-input").value;
             let query = rawQuery.toLowerCase().replace(/\s+/g, '');
