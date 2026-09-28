@@ -2,12 +2,20 @@
 <html lang="my">
 <head>
     <meta charset="UTF-8">
-    <title>Google Keep Clone - Click to Edit</title>
+    <title>Google Keep Clone - Flexible Search</title>
     <style>
         body { font-family: Arial, sans-serif; background: #f1f3f4; margin: 0; padding: 20px; }
         
-        .header-bar { max-width: 1200px; margin: auto; display: flex; justify-content: flex-end; margin-bottom: 10px; }
-        .layout-btn { background: #fff; border: 1px solid #dadce0; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-size: 13px; font-weight: bold; color: #3c4043; box-shadow: 0 1px 2px rgba(0,0,0,0.05); }
+        .header-bar { max-width: 1200px; margin: auto; display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; gap: 15px; flex-wrap: wrap; }
+        
+        .search-box {
+            flex-grow: 1; max-width: 600px; background: #fff; display: flex; align-items: center;
+            padding: 8px 15px; border-radius: 8px; border: 1px solid #dadce0; box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+        }
+        .search-box input { width: 100%; border: none; outline: none; font-size: 15px; font-family: inherit; background: transparent; }
+        .search-box svg { width: 18px; height: 18px; fill: #5f6368; margin-right: 10px; flex-shrink: 0; }
+
+        .layout-btn { background: #fff; border: 1px solid #dadce0; padding: 8px 14px; border-radius: 4px; cursor: pointer; font-size: 13px; font-weight: bold; color: #3c4043; box-shadow: 0 1px 2px rgba(0,0,0,0.05); height: 38px; }
         .layout-btn:hover { background: #f8f9fa; }
 
         .container { max-width: 600px; margin: auto; background: #fff; padding: 15px; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.2); margin-bottom: 30px; position: relative; }
@@ -118,6 +126,10 @@
 <body>
 
     <div class="header-bar">
+        <div class="search-box">
+            <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+            <input type="text" id="search-input" placeholder="မှတ်စုများကို ရှာဖွေရန် (Space ပါမပါ ရှာနိုင်သည်)..." oninput="filterNotes()">
+        </div>
         <button class="layout-btn" id="layout-toggle-btn" onclick="toggleLayout()">Standard View သို့ပြောင်းရန်</button>
     </div>
 
@@ -150,6 +162,7 @@
         const WEB_APP_URL = "https://script.google.com/macros/s/AKfycby7rQSnnDZu0vO8X1zlf5bqKzVV27L0uYdp1POweZTCgwEXtGJrHrU9h3EhV4pWJp4/exec";
         let isGridView = true;
         let editingNoteId = null;
+        let allNotes = [];
 
         function toggleLayout() {
             isGridView = !isGridView;
@@ -182,49 +195,69 @@
 
             try {
                 let res = await fetch(WEB_APP_URL);
-                let notes = await res.json();
-                container.innerHTML = "";
-                
-                if(notes.length === 0) {
-                    container.innerHTML = `<div class="loading-status">မှတ်စုများ မရှိသေးပါ။</div>`;
-                    return;
-                }
-
-                notes.sort((a, b) => (b.pinned === true) - (a.pinned === true));
-
-                notes.forEach(note => {
-                    let pinClass = note.pinned ? "icon-btn pinned" : "icon-btn";
-                    // Note card တစ်ခုလုံးကို နှိပ်လျှင် Edit ပွင့်ရန် onclick ထည့်သွင်းထားသည် (ခလုတ်များကိုမူ e.stopPropagation() ဖြင့် ခွဲထုတ်ထားသည်)
-                    container.innerHTML += `
-                        <div class="note-card" id="card-${note.id}" draggable="true" ondragstart="drag(event)" ondragend="dragEnd(event)" data-id="${note.id}" onclick="openEditModal('${note.id}', '${encodeURIComponent(note.title || '')}', '${encodeURIComponent(note.content || '')}')">
-                            <div>
-                                <div class="note-header">
-                                    <h3 id="display-title-${note.id}">${note.title || "ခေါင်းစဉ်မရှိ"}</h3>
-                                    <div class="card-actions">
-                                        <!-- Pin Icon -->
-                                        <button class="${pinClass}" title="Pin ထောက်ရန်" onclick="event.stopPropagation(); togglePin('${note.id}', ${!note.pinned})">
-                                            <svg viewBox="0 0 24 24"><path d="M16 9V4h1c.55 0 1-.45 1-1s-.45-1-1-1H7c-.55 0-1 .45-1 1s.45 1 1 1h1v5c0 1.66-1.34 3-3 3v2h5.97v7l1 1 1-1v-7H19v-2c-1.66 0-3-1.34-3-3z"/></svg>
-                                        </button>
-                                        <!-- Copy Icon -->
-                                        <button class="icon-btn" title="စာသားကူးရန်" onclick="event.stopPropagation(); copyText('display-content-${note.id}')">
-                                            <svg viewBox="0 0 24 24"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>
-                                        </button>
-                                    </div>
-                                </div>
-                                <p style="white-space: pre-wrap;" id="display-content-${note.id}">${note.content}</p>
-                            </div>
-
-                            <!-- Delete Icon at Bottom Right -->
-                            <button class="icon-btn delete-btn" title="ဖျက်ရန်" onclick="event.stopPropagation(); deleteNote('${note.id}')">
-                                <svg viewBox="0 0 24 24"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg>
-                            </button>
-                        </div>
-                    `;
-                });
+                allNotes = await res.json();
+                renderNotes(allNotes);
             } catch (error) {
                 console.error("Error fetching notes:", error);
                 container.innerHTML = `<div class="loading-status" style="color: #d93025;">မှတ်စုများကို ဆွဲထုတ်ရာတွင် အမှားအယွင်း ရှိနေပါသည်။</div>`;
             }
+        }
+
+        function renderNotes(notesArray) {
+            let container = document.getElementById("notes-container");
+            container.innerHTML = "";
+            
+            if(notesArray.length === 0) {
+                container.innerHTML = `<div class="loading-status">မှတ်စုများ မရှိသေးပါ။</div>`;
+                return;
+            }
+
+            let sortedNotes = [...notesArray].sort((a, b) => (b.pinned === true) - (a.pinned === true));
+
+            sortedNotes.forEach(note => {
+                let pinClass = note.pinned ? "icon-btn pinned" : "icon-btn";
+                container.innerHTML += `
+                    <div class="note-card" id="card-${note.id}" draggable="true" ondragstart="drag(event)" ondragend="dragEnd(event)" data-id="${note.id}" onclick="openEditModal('${note.id}', '${encodeURIComponent(note.title || '')}', '${encodeURIComponent(note.content || '')}')">
+                        <div>
+                            <div class="note-header">
+                                <h3 id="display-title-${note.id}">${note.title || "ခေါင်းစဉ်မရှိ"}</h3>
+                                <div class="card-actions">
+                                    <button class="${pinClass}" title="Pin ထောက်ရန်" onclick="event.stopPropagation(); togglePin('${note.id}', ${!note.pinned})">
+                                        <svg viewBox="0 0 24 24"><path d="M16 9V4h1c.55 0 1-.45 1-1s-.45-1-1-1H7c-.55 0-1 .45-1 1s.45 1 1 1h1v5c0 1.66-1.34 3-3 3v2h5.97v7l1 1 1-1v-7H19v-2c-1.66 0-3-1.34-3-3z"/></svg>
+                                    </button>
+                                    <button class="icon-btn" title="စာသားကူးရန်" onclick="event.stopPropagation(); copyText('display-content-${note.id}')">
+                                        <svg viewBox="0 0 24 24"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>
+                                    </button>
+                                </div>
+                            </div>
+                            <p style="white-space: pre-wrap;" id="display-content-${note.id}">${note.content}</p>
+                        </div>
+                        <button class="icon-btn delete-btn" title="ဖျက်ရန်" onclick="event.stopPropagation(); deleteNote('${note.id}')">
+                            <svg viewBox="0 0 24 24"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg>
+                        </button>
+                    </div>
+                `;
+            });
+        }
+
+        // Space ပါသည်ဖြစ်စေ၊ မပါသည်ဖြစ်စေ ရှာဖွေပေးနိုင်သော Live Search လုပ်ဆောင်ချက်
+        function filterNotes() {
+            let rawQuery = document.getElementById("search-input").value;
+            // Space အားလုံးကို ဖယ်ရှားပြီး စာလုံးအသေး (lowercase) ပြောင်းခြင်း
+            let query = rawQuery.toLowerCase().replace(/\s+/g, '');
+
+            if (!query) {
+                renderNotes(allNotes);
+                return;
+            }
+
+            let filtered = allNotes.filter(note => {
+                let title = (note.title || "").toLowerCase().replace(/\s+/g, '');
+                let content = (note.content || "").toLowerCase().replace(/\s+/g, '');
+                return title.includes(query) || content.includes(query);
+            });
+
+            renderNotes(filtered);
         }
 
         let draggedCard = null;
@@ -269,7 +302,9 @@
                 });
                 let result = await response.json();
                 if(result.status === "success") {
-                    await fetchNotes();
+                    let note = allNotes.find(n => n.id.toString() === id.toString());
+                    if(note) note.pinned = pinStatus;
+                    filterNotes();
                 }
             } catch (error) {
                 console.error("Error pinning note:", error);
@@ -299,6 +334,7 @@
                     document.getElementById("note-content").value = "";
                     showToast("မှတ်စု သိမ်းဆည်းပြီးပါပြီ!");
                     await fetchNotes();
+                    document.getElementById("search-input").value = "";
                 }
             } catch (error) {
                 console.error("Error saving note:", error);
