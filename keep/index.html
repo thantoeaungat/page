@@ -2,26 +2,24 @@
 <html lang="my">
 <head>
     <meta charset="UTF-8">
-    <title>Google Keep Clone - Default Grid View</title>
+    <title>Google Keep Clone - Pin & Drag Sort</title>
     <style>
         body { font-family: Arial, sans-serif; background: #f1f3f4; margin: 0; padding: 20px; }
         
-        /* Header & Layout Switcher */
         .header-bar { max-width: 1200px; margin: auto; display: flex; justify-content: flex-end; margin-bottom: 10px; }
         .layout-btn { background: #fff; border: 1px solid #dadce0; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-size: 13px; font-weight: bold; color: #3c4043; box-shadow: 0 1px 2px rgba(0,0,0,0.05); }
         .layout-btn:hover { background: #f8f9fa; }
 
         .container { max-width: 600px; margin: auto; background: #fff; padding: 15px; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.2); margin-bottom: 30px; position: relative; }
-        input, textarea { width: 100%; border: none; outline: none; margin-bottom: 10px; font-size: 14px; resize: none; font-family: inherit; }
-        input { font-weight: bold; font-size: 16px; }
+        .container input, .container textarea { width: 100%; border: none; outline: none; margin-bottom: 10px; font-size: 14px; resize: none; font-family: inherit; box-sizing: border-box; }
+        .container input { font-weight: bold; font-size: 16px; }
 
-        /* Notes Container Layouts */
         #notes-container { width: 100%; max-width: 1200px; margin: auto; }
         
         .loading-status { text-align: center; color: #5f6368; font-size: 14px; margin: 20px 0; font-style: italic; }
 
         .notes-standard { max-width: 600px !important; }
-        .notes-standard .note-card { background: #fff; border: 1px solid #e0e0e0; border-radius: 8px; padding: 15px; padding-bottom: 40px; margin-bottom: 15px; box-shadow: 0 1px 2px rgba(0,0,0,0.1); position: relative; }
+        .notes-standard .note-card { background: #fff; border: 1px solid #e0e0e0; border-radius: 8px; padding: 15px; padding-bottom: 40px; margin-bottom: 15px; box-shadow: 0 1px 2px rgba(0,0,0,0.1); position: relative; cursor: grab; }
         
         .notes-grid { 
             column-count: 4; 
@@ -41,23 +39,50 @@
             display: inline-block;
             width: 100%;
             box-sizing: border-box;
+            cursor: grab;
         }
+
+        .note-card.dragging { opacity: 0.4; }
 
         .note-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px; border-bottom: 1px solid #f1f3f4; padding-bottom: 8px; }
         .note-header h3 { margin: 0; font-size: 15px; word-break: break-word; flex-grow: 1; padding-right: 5px; }
         
-        /* Icon Button Styles */
-        .card-actions { display: flex; gap: 6px; flex-shrink: 0; }
+        .card-actions { display: flex; gap: 4px; flex-shrink: 0; align-items: center; }
         .icon-btn { background: transparent; border: none; cursor: pointer; padding: 4px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #5f6368; transition: background 0.2s; }
         .icon-btn:hover { background: #f1f3f4; color: #202124; }
         .icon-btn svg { width: 16px; height: 16px; fill: currentColor; }
 
-        /* Delete button at bottom-right corner */
+        /* Active Pin Icon Color */
+        .icon-btn.pinned { color: #1a73e8; }
+
         .delete-btn { position: absolute; bottom: 10px; right: 10px; }
         .delete-btn:hover { color: #d93025; background: #fce8e6; }
         
         .note-card p { font-size: 14px; color: #3c4043; word-break: break-word; margin: 0; }
+
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.5); display: none;
+            justify-content: center; align-items: center; z-index: 1000;
+        }
+        .modal-content {
+            background: #fff; width: 90%; max-width: 600px; padding: 20px;
+            border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.3); position: relative;
+        }
+        .modal-content input, .modal-content textarea {
+            width: 100%; border: none; outline: none; margin-bottom: 10px;
+            font-size: 16px; font-family: inherit; resize: vertical; box-sizing: border-box;
+        }
+        .modal-content input { font-weight: bold; font-size: 18px; border-bottom: 1px solid #f1f3f4; padding-bottom: 8px; }
+        .modal-content textarea { min-height: 150px; }
+        .modal-actions { display: flex; justify-content: flex-end; gap: 10px; margin-top: 15px; }
         
+        .btn-modal { padding: 8px 16px; border-radius: 4px; cursor: pointer; font-size: 13px; font-weight: bold; border: none; }
+        .btn-cancel { background: #f1f3f4; color: #3c4043; }
+        .btn-cancel:hover { background: #e8eaed; }
+        .btn-save { background: #1a73e8; color: #fff; }
+        .btn-save:hover { background: #1557b0; }
+
         .save-btn { background: #fbbc04; border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer; font-size: 13px; font-weight: bold; color: #202124; }
         .save-btn:hover { background: #f9ab00; }
 
@@ -101,16 +126,28 @@
 
         <input type="text" id="note-title" placeholder="ခေါင်းစဉ် (Title)...">
         <textarea id="note-content" placeholder="မှတ်စုအသစ် ရေးရန်..." rows="3"></textarea>
-        <button class="save-btn" onclick="saveNote()">မှတ်စုသိမ်းမည် (Save)</button>
+        <button class="save-btn" onclick="saveNewNote()">မှတ်စုသိမ်းမည် (Save)</button>
     </div>
 
-    <div id="notes-container" class="notes-grid"></div>
+    <div id="notes-container" class="notes-grid" ondragover="allowDrop(event)"></div>
+
+    <div class="modal-overlay" id="edit-modal">
+        <div class="modal-content">
+            <input type="text" id="modal-title" placeholder="ခေါင်းစဉ် (Title)...">
+            <textarea id="modal-content" placeholder="မှတ်စုစာသား..."></textarea>
+            <div class="modal-actions">
+                <button class="btn-modal btn-cancel" onclick="closeEditModal()">မလုပ်တော့ပါ</button>
+                <button class="btn-modal btn-save" onclick="saveModalEdit()">ပြင်ဆင်မည်</button>
+            </div>
+        </div>
+    </div>
+
     <div id="toast">သိမ်းဆည်းပြီးပါပြီ (Saved!)</div>
 
     <script>
         const WEB_APP_URL = "https://script.google.com/macros/s/AKfycby7rQSnnDZu0vO8X1zlf5bqKzVV27L0uYdp1POweZTCgwEXtGJrHrU9h3EhV4pWJp4/exec";
-        let currentEditId = null;
-        let isGridView = true; // Default ကို Grid View အဖြစ်သတ်မှတ်ထားသည်
+        let isGridView = true;
+        let editingNoteId = null;
 
         function toggleLayout() {
             isGridView = !isGridView;
@@ -151,25 +188,34 @@
                     return;
                 }
 
-                notes.reverse().forEach(note => {
+                // Pin ထောက်ထားတာတွေက အပေါ်ဆုံးကို ရောက်အောင် စီစဥ်ခြင်း
+                notes.sort((a, b) => (b.pinned === true) - (a.pinned === true));
+
+                notes.forEach(note => {
+                    let pinClass = note.pinned ? "icon-btn pinned" : "icon-btn";
                     container.innerHTML += `
-                        <div class="note-card">
+                        <div class="note-card" id="card-${note.id}" draggable="true" ondragstart="drag(event)" ondragend="dragEnd(event)" data-id="${note.id}">
                             <div>
                                 <div class="note-header">
-                                    <h3>${note.title || "ခေါင်းစဉ်မရှိ"}</h3>
+                                    <h3 id="display-title-${note.id}">${note.title || "ခေါင်းစဉ်မရှိ"}</h3>
                                     <div class="card-actions">
+                                        <!-- Pin Icon -->
+                                        <button class="${pinClass}" title="Pin ထောက်ရန်" onclick="togglePin('${note.id}', ${!note.pinned})">
+                                            <svg viewBox="0 0 24 24"><path d="M16 9V4h1c.55 0 1-.45 1-1s-.45-1-1-1H7c-.55 0-1 .45-1 1s.45 1 1 1h1v5c0 1.66-1.34 3-3 3v2h5.97v7l1 1 1-1v-7H19v-2c-1.66 0-3-1.34-3-3z"/></svg>
+                                        </button>
                                         <!-- Edit Icon -->
-                                        <button class="icon-btn" title="ပြင်ဆင်ရန်" onclick="editNote('${note.id}', '${encodeURIComponent(note.title)}', '${encodeURIComponent(note.content)}')">
+                                        <button class="icon-btn" title="ပြင်ဆင်ရန်" onclick="openEditModal('${note.id}', '${encodeURIComponent(note.title || '')}', '${encodeURIComponent(note.content || '')}')">
                                             <svg viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
                                         </button>
                                         <!-- Copy Icon -->
-                                        <button class="icon-btn" title="စာသားကူးရန်" onclick="copyText('content-${note.id}')">
+                                        <button class="icon-btn" title="စာသားကူးရန်" onclick="copyText('display-content-${note.id}')">
                                             <svg viewBox="0 0 24 24"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>
                                         </button>
                                     </div>
                                 </div>
-                                <p style="white-space: pre-wrap;" id="content-${note.id}">${note.content}</p>
+                                <p style="white-space: pre-wrap;" id="display-content-${note.id}">${note.content}</p>
                             </div>
+
                             <!-- Delete Icon at Bottom Right -->
                             <button class="icon-btn delete-btn" title="ဖျက်ရန်" onclick="deleteNote('${note.id}')">
                                 <svg viewBox="0 0 24 24"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg>
@@ -183,7 +229,57 @@
             }
         }
 
-        async function saveNote() {
+        // Drag and Drop Functions for Manual Sorting
+        let draggedCard = null;
+        function drag(event) {
+            draggedCard = event.target;
+            event.target.classList.add("dragging");
+        }
+        function dragEnd(event) {
+            event.target.classList.remove("dragging");
+            draggedCard = null;
+        }
+        function allowDrop(event) {
+            event.preventDefault();
+            let container = document.getElementById("notes-container");
+            let afterElement = getDragAfterElement(container, event.clientY);
+            if (draggedCard) {
+                if (afterElement == null) {
+                    container.appendChild(draggedCard);
+                } else {
+                    container.insertBefore(draggedCard, afterElement);
+                }
+            }
+        }
+        function getDragAfterElement(container, y) {
+            let draggableElements = [...container.querySelectorAll('.note-card:not(.dragging)')];
+            return draggableElements.reduce((closest, child) => {
+                let box = child.getBoundingClientRect();
+                let offset = y - box.top - box.height / 2;
+                if (offset < 0 && offset > closest.offset) {
+                    return { offset: offset, element: child };
+                } else {
+                    return closest;
+                }
+            }, { offset: Number.NEGATIVE_INFINITY }).element;
+        }
+
+        async function togglePin(id, pinStatus) {
+            try {
+                let response = await fetch(WEB_APP_URL, {
+                    method: "POST",
+                    body: JSON.stringify({ action: "pin", id: id, pinned: pinStatus })
+                });
+                let result = await response.json();
+                if(result.status === "success") {
+                    await fetchNotes();
+                }
+            } catch (error) {
+                console.error("Error pinning note:", error);
+            }
+        }
+
+        async function saveNewNote() {
             let title = document.getElementById("note-title").value;
             let content = document.getElementById("note-content").value;
             if(!title && !content) {
@@ -192,9 +288,7 @@
             }
 
             toggleLoading(true);
-
-            let action = currentEditId ? "update" : "create";
-            let payload = { action: action, id: currentEditId, title: title, content: content };
+            let payload = { action: "create", title: title, content: content };
 
             try {
                 let response = await fetch(WEB_APP_URL, {
@@ -206,8 +300,6 @@
                 if(result.status === "success") {
                     document.getElementById("note-title").value = "";
                     document.getElementById("note-content").value = "";
-                    currentEditId = null;
-                    
                     showToast("မှတ်စု သိမ်းဆည်းပြီးပါပြီ!");
                     await fetchNotes();
                 }
@@ -216,6 +308,47 @@
                 alert("အမှားအယွင်း ရှိနေပါသည်။ ထပ်မံကြိုးစားပါ။");
             } finally {
                 toggleLoading(false);
+            }
+        }
+
+        function openEditModal(id, title, content) {
+            editingNoteId = id;
+            document.getElementById("modal-title").value = decodeURIComponent(title);
+            document.getElementById("modal-content").value = decodeURIComponent(content);
+            document.getElementById("edit-modal").style.display = "flex";
+        }
+
+        function closeEditModal() {
+            document.getElementById("edit-modal").style.display = "none";
+            editingNoteId = null;
+        }
+
+        async function saveModalEdit() {
+            let title = document.getElementById("modal-title").value;
+            let content = document.getElementById("modal-content").value;
+
+            if(!title && !content) {
+                alert("ခေါင်းစဉ် (သို့) မှတ်စုစာသား အလွတ်ဖြစ်နေ၍မရပါ။");
+                return;
+            }
+
+            let payload = { action: "update", id: editingNoteId, title: title, content: content };
+
+            try {
+                let response = await fetch(WEB_APP_URL, {
+                    method: "POST",
+                    body: JSON.stringify(payload)
+                });
+                let result = await response.json();
+
+                if(result.status === "success") {
+                    closeEditModal();
+                    showToast("ပြင်ဆင်ပြီးပါပြီ!");
+                    await fetchNotes();
+                }
+            } catch (error) {
+                console.error("Error updating note:", error);
+                alert("ပြင်ဆင်ရာတွင် အမှားအယွင်း ရှိနေပါသည်။");
             }
         }
 
@@ -240,13 +373,6 @@
             } finally {
                 toggleLoading(false);
             }
-        }
-
-        function editNote(id, title, content) {
-            currentEditId = id;
-            document.getElementById("note-title").value = decodeURIComponent(title);
-            document.getElementById("note-content").value = decodeURIComponent(content);
-            window.scrollTo({top: 0, behavior: 'smooth'});
         }
 
         function copyText(elementId) {
