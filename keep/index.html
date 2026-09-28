@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="my">
+<head>
+    <meta charset="UTF-8">
+    <title>Google Keep Clone - Default Grid View</title>
+    <style>
+        body { font-family: Arial, sans-serif; background: #f1f3f4; margin: 0; padding: 20px; }
+        
+        /* Header & Layout Switcher */
+        .header-bar { max-width: 1200px; margin: auto; display: flex; justify-content: flex-end; margin-bottom: 10px; }
+        .layout-btn { background: #fff; border: 1px solid #dadce0; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-size: 13px; font-weight: bold; color: #3c4043; box-shadow: 0 1px 2px rgba(0,0,0,0.05); }
+        .layout-btn:hover { background: #f8f9fa; }
+
+        .container { max-width: 600px; margin: auto; background: #fff; padding: 15px; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.2); margin-bottom: 30px; position: relative; }
+        input, textarea { width: 100%; border: none; outline: none; margin-bottom: 10px; font-size: 14px; resize: none; font-family: inherit; }
+        input { font-weight: bold; font-size: 16px; }
+
+        /* Notes Container Layouts */
+        #notes-container { width: 100%; max-width: 1200px; margin: auto; }
+        
+        .loading-status { text-align: center; color: #5f6368; font-size: 14px; margin: 20px 0; font-style: italic; }
+
+        .notes-standard { max-width: 600px !important; }
+        .notes-standard .note-card { background: #fff; border: 1px solid #e0e0e0; border-radius: 8px; padding: 15px; padding-bottom: 40px; margin-bottom: 15px; box-shadow: 0 1px 2px rgba(0,0,0,0.1); position: relative; }
+        
+        .notes-grid { 
+            column-count: 4; 
+            column-gap: 15px; 
+            width: 100%;
+        }
+        .notes-grid .note-card { 
+            background: #fff; 
+            border: 1px solid #e0e0e0; 
+            border-radius: 8px; 
+            padding: 15px; 
+            padding-bottom: 40px;
+            margin-bottom: 15px; 
+            box-shadow: 0 1px 2px rgba(0,0,0,0.1); 
+            position: relative; 
+            break-inside: avoid; 
+            display: inline-block;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .note-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px; border-bottom: 1px solid #f1f3f4; padding-bottom: 8px; }
+        .note-header h3 { margin: 0; font-size: 15px; word-break: break-word; flex-grow: 1; padding-right: 5px; }
+        
+        /* Icon Button Styles */
+        .card-actions { display: flex; gap: 6px; flex-shrink: 0; }
+        .icon-btn { background: transparent; border: none; cursor: pointer; padding: 4px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #5f6368; transition: background 0.2s; }
+        .icon-btn:hover { background: #f1f3f4; color: #202124; }
+        .icon-btn svg { width: 16px; height: 16px; fill: currentColor; }
+
+        /* Delete button at bottom-right corner */
+        .delete-btn { position: absolute; bottom: 10px; right: 10px; }
+        .delete-btn:hover { color: #d93025; background: #fce8e6; }
+        
+        .note-card p { font-size: 14px; color: #3c4043; word-break: break-word; margin: 0; }
+        
+        .save-btn { background: #fbbc04; border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer; font-size: 13px; font-weight: bold; color: #202124; }
+        .save-btn:hover { background: #f9ab00; }
+
+        .loading-overlay {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(255, 255, 255, 0.7); display: none;
+            justify-content: center; align-items: center; border-radius: 8px; z-index: 10;
+        }
+        .spinner {
+            border: 3px solid #f3f3f4; border-top: 3px solid #1a73e8;
+            border-radius: 50%; width: 24px; height: 24px;
+            animation: spin 0.8s linear infinite;
+        }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+        #toast {
+            visibility: hidden; min-width: 200px; background-color: #323232; color: #fff;
+            text-align: center; border-radius: 4px; padding: 10px; position: fixed;
+            z-index: 1000; left: 50%; bottom: 30px; transform: translateX(-50%);
+            font-size: 14px; box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+        }
+        #toast.show { visibility: visible; animation: fadein 0.5s, fadeout 0.5s 2.5s; }
+        @keyframes fadein { from { bottom: 0; opacity: 0; } to { bottom: 30px; opacity: 1; } }
+        @keyframes fadeout { from { bottom: 30px; opacity: 1; } to { bottom: 0; opacity: 0; } }
+
+        @media (max-width: 1024px) { .notes-grid { column-count: 3; } }
+        @media (max-width: 768px) { .notes-grid { column-count: 2; } }
+        @media (max-width: 480px) { .notes-grid { column-count: 1; } }
+    </style>
+</head>
+<body>
+
+    <div class="header-bar">
+        <button class="layout-btn" id="layout-toggle-btn" onclick="toggleLayout()">Standard View သို့ပြောင်းရန်</button>
+    </div>
+
+    <div class="container" id="form-container">
+        <div class="loading-overlay" id="loading-overlay">
+            <div class="spinner"></div>
+        </div>
+
+        <input type="text" id="note-title" placeholder="ခေါင်းစဉ် (Title)...">
+        <textarea id="note-content" placeholder="မှတ်စုအသစ် ရေးရန်..." rows="3"></textarea>
+        <button class="save-btn" onclick="saveNote()">မှတ်စုသိမ်းမည် (Save)</button>
+    </div>
+
+    <div id="notes-container" class="notes-grid"></div>
+    <div id="toast">သိမ်းဆည်းပြီးပါပြီ (Saved!)</div>
+
+    <script>
+        const WEB_APP_URL = "https://script.google.com/macros/s/AKfycby7rQSnnDZu0vO8X1zlf5bqKzVV27L0uYdp1POweZTCgwEXtGJrHrU9h3EhV4pWJp4/exec";
+        let currentEditId = null;
+        let isGridView = true; // Default ကို Grid View အဖြစ်သတ်မှတ်ထားသည်
+
+        function toggleLayout() {
+            isGridView = !isGridView;
+            let container = document.getElementById("notes-container");
+            let btn = document.getElementById("layout-toggle-btn");
+
+            if (isGridView) {
+                container.className = "notes-grid";
+                btn.innerText = "Standard View သို့ပြောင်းရန်";
+            } else {
+                container.className = "notes-standard";
+                btn.innerText = "Grid View သို့ပြောင်းရန်";
+            }
+        }
+
+        function showToast(message) {
+            let toast = document.getElementById("toast");
+            toast.innerText = message;
+            toast.className = "show";
+            setTimeout(() => { toast.className = toast.className.replace("show", ""); }, 3000);
+        }
+
+        function toggleLoading(show) {
+            document.getElementById("loading-overlay").style.display = show ? "flex" : "none";
+        }
+
+        async function fetchNotes() {
+            let container = document.getElementById("notes-container");
+            container.innerHTML = `<div class="loading-status">မှတ်စုများကို ရယူနေပါပြီ... ကျေးဇူးပြု၍ ခဏစောင့်ပါ</div>`;
+
+            try {
+                let res = await fetch(WEB_APP_URL);
+                let notes = await res.json();
+                container.innerHTML = "";
+                
+                if(notes.length === 0) {
+                    container.innerHTML = `<div class="loading-status">မှတ်စုများ မရှိသေးပါ။</div>`;
+                    return;
+                }
+
+                notes.reverse().forEach(note => {
+                    container.innerHTML += `
+                        <div class="note-card">
+                            <div>
+                                <div class="note-header">
+                                    <h3>${note.title || "ခေါင်းစဉ်မရှိ"}</h3>
+                                    <div class="card-actions">
+                                        <!-- Edit Icon -->
+                                        <button class="icon-btn" title="ပြင်ဆင်ရန်" onclick="editNote('${note.id}', '${encodeURIComponent(note.title)}', '${encodeURIComponent(note.content)}')">
+                                            <svg viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
+                                        </button>
+                                        <!-- Copy Icon -->
+                                        <button class="icon-btn" title="စာသားကူးရန်" onclick="copyText('content-${note.id}')">
+                                            <svg viewBox="0 0 24 24"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>
+                                        </button>
+                                    </div>
+                                </div>
+                                <p style="white-space: pre-wrap;" id="content-${note.id}">${note.content}</p>
+                            </div>
+                            <!-- Delete Icon at Bottom Right -->
+                            <button class="icon-btn delete-btn" title="ဖျက်ရန်" onclick="deleteNote('${note.id}')">
+                                <svg viewBox="0 0 24 24"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg>
+                            </button>
+                        </div>
+                    `;
+                });
+            } catch (error) {
+                console.error("Error fetching notes:", error);
+                container.innerHTML = `<div class="loading-status" style="color: #d93025;">မှတ်စုများကို ဆွဲထုတ်ရာတွင် အမှားအယွင်း ရှိနေပါသည်။</div>`;
+            }
+        }
+
+        async function saveNote() {
+            let title = document.getElementById("note-title").value;
+            let content = document.getElementById("note-content").value;
+            if(!title && !content) {
+                alert("ကျေးဇူးပြု၍ ခေါင်းစဉ် (သို့) မှတ်စုစာသား ထည့်ပါ");
+                return;
+            }
+
+            toggleLoading(true);
+
+            let action = currentEditId ? "update" : "create";
+            let payload = { action: action, id: currentEditId, title: title, content: content };
+
+            try {
+                let response = await fetch(WEB_APP_URL, {
+                    method: "POST",
+                    body: JSON.stringify(payload)
+                });
+                let result = await response.json();
+
+                if(result.status === "success") {
+                    document.getElementById("note-title").value = "";
+                    document.getElementById("note-content").value = "";
+                    currentEditId = null;
+                    
+                    showToast("မှတ်စု သိမ်းဆည်းပြီးပါပြီ!");
+                    await fetchNotes();
+                }
+            } catch (error) {
+                console.error("Error saving note:", error);
+                alert("အမှားအယွင်း ရှိနေပါသည်။ ထပ်မံကြိုးစားပါ။");
+            } finally {
+                toggleLoading(false);
+            }
+        }
+
+        async function deleteNote(id) {
+            if(!confirm("ဒီမှတ်စုကို ဖျက်မှာ သေချာပါသလား?")) return;
+
+            toggleLoading(true);
+            try {
+                let response = await fetch(WEB_APP_URL, {
+                    method: "POST",
+                    body: JSON.stringify({ action: "delete", id: id })
+                });
+                let result = await response.json();
+
+                if(result.status === "success") {
+                    showToast("မှတ်စုကို ဖျက်ပြီးပါပြီ!");
+                    await fetchNotes();
+                }
+            } catch (error) {
+                console.error("Error deleting note:", error);
+                alert("ဖျက်ရာတွင် အမှားအယွင်း ရှိနေပါသည်။");
+            } finally {
+                toggleLoading(false);
+            }
+        }
+
+        function editNote(id, title, content) {
+            currentEditId = id;
+            document.getElementById("note-title").value = decodeURIComponent(title);
+            document.getElementById("note-content").value = decodeURIComponent(content);
+            window.scrollTo({top: 0, behavior: 'smooth'});
+        }
+
+        function copyText(elementId) {
+            let text = document.getElementById(elementId).innerText;
+            navigator.clipboard.writeText(text).then(() => {
+                showToast("စာသားများကို ကူးယူပြီးပါပြီ (Copied!)");
+            });
+        }
+
+        fetchNotes();
+    </script>
+</body>
+</html>
