@@ -234,13 +234,11 @@
           <input type="text" id="searchInput" placeholder="🔍 နာမည်/ဖုန်း/ရက်စွဲ/Username ဖြင့် ရှာရန်..." oninput="onFilterChange()">
         </div>
         <div class="filter-group-select">
-          <!-- StatusFilter နှင့် SortOrder ကို Dropdown တစ်ခုတည်းအဖြစ် ပေါင်းစပ်ထားပါသည် -->
           <select id="combinedFilter" onchange="onFilterChange()">
             <option value="all-desc">📌 အသစ်ဆုံး အပေါ်ထားမည်</option>
             <option value="all-asc">📌 အဟောင်းဆုံး အပေါ်ထားမည်</option>
             <option value="pending-desc">⏳ မပို့ရသေးသည်များ</option>
             <option value="delivered-desc">✅ ပို့ပြီးသည်များ</option>
-
           </select>
         </div>
       </div>
@@ -281,14 +279,12 @@
   </div>
 
   <script>
-    // သင့်ကိုယ်ပိုင် Web App URL ကို ဒီမှာ ပြောင်းထည့်ပေးပါ 
     const API_URL = "https://script.google.com/macros/s/AKfycbww5K_aj0P2WSjnZqtgfsqR1Mf7bCwQLlQBuxV8swmFRwHIvxUEdrQy6VonmKmM1_EC/exec";
     let ordersData = [];
     let filteredData = [];
     let currentPage = 1;
     const rowsPerPage = 20;
 
-    // Loading Helper Functions
     function showLoader(text = "လုပ်ဆောင်နေပါသည်...") {
       document.getElementById('loader-text').innerText = text;
       document.getElementById('global-loader').style.display = 'flex';
@@ -310,7 +306,6 @@
       }
     };
 
-    // Login Handler
     document.getElementById('loginForm').addEventListener('submit', function(e) {
       e.preventDefault();
       const user = document.getElementById('loginUser').value;
@@ -368,7 +363,6 @@
       }
     }
 
-    // Order Submit Handler
     document.getElementById('orderForm').addEventListener('submit', async function(e) {
       e.preventDefault();
       const btn = document.getElementById('submitBtn');
@@ -388,7 +382,6 @@
         fileData = await convertFileToBase64(file);
       }
 
-      // Username တည်ဆောက်ခြင်း (Platform + Username)
       const rawUser = document.getElementById('username').value.trim();
       const platform = document.getElementById('socialPlatform').value;
       const finalUsername = rawUser ? (platform + rawUser) : "";
@@ -418,6 +411,10 @@
       .then(data => {
         hideLoader();
         btn.disabled = false;
+        
+        // Data အသစ်ပြောင်းလဲသွားပြီဖြစ်므로 Cache ကို ရှင်းထုတ်ပါ
+        localStorage.removeItem('cachedOrdersData');
+
         alert(isEdit ? "Order စာရင်း ပြင်ဆင်ပြီးပါပြီ!" : "Order အသစ် သိမ်းဆည်းပြီးပါပြီ!");
         resetForm();
         switchTab('list-tab');
@@ -438,49 +435,63 @@
       });
     }
 
-    // Load Orders
+    // LocalStorage Cache စနစ်ဖြင့် Order များ ဆွဲယူခြင်း
     function loadOrders() {
       const tbody = document.getElementById('orderTableBody');
       const mobileContainer = document.getElementById('mobileCardsContainer');
       const refreshBtn = document.getElementById('refreshBtn');
 
+      // LocalStorage ထဲတွင် Cache လုပ်ထားသော Data ရှိမရှိ စစ်ဆေးခြင်း
+      const cachedData = localStorage.getItem('cachedOrdersData');
+      if (cachedData) {
+        try {
+          ordersData = JSON.parse(cachedData);
+          onFilterChange(); // Cache ထဲမှ ဒေတာဖြင့် မျက်နှာပြင်ကို ချက်ချင်းပြသပေးမည် (Load Speed မြန်စေရန်)
+        } catch (e) {
+          console.error("Cache parsing error", e);
+        }
+      } else {
+        tbody.innerHTML = `
+          <tr>
+            <td colspan="9" style="text-align:center; padding: 25px;">
+              <div class="inline-spinner"></div>
+              <div style="color: #666; font-weight: bold;">Google Sheets မှ စာရင်းဆွဲယူနေပါသည်...</div>
+            </td>
+          </tr>`;
+        mobileContainer.innerHTML = `
+          <div style="text-align:center; padding: 25px;">
+            <div class="inline-spinner"></div>
+            <div style="color: #666; font-weight: bold;">စာရင်းဆွဲယူနေပါသည်...</div>
+          </div>`;
+      }
+
       if (refreshBtn) refreshBtn.disabled = true;
 
-      tbody.innerHTML = `
-        <tr>
-          <td colspan="9" style="text-align:center; padding: 25px;">
-            <div class="inline-spinner"></div>
-            <div style="color: #666; font-weight: bold;">Google Sheets မှ စာရင်းဆွဲယူနေပါသည်...</div>
-          </td>
-        </tr>`;
-
-      mobileContainer.innerHTML = `
-        <div style="text-align:center; padding: 25px;">
-          <div class="inline-spinner"></div>
-          <div style="color: #666; font-weight: bold;">စာရင်းဆွဲယူနေပါသည်...</div>
-        </div>`;
-
+      // နောက်ကွယ်တွင် Google Sheets မှ ဒေတာအသစ် လှမ်းဆွဲခြင်း
       fetch(API_URL)
         .then(res => res.json())
         .then(data => {
           ordersData = data || [];
+          // ရလာသည့် ဒေတာအသစ်ကို LocalStorage တွင် Cache ပြန်လုပ်ပါ
+          localStorage.setItem('cachedOrdersData', JSON.stringify(ordersData));
+
           if (refreshBtn) refreshBtn.disabled = false;
           onFilterChange();
         })
         .catch(err => {
           if (refreshBtn) refreshBtn.disabled = false;
-          tbody.innerHTML = '<tr><td colspan="9" style="text-align:center; color: red;">စာရင်းဆွဲယူ၍ မရပါ။ Refresh ပြန်လုပ်ကြည့်ပါ။</td></tr>';
-          mobileContainer.innerHTML = '<div style="text-align:center; padding: 20px; color: red;">စာရင်းဆွဲယူ၍ မရပါ။</div>';
+          if (!cachedData) {
+            tbody.innerHTML = '<tr><td colspan="9" style="text-align:center; color: red;">စာရင်းဆွဲယူ၍ မရပါ။ Refresh ပြန်လုပ်ကြည့်ပါ။</td></tr>';
+            mobileContainer.innerHTML = '<div style="text-align:center; padding: 20px; color: red;">စာရင်းဆွဲယူ၍ မရပါ။</div>';
+          }
         });
     }
 
-    // Filter, Search & Combined Dropdown Handler
     function onFilterChange() {
       const searchTerm = document.getElementById('searchInput').value.toLowerCase();
       const combinedVal = document.getElementById('combinedFilter').value;
       const [statusKey, sortOrder] = combinedVal.split('-');
 
-      // ၁။ Search & Status Filter
       filteredData = ordersData.filter(item => {
         const nameMatch = item.name && item.name.toLowerCase().includes(searchTerm);
         const phoneMatch = item.phone && item.phone.toString().includes(searchTerm);
@@ -498,7 +509,6 @@
         return matchesSearch && matchesStatus;
       });
 
-      // စုစုပေါင်း Counter များပြသပေးခြင်း
       const total = ordersData.length;
       const delivered = ordersData.filter(item => item.status === 'ပို့ပြီး').length;
       const pending = ordersData.filter(item => item.status === 'မပို့ရသေး').length;
@@ -507,7 +517,6 @@
       document.getElementById('deliveredCount').innerText = delivered;
       document.getElementById('pendingCount').innerText = pending;
 
-      // ၂။ Sorting (အသစ်ဆုံး/အဟောင်းဆုံး)
       if (sortOrder === 'desc') {
         filteredData.reverse();
       }
@@ -516,7 +525,6 @@
       renderViews();
     }
 
-    // Render Views
     function renderViews() {
       const tbody = document.getElementById('orderTableBody');
       const mobileContainer = document.getElementById('mobileCardsContainer');
@@ -544,7 +552,6 @@
           ? `<a href="${item.voucherLink}" target="_blank" style="color:#007bff;font-weight:bold;">ကြည့်ရန်</a>` 
           : '-';
 
-        // Username Link
         let userDisplay = item.username || '-';
         if (item.username && item.username !== '-') {
           let url = item.username.trim();
@@ -698,6 +705,10 @@
       .then(res => res.json())
       .then(data => {
         hideLoader();
+        
+        // ဖျက်လိုက်သည့်အခါ Cache ကို ရှင်းထုတ်ပါ
+        localStorage.removeItem('cachedOrdersData');
+
         alert("Order ဖျက်ပြီးပါပြီ!");
         loadOrders();
       })
