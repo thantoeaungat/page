@@ -255,7 +255,6 @@
     function checkLogin() { 
         let user = document.getElementById('username').value;
         let pass = document.getElementById('password').value;
-        // ဤနေရာတွင် admin နှင့် 12345 အစား မိမိစိတ်ကြိုက် Username နှင့် Password ပြောင်းလဲနိုင်ပါသည်။
         if (user === 'tta' && pass === '221122') { 
             sessionStorage.setItem('isLoggedIn', 'true'); checkAuth(); 
         } else { 
@@ -272,50 +271,69 @@
         if(tabName === 'add' && document.getElementById('actionType').value !== 'edit') resetForm();
     }
 
-    // ဈေးနှုန်း (Price) ကို ဂဏန်း ၃ လုံးတစ်ဖြတ် ကော်မာ ဖြင့် ဖော်ပြပေးမည့် Helper Function
     function formatPrice(val) {
         if (!val) return '';
         let text = val.toString().trim();
-        
-        // ဖျက်မည့် စာသားဟောင်းများ (Ks, MMK, ကျပ်) ကို ဖယ်ရှားမည်
         text = text.replace(/(ks|mmk|ကျပ်)/gi, '').trim();
-        // ကော်မာ (,) များကို ရှင်းလင်းမည်
         text = text.replace(/,/g, '');
-        
-        // ဂဏန်းများကိုရှာ၍ ၃ လုံးဖြတ် ကော်မာ (,) ထည့်မည်
         text = text.replace(/\d+/g, function(match) {
             return Number(match).toLocaleString();
         });
-        
-        // ဂဏန်းပါဝင်ပါက နောက်ဆုံးတွင် ' ကျပ်' ဟု ထည့်မည်
         if (/\d/.test(text)) {
             text += ' ကျပ်';
         }
         return text;
     }
 
-    // Price Input Auto Format as User Types
     document.getElementById('price').addEventListener('input', function(e) {
         let val = this.value.replace(/,/g, '');
-        // ကိန်းဂဏန်းစစ်စစ် ဖြစ်မှသာ အလိုအလျောက် ကော်မာထည့်ပေးမည်
         if (/^\d+$/.test(val)) {
             this.value = Number(val).toLocaleString();
         }
     });
 
-    // Main Data Loader
+    // --- Optimized Data Loader with Cache & Background Fetch ---
     function loadData() {
-        showLoader("Data များကို ဆွဲယူနေပါသည်...");
+        let cachedRecords = localStorage.getItem('cached_records');
+        let cachedBrands = localStorage.getItem('cached_brands');
+
+        // ၁။ Local Cache ထဲမှာ Data ရှိနေရင် ချက်ချင်းပြပေးမည် (Speed အလွန်မြန်စေရန်)
+        if (cachedRecords && cachedBrands) {
+            globalRecords = JSON.parse(cachedRecords);
+            globalBrands = JSON.parse(cachedBrands);
+            renderBrandsUI();
+            filterRecords();
+            hideLoader(); // Loader ကို ချက်ချင်းပိတ်ပေးမည်
+        } else {
+            showLoader("Data များကို ဆွဲယူနေပါသည်...");
+        }
+
+        // ၂။ နောက်ကွယ် (Background) မှာ Google Sheets ကနေ Data အသစ်ကို ယူပြီး Update လုပ်မည်
         fetch(API_URL)
             .then(res => res.json())
             .then(data => {
+                localStorage.setItem('cached_records', JSON.stringify(data.records));
+                localStorage.setItem('cached_brands', JSON.stringify(data.brands));
+
                 globalRecords = data.records; 
                 globalBrands = data.brands;
                 renderBrandsUI();
                 filterRecords();
                 hideLoader();
             })
-            .catch(err => { hideLoader(); customAlert("Error", "Data ဆွဲယူရာတွင် Error ဖြစ်နေပါသည်။"); });
+            .catch(err => { 
+                hideLoader(); 
+                if (!cachedRecords) {
+                    customAlert("Error", "Data ဆွဲယူရာတွင် Error ဖြစ်နေပါသည်။"); 
+                }
+            });
+    }
+
+    // Cache ကို ရှင်းလင်းပေးမည့် Function (Data အသစ်ထည့်/ပြင်/ဖျက် ပြီးတိုင်း သုံးရန်)
+    function clearCacheAndReload() {
+        localStorage.removeItem('cached_records');
+        localStorage.removeItem('cached_brands');
+        loadData();
     }
 
     // Render Brands
@@ -379,7 +397,6 @@
         let html = '';
         filtered.forEach(row => {
             if (row.ID) {
-                // ဒီနေရာမှာ row.Price ကို formatPrice() သုံးပြီး ဈေးနှုန်းအလှပြပေးထားပါတယ်
                 html += `
                     <div class="card">
                         ${row.Price ? `<span class="price-badge">${formatPrice(row.Price)}</span>` : ''}
@@ -426,7 +443,6 @@
         formData.append('Mode_Method', document.getElementById('mode').value);
         formData.append('Remark', document.getElementById('remark').value);
         
-        // သိမ်းသည့်အခါ ကော်မာများဖြုတ်၍ မူရင်းအတိုင်း သိမ်းမည်
         let rawPrice = document.getElementById('price').value.replace(/,/g, '');
         formData.append('Price', rawPrice); 
         
@@ -434,7 +450,9 @@
         formData.append('base64Data', base64Data); formData.append('mimeType', mimeType); formData.append('fileName', fileName);
 
         fetch(API_URL, { method: 'POST', body: formData }).then(res => res.json()).then(res => {
-            resetForm(); loadData(); switchTab('view');
+            resetForm(); 
+            clearCacheAndReload(); // Cache များကို ရှင်းလင်းပြီး Data အသစ်ပြန်ဆွဲမည်
+            switchTab('view');
         });
     }
 
@@ -448,7 +466,6 @@
         document.getElementById('mode').value = mode !== 'undefined' ? mode : '';
         document.getElementById('remark').value = remark !== 'undefined' ? remark : '';
         
-        // ပြင်မည့်အကွက်ထဲတွင် ကော်မာလေးတွေ ပြန်ပေါ်အောင် ထည့်ပေးမည်
         let editPrice = price !== 'undefined' ? price : '';
         if (/^\d+$/.test(editPrice)) { editPrice = Number(editPrice).toLocaleString(); }
         document.getElementById('price').value = editPrice;
@@ -462,7 +479,9 @@
         customConfirm("ဖျက်ရန် သေချာပါသလား?", "ဤမှတ်တမ်းကို ဖျက်လိုက်ပါက ပြန်လည်ရယူနိုင်မည် မဟုတ်ပါ။", function() {
             showLoader("မှတ်တမ်းကို ဖျက်နေပါသည်...");
             let formData = new URLSearchParams(); formData.append('action', 'delete'); formData.append('id', id);
-            fetch(API_URL, { method: 'POST', body: formData }).then(res => res.json()).then(res => loadData());
+            fetch(API_URL, { method: 'POST', body: formData }).then(res => res.json()).then(res => {
+                clearCacheAndReload(); // Cache များကို ရှင်းလင်းပြီး Data အသစ်ပြန်ဆွဲမည်
+            });
         });
     }
 
@@ -486,7 +505,7 @@
         let formData = new URLSearchParams(); formData.append('action', 'add_brand'); formData.append('brandName', newBrand);
         fetch(API_URL, { method: 'POST', body: formData }).then(res => res.json()).then(res => {
             document.getElementById('newBrandInput').value = '';
-            loadData(); 
+            clearCacheAndReload(); 
         });
     }
 
@@ -496,7 +515,7 @@
             let formData = new URLSearchParams(); formData.append('action', 'delete_brand'); formData.append('brandName', brandName);
             fetch(API_URL, { method: 'POST', body: formData }).then(res => res.json()).then(res => {
                 if(activeBrandFilter === brandName) activeBrandFilter = 'All';
-                loadData(); 
+                clearCacheAndReload(); 
             });
         });
     }
