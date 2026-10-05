@@ -1,42 +1,202 @@
 <!DOCTYPE html>
-<html lang="my">
-
+<html lang="my" class="h-full">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    <!-- Primary SEO Meta Tags -->
-    <title>TCF China FRP Tool | TTA China FRP & Temp Root Tool for Xiaomi</title>
-    <meta name="title" content="TCF China FRP Tool | TTA China FRP & Temp Root Tool for Xiaomi">
-    <meta name="description" content="Download TCF China FRP Tool (TTA China FRP Tool) for Xiaomi, Redmi, and POCO China devices. Easy FRP Bypass, Temp Root, and USB Debugging guide.">
-    <meta name="keywords" content="TCF China FRP Tool, TTA China FRP Tool, TCF Tool, TTA Tool, Xiaomi FRP Tool, Redmi FRP Bypass, TCF V1.4.3.2, Xiaomi Temp Root">
-    <meta name="author" content="TTA GSM">
-    <meta name="robots" content="index, follow">
-    <link rel="canonical" href="https://ttamig3.com/ttacn/">
+    <title>TCF China FRP Tool - Support Model List</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts Inter & Pyidaungsu Support -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 min-h-full flex flex-col text-slate-800">
 
-    <!-- Open Graph / Facebook / Telegram SEO Meta Tags -->
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://ttamig3.com/ttacn/">
-    <meta property="og:title" content="TCF China FRP Tool | TTA China FRP & Temp Root Tool">
-    <meta property="og:description" content="Download TCF China FRP Tool for Xiaomi / Redmi China Devices. Fast FRP removal & Temp Root support.">
-    <meta property="og:image" content="https://ttamig3.com/ttacn/Screenshot.png">
+    <header class="bg-gradient-to-r from-violet-600 via-indigo-600 to-blue-600 text-white shadow-lg">
+        <div class="max-w-6xl mx-auto px-4 py-8 md:py-12 flex flex-col md:flex-row items-center justify-between gap-6">
+            <div class="text-center md:text-left">
+                <span class="inline-block bg-white/20 text-white text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wider mb-2 backdrop-blur-sm">Official Database</span>
+                <h1 class="text-3xl md:text-4xl font-extrabold tracking-tight">TCF China FRP Tool</h1>
+                <p class="text-indigo-100 mt-1 text-sm md:text-base max-w-xl">Google Sheet ဒေတာဘေ့စ်ကို အခြေခံထားသော Support Model များစာရင်းနှင့် စစ်ဆေးပြီးသား အချက်အလက်များ</p>
+            </div>
+            <div class="flex items-center gap-3">
+                <button onclick="fetchData()" class="bg-white/10 hover:bg-white/20 transition text-white px-4 py-2.5 rounded-xl font-medium text-sm flex items-center gap-2 border border-white/20 backdrop-blur-sm shadow-sm">
+                    <svg class="w-4 h-4 animate-spin-slow" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
+                    ဒေတာပြန်ဆွဲမည် (Refresh)
+                </button>
+            </div>
+        </div>
+    </header>
 
-    <!-- Twitter SEO Meta Tags -->
-    <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="https://ttamig3.com/ttacn/">
-    <meta property="twitter:title" content="TCF China FRP Tool | TTA China FRP Tool">
-    <meta property="twitter:description" content="Download TCF China FRP Tool for Xiaomi / Redmi China Devices. Fast FRP removal & Temp Root support.">
-    <meta property="twitter:image" content="https://ttamig3.com/ttacn/Screenshot.png">
+    <main class="max-w-6xl mx-auto px-4 -mt-6 mb-12 flex-grow w-full">
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
+            <!-- Total Models Card -->
+            <div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-100 flex items-center justify-between">
+                <div>
+                    <p class="text-xs font-semibold uppercase tracking-wider text-slate-400">Total Models</p>
+                    <h3 id="totalCount" class="text-2xl font-bold text-slate-700 mt-1">0</h3>
+                </div>
+                <div class="w-12 h-12 rounded-xl bg-violet-50 text-violet-600 flex items-center justify-center font-bold text-lg">
+                    📱
+                </div>
+            </div>
+            <!-- Tested Models Card -->
+            <div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-100 flex items-center justify-between">
+                <div>
+                    <p class="text-xs font-semibold uppercase tracking-wider text-slate-400">Tested & Verified</p>
+                    <h3 id="testedCount" class="text-2xl font-bold text-emerald-600 mt-1">0</h3>
+                </div>
+                <div class="w-12 h-12 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center font-bold text-lg">
+                    ✅
+                </div>
+            </div>
+            <!-- Not Tested Card -->
+            <div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-100 flex items-center justify-between">
+                <div>
+                    <p class="text-xs font-semibold uppercase tracking-wider text-slate-400">Not Tested</p>
+                    <h3 id="notTestedCount" class="text-2xl font-bold text-amber-600 mt-1">0</h3>
+                </div>
+                <div class="w-12 h-12 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center font-bold text-lg">
+                    ⏳
+                </div>
+            </div>
+        </div>
 
-    <!-- Schema.org Structured Data for Google Search -->
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "SoftwareApplication",
-      "name": "TCF China FRP Tool",
-      "alternateName": ["TTA China FRP Tool", "TCF FRP Tool", "TCF Tool"],
-      "operatingSystem": "Windows",
-      "applicationCategory": "UtilitiesApplication",
-      "softwareVersion": "1.4.3.2",
-      "offers": {
-        "@type": "Offer
+        <div class="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
+            <div class="p-5 border-b border-slate-100 flex flex-col md:flex-row gap-4 items-center justify-between">
+                <div class="relative w-full md:w-96">
+                    <span class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none text-slate-400">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                    </span>
+                    <input type="text" id="searchInput" onkeyup="filterTable()" placeholder="Model, ရွေးချယ်ရန် သို့မဟုတ် OS Version ဖြင့် ရှာရန်..." class="w-full pl-10 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:bg-white transition">
+                </div>
+                <div class="text-sm text-slate-500 font-medium">
+                    ပြသနေသည်: <span id="displayCount" class="font-bold text-indigo-600">0</span> ခု
+                </div>
+            </div>
+
+            <div class="overflow-x-auto">
+                <table class="w-full text-left border-collapse">
+                    <thead>
+                        <tr class="bg-slate-50 text-slate-500 text-xs uppercase tracking-wider border-b border-slate-100">
+                            <th class="py-4 px-6 font-semibold">Model</th>
+                            <th class="py-4 px-6 font-semibold">ရွေးချယ်ရန်</th>
+                            <th class="py-4 px-6 font-semibold">OS Version</th>
+                            <th class="py-4 px-6 font-semibold text-center">Tested or Not</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tableBody" class="divide-y divide-slate-100 text-sm">
+                        <tr>
+                            <td colspan="4" class="text-center py-12 text-slate-400">
+                                <div class="flex flex-col items-center justify-center gap-2">
+                                    <svg class="w-8 h-8 animate-spin text-indigo-500" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path></svg>
+                                    <span>ဒေတာများကို ဆွဲယူနေပါသည်... ခေတ္တစောင့်ဆိုင်းပေးပါ။</span>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+
+    <footer class="bg-white border-t border-slate-100 py-6 text-center text-xs text-slate-400 mt-auto">
+        <p>© 2026 TCF China FRP Tool Support Model Database. Powered by Google Apps Script & Tailwind CSS.</p>
+    </footer>
+
+    <script>
+        const webAppUrl = "https://script.google.com/macros/s/AKfycbz3tPq1jmoYr_sVrgl_Bv7RmBC_ble0t3_2or5Rc2VOLapm3Lg5TE1DOrqBvn5-SBUb/exec";
+        window.allData = [];
+
+        async function fetchData() {
+            const tbody = document.getElementById('tableBody');
+            tbody.innerHTML = `<tr><td colspan="4" class="text-center py-12 text-slate-400"><div class="flex flex-col items-center justify-center gap-2"><svg class="w-8 h-8 animate-spin text-indigo-500" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path></svg><span>ဒေတာများကို ဆွဲယူနေပါသည်...</span></div></td></tr>`;
+
+            try {
+                const response = await fetch(webAppUrl);
+                const data = await response.json();
+                window.allData = data;
+                updateStats(data);
+                displayTable(data);
+            } catch (error) {
+                console.error("Error fetching data:", error);
+                tbody.innerHTML = `<tr><td colspan="4" class="text-center py-12 text-rose-500 font-medium">ဒေတာများကို ဆွဲယူ၍ မရပါ။ ကျေးဇူးပြု၍ လင့်ခ် သို့မဟုတ် Google Sheet ချိတ်ဆက်မှုကို ပြန်လည်စစ်ဆေးပါ။</td></tr>`;
+            }
+        }
+
+        function updateStats(data) {
+            const total = data.length;
+            let tested = 0;
+            let notTested = 0;
+
+            data.forEach(item => {
+                const status = item.tested ? item.tested.toString().trim().toLowerCase() : "";
+                if (status === 'tested' || status === 'yes' || status === 'true') {
+                    tested++;
+                } else {
+                    notTested++;
+                }
+            });
+
+            document.getElementById('totalCount').innerText = total;
+            document.getElementById('testedCount').innerText = tested;
+            document.getElementById('notTestedCount').innerText = notTested;
+        }
+
+        function displayTable(data) {
+            const tbody = document.getElementById('tableBody');
+            document.getElementById('displayCount').innerText = data.length;
+            tbody.innerHTML = "";
+
+            if (data.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="4" class="text-center py-12 text-slate-400 font-medium">ရှာမတွေ့ပါ (သို့မဟုတ်) စာရင်း မရှိသေးပါ။</td></tr>`;
+                return;
+            }
+
+            data.forEach(item => {
+                const tr = document.createElement('tr');
+                tr.className = "hover:bg-slate-50/80 transition duration-150";
+                
+                let testedVal = item.tested ? item.tested.toString().trim() : "";
+                let testedLower = testedVal.toLowerCase();
+                let testedBadge = `<span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-slate-100 text-slate-600">${testedVal || 'N/A'}</span>`;
+                
+                if(testedLower === 'tested' || testedLower === 'yes' || testedLower === 'true') {
+                    testedBadge = `<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200/60"><span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>Tested</span>`;
+                } else if(testedLower === 'not tested' || testedLower === 'no' || testedLower === 'false') {
+                    testedBadge = `<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-amber-50 text-amber-700 border border-amber-200/60"><span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span>Not Tested</span>`;
+                }
+
+                tr.innerHTML = `
+                    <td class="py-4 px-6 font-semibold text-slate-700">${item.model || ''}</td>
+                    <td class="py-4 px-6 text-slate-600">${item.selection || ''}</td>
+                    <td class="py-4 px-6 text-slate-600 font-mono text-xs"><span class="bg-slate-100 px-2 py-1 rounded">${item.osVersion || ''}</span></td>
+                    <td class="py-4 px-6 text-center">${testedBadge}</td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function filterTable() {
+            const query = document.getElementById('searchInput').value.toLowerCase();
+            if (!window.allData) return;
+            
+            const filtered = window.allData.filter(item => {
+                const model = item.model ? item.model.toLowerCase() : "";
+                const selection = item.selection ? item.selection.toLowerCase() : "";
+                const osVersion = item.osVersion ? item.osVersion.toLowerCase() : "";
+                
+                return model.includes(query) || selection.includes(query) || osVersion.includes(query);
+            });
+            displayTable(filtered);
+        }
+
+        // Initialize on load
+        fetchData();
+    </script>
+</body>
+</html>
