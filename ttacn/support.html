@@ -6,7 +6,7 @@
     <title>TCF China FRP Tool - Support Model List</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Google Fonts Inter & Pyidaungsu Support -->
+    <!-- Google Fonts Plus Jakarta Sans -->
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         body {
@@ -17,69 +17,69 @@
 <body class="bg-slate-50 min-h-full flex flex-col text-slate-800">
 
     <header class="bg-gradient-to-r from-violet-600 via-indigo-600 to-blue-600 text-white shadow-lg">
-        <div class="max-w-6xl mx-auto px-4 py-8 md:py-12 flex flex-col md:flex-row items-center justify-between gap-6">
+        <div class="max-w-6xl mx-auto px-4 py-6 md:py-10 flex flex-col md:flex-row items-center justify-between gap-4">
             <div class="text-center md:text-left">
                 <span class="inline-block bg-white/20 text-white text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wider mb-2 backdrop-blur-sm">Official Database</span>
-                <h1 class="text-3xl md:text-4xl font-extrabold tracking-tight">TCF China FRP Tool</h1>
-                <p class="text-indigo-100 mt-1 text-sm md:text-base max-w-xl">Google Sheet ဒေတာဘေ့စ်ကို အခြေခံထားသော Support Model များစာရင်းနှင့် စစ်ဆေးပြီးသား အချက်အလက်များ</p>
+                <h1 class="text-2xl md:text-4xl font-extrabold tracking-tight">TCF China FRP Tool</h1>
+                <p class="text-indigo-100 mt-1 text-xs md:text-base max-w-xl">Google Sheet ဒေတာဘေ့စ်ကို အခြေခံထားသော Support Model များစာရင်း (Mobile & Desktop Compatible)</p>
             </div>
             <div class="flex items-center gap-3">
-                <button onclick="fetchData()" class="bg-white/10 hover:bg-white/20 transition text-white px-4 py-2.5 rounded-xl font-medium text-sm flex items-center gap-2 border border-white/20 backdrop-blur-sm shadow-sm">
-                    <svg class="w-4 h-4 animate-spin-slow" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
-                    ဒေတာပြန်ဆွဲမည် (Refresh)
+                <button onclick="fetchData()" class="bg-white/10 hover:bg-white/20 transition text-white px-4 py-2.5 rounded-xl font-medium text-xs md:text-sm flex items-center gap-2 border border-white/20 backdrop-blur-sm shadow-sm active:scale-95">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
+                    ဒေတာပြန်ဆွဲမည်
                 </button>
             </div>
         </div>
     </header>
 
-    <main class="max-w-6xl mx-auto px-4 -mt-6 mb-12 flex-grow w-full">
-        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
-            <!-- Total Models Card -->
-            <div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-100 flex items-center justify-between">
+    <main class="max-w-6xl mx-auto px-4 -mt-4 md:-mt-6 mb-12 flex-grow w-full">
+        <!-- Stats Grid -->
+        <div class="grid grid-cols-3 gap-2 md:gap-4 mb-6">
+            <div class="bg-white rounded-xl md:rounded-2xl p-3 md:p-5 shadow-sm border border-slate-100 flex flex-col md:flex-row items-center justify-between text-center md:text-left">
                 <div>
-                    <p class="text-xs font-semibold uppercase tracking-wider text-slate-400">Total Models</p>
-                    <h3 id="totalCount" class="text-2xl font-bold text-slate-700 mt-1">0</h3>
+                    <p class="text-[10px] md:text-xs font-semibold uppercase tracking-wider text-slate-400">Total</p>
+                    <h3 id="totalCount" class="text-lg md:text-2xl font-bold text-slate-700 mt-0.5">0</h3>
                 </div>
-                <div class="w-12 h-12 rounded-xl bg-violet-50 text-violet-600 flex items-center justify-center font-bold text-lg">
-                    📱
-                </div>
+                <div class="hidden md:flex w-12 h-12 rounded-xl bg-violet-50 text-violet-600 items-center justify-center font-bold text-lg">📱</div>
             </div>
-            <!-- Tested Models Card -->
-            <div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-100 flex items-center justify-between">
+            <div class="bg-white rounded-xl md:rounded-2xl p-3 md:p-5 shadow-sm border border-slate-100 flex flex-col md:flex-row items-center justify-between text-center md:text-left">
                 <div>
-                    <p class="text-xs font-semibold uppercase tracking-wider text-slate-400">Tested & Verified</p>
-                    <h3 id="testedCount" class="text-2xl font-bold text-emerald-600 mt-1">0</h3>
+                    <p class="text-[10px] md:text-xs font-semibold uppercase tracking-wider text-slate-400">Tested</p>
+                    <h3 id="testedCount" class="text-lg md:text-2xl font-bold text-emerald-600 mt-0.5">0</h3>
                 </div>
-                <div class="w-12 h-12 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center font-bold text-lg">
-                    ✅
-                </div>
+                <div class="hidden md:flex w-12 h-12 rounded-xl bg-emerald-50 text-emerald-600 items-center justify-center font-bold text-lg">✅</div>
             </div>
-            <!-- Not Tested Card -->
-            <div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-100 flex items-center justify-between">
+            <div class="bg-white rounded-xl md:rounded-2xl p-3 md:p-5 shadow-sm border border-slate-100 flex flex-col md:flex-row items-center justify-between text-center md:text-left">
                 <div>
-                    <p class="text-xs font-semibold uppercase tracking-wider text-slate-400">Not Tested</p>
-                    <h3 id="notTestedCount" class="text-2xl font-bold text-amber-600 mt-1">0</h3>
+                    <p class="text-[10px] md:text-xs font-semibold uppercase tracking-wider text-slate-400">Not Tested</p>
+                    <h3 id="notTestedCount" class="text-lg md:text-2xl font-bold text-amber-600 mt-0.5">0</h3>
                 </div>
-                <div class="w-12 h-12 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center font-bold text-lg">
-                    ⏳
-                </div>
+                <div class="hidden md:flex w-12 h-12 rounded-xl bg-amber-50 text-amber-600 items-center justify-center font-bold text-lg">⏳</div>
             </div>
         </div>
 
+        <!-- Main Content Box -->
         <div class="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
-            <div class="p-5 border-b border-slate-100 flex flex-col md:flex-row gap-4 items-center justify-between">
-                <div class="relative w-full md:w-96">
+            <!-- Search & Info Bar -->
+            <div class="p-4 md:p-5 border-b border-slate-100 flex flex-col sm:flex-row gap-4 items-center justify-between">
+                <div class="relative w-full sm:w-96">
                     <span class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none text-slate-400">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
                     </span>
-                    <input type="text" id="searchInput" onkeyup="filterTable()" placeholder="Model, ရွေးချယ်ရန် သို့မဟုတ် OS Version ဖြင့် ရှာရန်..." class="w-full pl-10 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:bg-white transition">
+                    <input type="text" id="searchInput" onkeyup="filterTable()" placeholder="Model, အမျိုးအစား သို့မဟုတ် OS ဖြင့် ရှာရန်..." class="w-full pl-10 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:bg-white transition">
                 </div>
-                <div class="text-sm text-slate-500 font-medium">
+                <div class="text-xs md:text-sm text-slate-500 font-medium self-end sm:self-center">
                     ပြသနေသည်: <span id="displayCount" class="font-bold text-indigo-600">0</span> ခု
                 </div>
             </div>
 
-            <div class="overflow-x-auto">
+            <!-- Mobile View: Card Layout (Visible on Small Screens) -->
+            <div id="cardContainer" class="block md:hidden divide-y divide-slate-100 p-4 space-y-3">
+                <div class="text-center py-8 text-slate-400 text-sm">ဒေတာများကို ဆွဲယူနေပါသည်...</div>
+            </div>
+
+            <!-- Desktop/Tablet View: Table Layout (Hidden on Small Screens) -->
+            <div class="hidden md:block overflow-x-auto">
                 <table class="w-full text-left border-collapse">
                     <thead>
                         <tr class="bg-slate-50 text-slate-500 text-xs uppercase tracking-wider border-b border-slate-100">
@@ -91,12 +91,7 @@
                     </thead>
                     <tbody id="tableBody" class="divide-y divide-slate-100 text-sm">
                         <tr>
-                            <td colspan="4" class="text-center py-12 text-slate-400">
-                                <div class="flex flex-col items-center justify-center gap-2">
-                                    <svg class="w-8 h-8 animate-spin text-indigo-500" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path></svg>
-                                    <span>ဒေတာများကို ဆွဲယူနေပါသည်... ခေတ္တစောင့်ဆိုင်းပေးပါ။</span>
-                                </div>
-                            </td>
+                            <td colspan="4" class="text-center py-12 text-slate-400">ဒေတာများကို ဆွဲယူနေပါသည်...</td>
                         </tr>
                     </tbody>
                 </table>
@@ -114,17 +109,24 @@
 
         async function fetchData() {
             const tbody = document.getElementById('tableBody');
-            tbody.innerHTML = `<tr><td colspan="4" class="text-center py-12 text-slate-400"><div class="flex flex-col items-center justify-center gap-2"><svg class="w-8 h-8 animate-spin text-indigo-500" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path></svg><span>ဒေတာများကို ဆွဲယူနေပါသည်...</span></div></td></tr>`;
+            const cardContainer = document.getElementById('cardContainer');
+            
+            const loadingHtml = `<div class="text-center py-12 text-slate-400 flex flex-col items-center justify-center gap-2"><svg class="w-8 h-8 animate-spin text-indigo-500" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path></svg><span>ဒေတာများကို ဆွဲယူနေပါသည်...</span></div>`;
+            
+            tbody.innerHTML = `<tr><td colspan="4">${loadingHtml}</td></tr>`;
+            cardContainer.innerHTML = loadingHtml;
 
             try {
                 const response = await fetch(webAppUrl);
                 const data = await response.json();
                 window.allData = data;
                 updateStats(data);
-                displayTable(data);
+                displayData(data);
             } catch (error) {
                 console.error("Error fetching data:", error);
-                tbody.innerHTML = `<tr><td colspan="4" class="text-center py-12 text-rose-500 font-medium">ဒေတာများကို ဆွဲယူ၍ မရပါ။ ကျေးဇူးပြု၍ လင့်ခ် သို့မဟုတ် Google Sheet ချိတ်ဆက်မှုကို ပြန်လည်စစ်ဆေးပါ။</td></tr>`;
+                const errHtml = `<div class="text-center py-12 text-rose-500 font-medium">ဒေတာများကို ဆွဲယူ၍ မရပါ။ ချိတ်ဆက်မှုကို ပြန်လည်စစ်ဆေးပါ။</div>`;
+                tbody.innerHTML = `<tr><td colspan="4">${errHtml}</td></tr>`;
+                cardContainer.innerHTML = errHtml;
             }
         }
 
@@ -147,37 +149,59 @@
             document.getElementById('notTestedCount').innerText = notTested;
         }
 
-        function displayTable(data) {
+        function getTestedBadge(testedVal) {
+            let testedLower = testedVal ? testedVal.toString().trim().toLowerCase() : "";
+            if(testedLower === 'tested' || testedLower === 'yes' || testedLower === 'true') {
+                return `<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200/60"><span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>Tested</span>`;
+            } else if(testedLower === 'not tested' || testedLower === 'no' || testedLower === 'false') {
+                return `<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-amber-50 text-amber-700 border border-amber-200/60"><span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span>Not Tested</span>`;
+            }
+            return `<span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-slate-100 text-slate-600">${testedVal || 'N/A'}</span>`;
+        }
+
+        function displayData(data) {
             const tbody = document.getElementById('tableBody');
+            const cardContainer = document.getElementById('cardContainer');
             document.getElementById('displayCount').innerText = data.length;
+            
             tbody.innerHTML = "";
+            cardContainer.innerHTML = "";
 
             if (data.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="4" class="text-center py-12 text-slate-400 font-medium">ရှာမတွေ့ပါ (သို့မဟုတ်) စာရင်း မရှိသေးပါ။</td></tr>`;
+                const emptyMsg = `<div class="text-center py-12 text-slate-400 font-medium">ရှာမတွေ့ပါ (သို့မဟုတ်) စာရင်း မရှိသေးပါ။</div>`;
+                tbody.innerHTML = `<tr><td colspan="4">${emptyMsg}</td></tr>`;
+                cardContainer.innerHTML = emptyMsg;
                 return;
             }
 
+            // Populate Desktop Table
             data.forEach(item => {
                 const tr = document.createElement('tr');
                 tr.className = "hover:bg-slate-50/80 transition duration-150";
-                
-                let testedVal = item.tested ? item.tested.toString().trim() : "";
-                let testedLower = testedVal.toLowerCase();
-                let testedBadge = `<span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-slate-100 text-slate-600">${testedVal || 'N/A'}</span>`;
-                
-                if(testedLower === 'tested' || testedLower === 'yes' || testedLower === 'true') {
-                    testedBadge = `<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200/60"><span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>Tested</span>`;
-                } else if(testedLower === 'not tested' || testedLower === 'no' || testedLower === 'false') {
-                    testedBadge = `<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-amber-50 text-amber-700 border border-amber-200/60"><span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span>Not Tested</span>`;
-                }
-
                 tr.innerHTML = `
                     <td class="py-4 px-6 font-semibold text-slate-700">${item.model || ''}</td>
                     <td class="py-4 px-6 text-slate-600">${item.selection || ''}</td>
                     <td class="py-4 px-6 text-slate-600 font-mono text-xs"><span class="bg-slate-100 px-2 py-1 rounded">${item.osVersion || ''}</span></td>
-                    <td class="py-4 px-6 text-center">${testedBadge}</td>
+                    <td class="py-4 px-6 text-center">${getTestedBadge(item.tested)}</td>
                 `;
                 tbody.appendChild(tr);
+            });
+
+            // Populate Mobile Cards
+            data.forEach(item => {
+                const card = document.createElement('div');
+                card.className = "bg-slate-50/60 border border-slate-100 p-4 rounded-xl flex flex-col gap-2.5 shadow-xs";
+                card.innerHTML = `
+                    <div class="flex items-start justify-between gap-2">
+                        <h4 class="font-bold text-slate-800 text-base">${item.model || 'Unknown Model'}</h4>
+                        <div>${getTestedBadge(item.tested)}</div>
+                    </div>
+                    <div class="flex flex-wrap items-center justify-between text-xs text-slate-500 pt-1 border-t border-slate-200/60 mt-1">
+                        <div><span class="text-slate-400">ရွေးချယ်ရန်:</span> <span class="font-medium text-slate-700">${item.selection || '-'}</span></div>
+                        <div><span class="text-slate-400">OS:</span> <span class="font-mono bg-white px-2 py-0.5 rounded border border-slate-200 text-slate-700">${item.osVersion || '-'}</span></div>
+                    </div>
+                `;
+                cardContainer.appendChild(card);
             });
         }
 
@@ -192,7 +216,7 @@
                 
                 return model.includes(query) || selection.includes(query) || osVersion.includes(query);
             });
-            displayTable(filtered);
+            displayData(filtered);
         }
 
         // Initialize on load
