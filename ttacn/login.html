@@ -23,7 +23,7 @@
             padding: 30px;
             border-radius: 10px;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-            width: 350px;
+            width: 380px;
         }
         .card h2 {
             margin-bottom: 20px;
@@ -62,7 +62,7 @@
             background-color: #0056b3;
         }
         
-        /* Navigation & Register Links */
+        /* Navigation & Links */
         .nav-links {
             margin-top: 15px;
             text-align: center;
@@ -102,6 +102,42 @@
             background-color: #218838;
         }
 
+        .btn-download {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+            background-color: #ffc107;
+            color: #212529;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 15px;
+            font-weight: bold;
+            text-align: center;
+            transition: background 0.3s ease;
+        }
+        .btn-download:hover {
+            background-color: #e0a800;
+        }
+
+        .btn-admin {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            margin-top: 8px;
+            background-color: #17a2b8;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 14px;
+            font-weight: bold;
+            text-align: center;
+            transition: background 0.3s ease;
+        }
+        .btn-admin:hover {
+            background-color: #138496;
+        }
+
         #message {
             margin-top: 15px;
             font-size: 14px;
@@ -113,27 +149,31 @@
         /* Dashboard / Profile Section */
         .profile-box {
             display: none;
+            text-align: left;
+        }
+        .profile-box h2 {
             text-align: center;
         }
         .profile-box p {
-            margin: 10px 0;
-            font-size: 15px;
+            margin: 8px 0;
+            font-size: 14px;
         }
         .badge {
             display: inline-block;
-            padding: 6px 12px;
+            padding: 4px 10px;
             border-radius: 20px;
             font-weight: bold;
             color: white;
+            font-size: 12px;
         }
         .badge-active { background-color: #28a745; }
         .badge-inactive { background-color: #dc3545; }
         .badge-credit { 
-            background-color: #17a2b8; 
-            font-size: 14px;
+            background-color: #6f42c1; 
+            font-size: 13px;
         }
         .logout-btn {
-            margin-top: 15px;
+            margin-top: 12px;
             background-color: #dc3545;
         }
         .logout-btn:hover {
@@ -161,7 +201,6 @@
         <div id="message"></div>
 
         <div class="nav-links">
-            <!-- အကောင့်ပြုလုပ်ရန် ခလုတ် (Register Page သို့မဟုတ် Google Form Link သို့ ချိတ်နိုင်သည်) -->
             <a href="https://ttamig3.com/ttacn/join.html" class="btn-register">Create New Account</a>
             <a href="https://ttamig3.com/ttacn/" class="btn-secondary">Back to Home</a>
         </div>
@@ -173,6 +212,12 @@
         <p><strong>Gmail:</strong> <span id="displayGmail"></span></p>
         <p><strong>Credit Left:</strong> <span id="displayCredit" class="badge badge-credit">0</span></p>
         <p><strong>Status:</strong> <span id="displayStatus" class="badge"></span></p>
+        
+        <!-- Login ဝင်ပြီးမှ ပေါ်လာမည့် Tool Download နှင့် Admin ဆက်သွယ်ရန် ခလုတ်များ -->
+        <a href="YOUR_TOOL_DOWNLOAD_LINK_HERE" class="btn-download" target="_blank">📥 Tool Download</a>
+        <a href="https://t.me/YOUR_ADMIN_USERNAME" class="btn-admin" target="_blank">💬 Credit ဝယ်လိုလျှင် admin နှင့် ဆက်သွယ်ရန်</a>
+        <a href="https://ttamig3.com/ttacn/" class="btn-secondary">Back to Home</a>
+
         <button class="logout-btn" onclick="logout()">Logout</button>
     </div>
 </div>
