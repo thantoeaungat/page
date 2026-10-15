@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="my">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Xiaomi Global Firmware Hub</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- FontAwesome 6 Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-color: #0b0f19;
+            --card-bg: rgba(22, 27, 34, 0.7);
+            --border-color: rgba(255, 255, 255, 0.1);
+            --accent-blue: #0088ff;
+            --accent-green: #238636;
+            --accent-purple: #8957e5;
+            --accent-orange: #d97706;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(0, 136, 255, 0.12) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(137, 87, 229, 0.12) 0px, transparent 50%);
+            background-attachment: fixed;
+            color: #e6edf3;
+            font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;
+            min-height: 100vh;
+        }
+
+        /* Glassmorphism Header */
+        .hero-section {
+            background: rgba(13, 17, 23, 0.6);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 35px 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Modern Search Input */
+        .search-container {
+            position: relative;
+            max-width: 650px;
+            margin: 0 auto;
+        }
+
+        .search-input {
+            background: rgba(13, 17, 23, 0.8) !important;
+            border: 1px solid rgba(255, 255, 255, 0.15) !important;
+            color: #fff !important;
+            padding: 14px 20px 14px 50px;
+            border-radius: 50px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .search-input:focus {
+            border-color: var(--accent-blue) !important;
+            box-shadow: 0 0 20px rgba(0, 136, 255, 0.3) !important;
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #8b949e;
+        }
+
+        /* Firmware Card Design */
+        .firmware-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 20px;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .firmware-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(0, 136, 255, 0.4);
+            box-shadow: 0 12px 30px rgba(0, 136, 255, 0.15);
+        }
+
+        .model-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 8px;
+        }
+
+        .badge-region {
+            background: rgba(0, 136, 255, 0.15);
+            color: #58a6ff;
+            border: 1px solid rgba(0, 136, 255, 0.3);
+            font-weight: 600;
+            border-radius: 8px;
+            padding: 5px 12px;
+            font-size: 0.75rem;
+            display: inline-block;
+        }
+
+        /* Buttons Styling */
+        .btn-custom {
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            padding: 8px 14px;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            text-decoration: none;
+            width: 100%;
+        }
+
+        .btn-drive-1 {
+            background: rgba(35, 134, 54, 0.2);
+            color: #3fb950;
+            border: 1px solid rgba(35, 134, 54, 0.4);
+        }
+
+        .btn-drive-1:hover {
+            background: var(--accent-green);
+            color: #fff;
+        }
+
+        .btn-drive-2 {
+            background: rgba(137, 87, 229, 0.2);
+            color: #a371f7;
+            border: 1px solid rgba(137, 87, 229, 0.4);
+        }
+
+        .btn-drive-2:hover {
+            background: var(--accent-purple);
+            color: #fff;
+        }
+
+        .btn-video {
+            background: rgba(217, 119, 6, 0.15);
+            color: #fbbf24;
+            border: 1px solid rgba(217, 119, 6, 0.4);
+        }
+
+        .btn-video:hover {
+            background: var(--accent-orange);
+            color: #fff;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--bg-color);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #30363d;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #484f58;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container py-5">
+    
+    <!-- Hero Header -->
+    <div class="hero-section text-center mb-5">
+        <h1 class="fw-bold mb-2">
+            <i class="fa-solid fa-microchip text-primary me-2"></i>TTA Xiaomi Global Firmware
+        </h1>
+        <p class="text-secondary mb-4"> Convert Global Firmware & Direct Google Drive Downloads</p>
+        
+        <!-- Search Box -->
+        <div class="search-container">
+            <i class="fa-solid fa-magnifying-glass search-icon"></i>
+            <input type="text" id="searchInput" class="form-control search-input" placeholder="Search device model (e.g., Redmi 14C, Note 13 Pro)..." onkeyup="filterModels()">
+        </div>
+    </div>
+
+    <!-- Loading Spinner -->
+    <div id="loading" class="text-center py-5">
+        <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status"></div>
+        <p class="mt-3 text-secondary fs-6">Loading Firmware Database...</p>
+    </div>
+
+    <!-- Firmware Cards Container -->
+    <div class="row g-4" id="firmwareContainer"></div>
+
+</div>
+
+<script>
+    // Google Apps Script Web App URL
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycby_zHZqtx1PQfC2TKARaSQWMMlx-FCEFrOrFoauSMrWTMVytG-fKcLe4L6VfPcvv3YU/exec";
+
+    let firmwareData = [];
+
+    async function fetchFirmware() {
+        try {
+            const response = await fetch(SCRIPT_URL);
+            firmwareData = await response.json();
+            document.getElementById('loading').style.display = 'none';
+            renderCards(firmwareData);
+        } catch (error) {
+            console.error("Error fetching data:", error);
+            document.getElementById('loading').innerHTML = `
+                <div class="alert alert-danger d-inline-block px-4 py-2" role="alert">
+                    <i class="fa-solid fa-triangle-exclamation me-2"></i> Data ရယူရာတွင် အမှားအယွင်းရှိနေပါသည်။ ခဏအကြာမှ ထပ်မံကြိုးစားပါ။
+                </div>`;
+        }
+    }
+
+    function renderCards(data) {
+        const container = document.getElementById('firmwareContainer');
+        container.innerHTML = '';
+
+        if (!data || data.length === 0) {
+            container.innerHTML = `
+                <div class="col-12 text-center text-secondary py-5">
+                    <i class="fa-regular fa-folder-open fa-3x mb-3 d-block"></i>
+                    ရှာဖွေမှုနှင့် ကိုက်ညီသော Firmware မရှိပါ။
+                </div>`;
+            return;
+        }
+
+        data.forEach(item => {
+            if (!item.model) return; // Row အလွတ်များကို ကျော်မည်
+
+            let link1Btn = item.link1 ? `<a href="${item.link1}" target="_blank" class="btn-custom btn-drive-1 mb-2"><i class="fa-solid fa-cloud-arrow-down"></i> Drive Link 1</a>` : '';
+            let link2Btn = item.link2 ? `<a href="${item.link2}" target="_blank" class="btn-custom btn-drive-2 mb-2"><i class="fa-solid fa-cloud-arrow-down"></i> Drive Link 2</a>` : '';
+            let videoBtn = item.video ? `<a href="${item.video}" target="_blank" class="btn-custom btn-video mb-2"><i class="fa-circle-play fa-solid"></i> Download ဆွဲနည်း Video</a>` : '';
+
+            let cardHTML = `
+                <div class="col-md-6 col-lg-4 firmware-item">
+                    <div class="firmware-card">
+                        <div>
+                            <div class="d-flex justify-content-between align-items-start mb-2">
+                                <h3 class="model-title mb-0">${item.model}</h3>
+                            </div>
+                            <span class="badge-region mb-3">
+                                <i class="fa-solid fa-globe me-1"></i>${item.region || 'Global Change'}
+                            </span>
+                        </div>
+                        <div class="mt-3">
+                            ${link1Btn}
+                            ${link2Btn}
+                            ${videoBtn}
+                        </div>
+                    </div>
+                </div>
+            `;
+            container.innerHTML += cardHTML;
+        });
+    }
+
+    function filterModels() {
+        const query = document.getElementById('searchInput').value.toLowerCase();
+        const filtered = firmwareData.filter(item => 
+            (item.model && item.model.toLowerCase().includes(query)) || 
+            (item.region && item.region.toLowerCase().includes(query))
+        );
+        renderCards(filtered);
+    }
+
+    // Load Data
+    fetchFirmware();
+</script>
+
+</body>
+</html>
